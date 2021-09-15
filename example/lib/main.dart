@@ -82,6 +82,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(
                           Icons.home,
                         ),
+                        badge: Text(
+                          ' 1 ',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        badgeRadius: BorderRadius.circular(12),
+                        showBadge: true,
+                        badgeColor: Colors.red,
                         activeIcon: Icon(Icons.home),
                         title: Text("Home")),
                     BubbleBarItem(

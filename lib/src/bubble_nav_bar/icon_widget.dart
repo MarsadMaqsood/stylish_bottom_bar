@@ -1,5 +1,5 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/src/badge/badge.dart';
 
 import 'bubble_item.dart';
 
@@ -29,6 +29,7 @@ class IconWidget extends StatelessWidget {
         badgeContent: item.badge,
         badgeColor: item.badgeColor,
         animationType: BadgeAnimationType.fade,
+        borderRadius: item.badgeRadius,
         child: Container(
           child: IconTheme(
             data: IconThemeData(

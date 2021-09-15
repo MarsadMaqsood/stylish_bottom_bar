@@ -1,14 +1,13 @@
 name: stylish_bottom_bar
-description: A new Flutter package project.
-version: 0.0.1
-homepage:
+description: A stylish bottom navigation bar for flutter
+version: 0.0.1+1
+homepage: https://github.com/MarsadMaqsood/Stylish_bottom_bar
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
-  badges: ^2.0.1
   flutter:
     sdk: flutter
 

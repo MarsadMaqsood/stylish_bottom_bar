@@ -8,6 +8,7 @@ class BubbleBarItem {
   final bool showBadge;
   final Color badgeColor;
   final Color? backgroundColor;
+  final BorderRadius badgeRadius;
 
   BubbleBarItem({
     required this.icon,
@@ -17,5 +18,6 @@ class BubbleBarItem {
     this.badgeColor = Colors.black,
     this.backgroundColor = Colors.green,
     this.badge,
+    this.badgeRadius = BorderRadius.zero,
   });
 }

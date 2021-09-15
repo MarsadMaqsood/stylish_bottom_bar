@@ -1,7 +1,7 @@
 ## ⭐  Installing
 
     dependencies:
-        stylish_bottom_bar: ^0.0.1
+        stylish_bottom_bar: ^0.0.1+1
         
 ## ⚡ Import
 
