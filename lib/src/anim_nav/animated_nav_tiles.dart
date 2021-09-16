@@ -15,7 +15,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
       this.animation,
       this.flex,
       this.indexLabel,
-      required this.barStyle})
+      required this.barAnimation})
       : super(key: key);
 
   final AnimatedBarItems items;
@@ -29,7 +29,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
   final double? flex;
   final String? indexLabel;
   final Animation<double>? animation;
-  final AnimatedBarStyle barStyle;
+  final BarAnimation barAnimation;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                       mainAxisAlignment: selected
                           ? MainAxisAlignment.spaceEvenly
                           : MainAxisAlignment.center,
-                      children: childItems(),
+                      children: _childItems(),
                     )),
               ),
             ),
@@ -67,7 +67,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
     );
   }
 
-  childItems() {
+  _childItems() {
     var label = LabelWidget(
         animation: animation!, item: items, color: items.selectedColor!);
 
@@ -76,7 +76,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
         items: items,
         selected: selected,
         iconSize: iconSize,
-        barStyle: barStyle,
+        barAnimation: barAnimation,
       ),
       AnimatedCrossFade(
         alignment: Alignment(0, 0),
@@ -93,7 +93,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 }
 
-const activeFontSize = 14.0;
+const _activeFontSize = 14.0;
 
 class LabelWidget extends StatelessWidget {
   LabelWidget({
@@ -118,7 +118,7 @@ class LabelWidget extends StatelessWidget {
           opacity: animation,
           child: DefaultTextStyle.merge(
             style: TextStyle(
-              fontSize: activeFontSize,
+              fontSize: _activeFontSize,
               fontWeight: FontWeight.w600,
               color: color,
             ),
@@ -136,12 +136,12 @@ class IconWidget extends StatefulWidget {
       required this.items,
       required this.selected,
       required this.iconSize,
-      required this.barStyle})
+      required this.barAnimation})
       : super(key: key);
   final AnimatedBarItems items;
   final bool selected;
   final double iconSize;
-  final AnimatedBarStyle barStyle;
+  final BarAnimation barAnimation;
 
   @override
   _IconWidgetState createState() => _IconWidgetState();
@@ -173,18 +173,9 @@ class _IconWidgetState extends State<IconWidget>
   late Animation<double> animation;
 
   _assignAnimation() {
-    if (widget.barStyle == AnimatedBarStyle.easeIn) {
+    if (widget.barAnimation == BarAnimation.fade) {
       animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
-      // animation = ColorTween(
-      //   begin: widget.items.unSelectedColor,
-      //   end: widget.items.selectedColor,
-      // ).animate(controller)
-      //   ..addListener(() {
-      //     setState(() {});
-      //   });
-    }
-
-    if (widget.barStyle == AnimatedBarStyle.blink) {
+    } else if (widget.barAnimation == BarAnimation.blink) {
       animation =
           new CurvedAnimation(parent: controller, curve: Curves.bounceIn);
     }
@@ -205,7 +196,6 @@ class _IconWidgetState extends State<IconWidget>
     widget.selected ? controller.forward() : controller.reset();
 
     return Container(
-      // color: selected ? Colors.transparent : Colors.white.withOpacity(0.9),
       child: IconTheme(
         data: IconThemeData(
           color: widget.selected ? animationColor.value : Colors.grey,

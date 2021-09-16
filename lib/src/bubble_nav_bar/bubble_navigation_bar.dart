@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'dart:math' as math;
 import 'bubble_item.dart';
 import 'bubble_navigation_tile.dart';
 import 'cliper.dart';
 
-enum BubbleBarFabLocation { end, center }
 enum BubbleBarStyle { vertical, horizotnal }
+
 const _BottomMargin = 8.0;
 
 // ignore: must_be_immutable
@@ -25,33 +26,36 @@ class BubbleNavigationBar extends StatefulWidget {
     this.elevation,
     this.backgroundColor,
     this.hasNotch = false,
-    this.hasInk = false,
+    this.inkEffect = false,
     this.inkColor,
     this.fabLocation,
-    this.tilesPadding = EdgeInsets.zero,
+    this.padding = EdgeInsets.zero,
 
     ///If icon color not provided then
-    ///default unselected icon color is white
+    ///default unselected icon color is [Colors.black]
     ///this is also used to set bulk color to unselected icons
     this.unselectedIconColor = Colors.black,
-  })  : assert(items.length >= 2),
+  })  : assert(items.length >= 2,
+            'Animated Bottom Navigation must have 2 or more items'),
         assert(
           items.every((BubbleBarItem item) => item.title != null) == true,
           'Every item must have a non-null title',
         ),
-        assert(0 <= currentIndex! && currentIndex < items.length),
-        assert(iconSize != null),
+        assert((currentIndex! >= items.length) == false,
+            '\n\nCurrent index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}'),
+        assert((currentIndex! < 0) == false,
+            'Current index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}'),
         super(key: key);
 
   ///Add BubbleNavigationbar items
   ///
   ///{required this.icon,this.title,this.activeIcon,this.showBadge,
-  ///this.badgeColor,this.backgroundColor,this.badge,}
+  ///this.badgeColor,this.backgroundColor,this.badge, this.badgeRadius}
   final List<BubbleBarItem> items;
 
-  ///BarStyle to align icon and title in horizonal or vertical
+  ///BarStyle to align icon and title in horizontal or vertical
   ///[BubbleBarStyle.horizotnal]
-  ///[BubbleBarStyle.vertical]
+  ///[BubbleBarStyle.vertical]\
   ///Default value is [BubbleBarStyle.horizotnal]
   final BubbleBarStyle? barStyle;
 
@@ -75,7 +79,7 @@ class BubbleNavigationBar extends StatefulWidget {
   ///Change bubble navigation bar border radius
   final BorderRadius? borderRadius;
 
-  ///Add elevation to bubble navigation bar
+  ///Add elevation to bottom navigation bar
   final double? elevation;
 
   ///Change bubble navigation bar background color
@@ -86,23 +90,31 @@ class BubbleNavigationBar extends StatefulWidget {
 
   ///Enable ink effect to bubble navigation bar item
   ///Default value is false
-  final bool hasInk;
+  final bool inkEffect;
 
   ///Adjust bubble navigation items according to the fab location
-  final BubbleBarFabLocation? fabLocation;
+  ///
+  ///You can change Fab Location [StylishBarFabLocation.center]
+  ///
+  ///and [StylishBarFabLocation.end]
+  final StylishBarFabLocation? fabLocation;
 
   ///Change ink color
   ///Default color is [Colors.grey]
   final Color? inkColor;
 
-  ///Change unselected items color
+  ///Change unselected item color
   ///If you don't want to change every single icon color use this property
-  ///this will bulk change all the unselected icon color which does'nt have color property
+  ///this will bulk change all the unselected icon color which does'nt have color property.
+  ///
+  ///If icon color not provided then
+  ///default unselected icon color is [Colors.black]
+  ///this is also used to set bulk color to unselected icons
   Color? unselectedIconColor;
 
   ///Add padding arround navigation tiles
   ///Default padding is [EdgeInsets.zero]
-  final EdgeInsets tilesPadding;
+  final EdgeInsets padding;
 
   @override
   _BubbleNavigationBarState createState() => _BubbleNavigationBarState();
@@ -113,9 +125,7 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
   late List<AnimationController> _controllers = <AnimationController>[];
   late List<CurvedAnimation> _animations;
   Color? _backgroundColor;
-  ValueListenable<ScaffoldGeometry>? geometryListenable;
-  bool fabExists = false;
-  BubbleBarItem? holder;
+  ValueListenable<ScaffoldGeometry>? _geometryListenable;
   Animatable<double>? _flexTween;
 
   @override
@@ -127,7 +137,7 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    geometryListenable = Scaffold.geometryOf(context);
+    _geometryListenable = Scaffold.geometryOf(context);
     _flexTween = widget.hasNotch
         ? Tween<double>(begin: 1.15, end: 2.0)
         : Tween<double>(begin: 1.15, end: 1.75);
@@ -180,7 +190,7 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
       _controllers[oldWidget.currentIndex!].reverse();
       _controllers[widget.currentIndex!].forward();
 
-      if (widget.fabLocation == BubbleBarFabLocation.center) {
+      if (widget.fabLocation == StylishBarFabLocation.center) {
         BubbleBarItem _currentItem = widget.items[oldWidget.currentIndex!];
         BubbleBarItem _nextItem = widget.items[widget.currentIndex!];
 
@@ -219,14 +229,14 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
           flex: _evaluateFlex(_animations[i]),
           indexLabel: localizations!
               .tabLabel(tabIndex: i + 1, tabCount: widget.items.length),
-          ink: widget.hasInk,
+          ink: widget.inkEffect,
           inkColor: widget.inkColor,
-          padding: widget.tilesPadding,
+          padding: widget.padding,
         ),
       );
     }
 
-    if (widget.fabLocation == BubbleBarFabLocation.center) {
+    if (widget.fabLocation == StylishBarFabLocation.center) {
       children.insert(
           1,
           Spacer(
@@ -260,7 +270,8 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
           child: Padding(
             padding: EdgeInsets.only(
                 bottom: additionalBottomPadding,
-                right: widget.fabLocation == BubbleBarFabLocation.end ? 72 : 0),
+                right:
+                    widget.fabLocation == StylishBarFabLocation.end ? 72 : 0),
             child: MediaQuery.removePadding(
               context: context,
               removeBottom: true,
@@ -286,7 +297,7 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
                 color: widget.backgroundColor ?? Colors.white,
                 clipper: BubbleBarClipper(
                   shape: CircularNotchedRectangle(),
-                  geometry: geometryListenable!,
+                  geometry: _geometryListenable!,
                   notchMargin: 8,
                 ),
                 child: _innerWidgets(additionalBottomPadding),

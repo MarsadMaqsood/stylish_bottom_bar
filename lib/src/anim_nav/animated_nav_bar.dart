@@ -6,9 +6,10 @@ import 'dart:math' as math;
 import 'animated_nav_items.dart';
 import 'animated_nav_tiles.dart';
 
-enum AnimatedBarFabLocation { center, end }
-enum AnimatedBarStyle {
-  easeIn,
+enum StylishBarFabLocation { center, end }
+
+enum BarAnimation {
+  fade,
   blink,
 }
 const _BottomMargin = 8.0;
@@ -30,9 +31,9 @@ class AnimatedNavigationBar extends StatefulWidget {
     this.borderRadius,
     this.fabLocation,
     this.hasNotch = false,
-    this.barStyle = AnimatedBarStyle.easeIn,
+    this.barAnimation = BarAnimation.fade,
   })  : assert(items.length >= 2,
-            'LivenavigationBar must contain 2 or more items'),
+            'Animated Bottom Navigation must have 2 or more items'),
         assert(
             (items.every((AnimatedBarItems item) => item.icon != null) == true),
             'Every item must have non-null icon'),
@@ -41,25 +42,73 @@ class AnimatedNavigationBar extends StatefulWidget {
                 true),
             'Every item must have non-null title'),
         assert((currentIndex! >= items.length) == false,
-            'Current index is out of bond Provided: $currentIndex Bond: 0 to ${items.length - 1}'),
+            '\n\nCurrent index is out of bond Provided: $currentIndex Bond: 0 to ${items.length - 1}'),
         assert((currentIndex! < 0) == false,
             'Current index is out of bond Provided: $currentIndex Bond: 0 to ${items.length - 1}'),
         super(key: key);
 
+  ///Add AnimatedBarItems items
+  ///
+  ///{required this.icon, this.title, this.backgroundColor, this.unSelectedColor,
+  /// this.selectedColor }
+
   final List<AnimatedBarItems> items;
+
+  ///Change animated navigation bar background color
   final Color? backgroundColor;
+
+  //////Add elevation to bottom navigation bar
+  ///
+  ///Default value is 8.0
   final double? elevation;
+
+  ///Change Icon size
+  ///Default is 26.0
   final double? iconSize;
+
+  ///Used to change the selected item
   int? currentIndex;
+
+  ///Add padding arround navigation tiles
+  ///Default padding is [EdgeInsets.zero]
   final EdgeInsets? padding;
+
+  ///Enable ink effect to bubble navigation bar item
+  ///Default value is false
   final bool? inkEffect;
+
+  ///Add notch effect to fab icon
   final bool hasNotch;
+
+  ///Change ink color
+  ///Default color is [Colors.grey]
   final Color? inkColor;
+
+  ///ValueChanged function to return current selected item index
+  ///
+  ///(index){
+  ///
+  ///}
   final ValueChanged<int?>? onTap;
+
+  ///Change bubble item background color opacity
   final double? opacity;
+
+  ///Change bubble navigation bar border radius
   final BorderRadius? borderRadius;
-  final AnimatedBarFabLocation? fabLocation;
-  final AnimatedBarStyle? barStyle;
+
+  ///Adjust bubble navigation items according to the fab location
+  ///
+  ///You can change Fab Location [StylishBarFabLocation.center]
+  ///
+  ///and [StylishBarFabLocation.end]
+  final StylishBarFabLocation? fabLocation;
+
+  ///BarAnimation to animate items when current index changes
+  ///[BarAnimation.fade]
+  ///[BarAnimation.blink]
+  ///Default value is [BarAnimation.fade]
+  final BarAnimation? barAnimation;
 
   @override
   _AnimatedNavigationBarState createState() => _AnimatedNavigationBarState();
@@ -71,15 +120,13 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
   late List<CurvedAnimation> _animations;
   Color? _backgroundColor;
 
-  ValueListenable<ScaffoldGeometry>? geometryListenable;
-  bool fabExists = false;
-  AnimatedBarItems? holder;
+  ValueListenable<ScaffoldGeometry>? _geometryListenable;
   Animatable<double>? _flexTween;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    geometryListenable = Scaffold.geometryOf(context);
+    _geometryListenable = Scaffold.geometryOf(context);
     _flexTween = widget.hasNotch
         ? Tween<double>(begin: 1.15, end: 2.0)
         : Tween<double>(begin: 1.15, end: 1.75);
@@ -138,7 +185,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
       _controllers[oldWidget.currentIndex!].reverse();
       _controllers[widget.currentIndex!].forward();
 
-      if (widget.fabLocation == AnimatedBarFabLocation.center) {
+      if (widget.fabLocation == StylishBarFabLocation.center) {
         AnimatedBarItems _currentItem = widget.items[oldWidget.currentIndex!];
         AnimatedBarItems _nextItem = widget.items[widget.currentIndex!];
 
@@ -168,7 +215,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
               color: widget.backgroundColor ?? Colors.white,
               clipper: BubbleBarClipper(
                 shape: CircularNotchedRectangle(),
-                geometry: geometryListenable!,
+                geometry: _geometryListenable!,
                 notchMargin: 8,
               ),
               child: _innerWidget(additionalBottomPadding),
@@ -201,7 +248,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
             padding: EdgeInsets.only(
                 bottom: additionalBottomPadding,
                 right:
-                    widget.fabLocation == AnimatedBarFabLocation.end ? 72 : 0),
+                    widget.fabLocation == StylishBarFabLocation.end ? 72 : 0),
             child: MediaQuery.removePadding(
               context: context,
               removeBottom: true,
@@ -238,7 +285,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
         selected: widget.currentIndex == i,
         opacity: widget.opacity!,
         animation: _animations[i],
-        barStyle: widget.barStyle!,
+        barAnimation: widget.barAnimation!,
         onTap: () {
           if (widget.onTap != null) widget.onTap!(i);
         },
@@ -247,7 +294,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
             .tabLabel(tabIndex: i + 1, tabCount: widget.items.length),
       ));
     }
-    if (widget.fabLocation == AnimatedBarFabLocation.center) {
+    if (widget.fabLocation == StylishBarFabLocation.center) {
       list.insert(
           1,
           Spacer(

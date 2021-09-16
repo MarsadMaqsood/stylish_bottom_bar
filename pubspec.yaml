@@ -1,6 +1,6 @@
 name: stylish_bottom_bar
-description: A stylish bottom navigation bar for flutter
-version: 0.0.1+1
+description: A collection of stylish bottom navigation bar like animated bottom bar and bubble bottom bar for flutter.
+version: 0.0.2
 homepage: https://github.com/MarsadMaqsood/Stylish_bottom_bar
 
 environment:

@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ],
-                  unselectedIconColor: Colors.black,
+
                   // inkColor: Colors.yellow,
                   barStyle: BubbleBarStyle.vertical,
                   currentIndex: selected ?? 0,
@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                   iconSize: 38,
-                  hasInk: true,
+                  inkEffect: true,
                   opacity: 0.2,
                   hasNotch: false,
                 ),
@@ -175,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                   iconSize: 38,
-                  hasInk: true,
+                  inkEffect: true,
                   opacity: 0.2,
                   hasNotch: false,
                 ),
@@ -185,8 +185,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: AnimatedNavigationBar(
-        fabLocation: AnimatedBarFabLocation.end,
-        hasNotch: false,
+        fabLocation: StylishBarFabLocation.end,
+        hasNotch: true,
         items: [
           AnimatedBarItems(
               icon: Icon(
@@ -211,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Profile')),
         ],
         iconSize: 32,
-        barStyle: AnimatedBarStyle.easeIn,
+        barAnimation: BarAnimation.blink,
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {
