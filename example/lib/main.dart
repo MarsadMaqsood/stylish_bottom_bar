@@ -211,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Profile')),
         ],
         iconSize: 32,
-        barAnimation: BarAnimation.blink,
+        barAnimation: BarAnimation.transform3D,
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {

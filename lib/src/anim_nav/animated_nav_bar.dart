@@ -11,7 +11,9 @@ enum StylishBarFabLocation { center, end }
 enum BarAnimation {
   fade,
   blink,
+  transform3D,
 }
+
 const _BottomMargin = 8.0;
 
 // ignore: must_be_immutable

@@ -149,59 +149,75 @@ class IconWidget extends StatefulWidget {
 
 class _IconWidgetState extends State<IconWidget>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller = AnimationController(
-    duration: Duration(milliseconds: 1200),
-    vsync: this,
-  );
+  late AnimationController controller;
   late Animation<Color?> animationColor;
+  late Animation<double> animation;
 
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
-      duration: Duration(milliseconds: 600),
-      vsync: this,
-    );
+    if (widget.barAnimation != BarAnimation.transform3D)
+      controller = AnimationController(
+        duration: Duration(milliseconds: 600),
+        vsync: this,
+      );
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    if (widget.barAnimation != BarAnimation.transform3D) controller.dispose();
     super.dispose();
   }
 
-  late Animation<double> animation;
-
   _assignAnimation() {
-    if (widget.barAnimation == BarAnimation.fade) {
-      animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
-    } else if (widget.barAnimation == BarAnimation.blink) {
-      animation =
-          new CurvedAnimation(parent: controller, curve: Curves.bounceIn);
-    }
+    if (widget.barAnimation != BarAnimation.transform3D) {
+      if (widget.barAnimation == BarAnimation.fade) {
+        animation =
+            new CurvedAnimation(parent: controller, curve: Curves.easeIn);
+      } else if (widget.barAnimation == BarAnimation.blink) {
+        animation =
+            new CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+      }
 
-    animationColor = ColorTween(
-      begin: widget.items.unSelectedColor,
-      end: widget.items.selectedColor,
-    ).animate(animation)
-      ..addListener(() {
-        setState(() {});
-      });
+      animationColor = ColorTween(
+        begin: widget.items.unSelectedColor,
+        end: widget.items.selectedColor,
+      ).animate(animation)
+        ..addListener(() {
+          setState(() {});
+        });
+
+      widget.selected ? controller.forward() : controller.reset();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     _assignAnimation();
 
-    widget.selected ? controller.forward() : controller.reset();
+    return _buildWidget();
+  }
 
+  _buildWidget() {
     return Container(
       child: IconTheme(
         data: IconThemeData(
-          color: widget.selected ? animationColor.value : Colors.grey,
+          color: widget.selected
+              ? widget.barAnimation == BarAnimation.transform3D
+                  ? widget.items.selectedColor
+                  : animationColor.value
+              : Colors.grey,
           size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
         ),
-        child: widget.items.icon!,
+        child:
+            widget.barAnimation == BarAnimation.transform3D && widget.selected
+                ? Transform(
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 0, 0.003)
+                      ..rotateY(0),
+                    child: widget.items.icon!,
+                  )
+                : widget.items.icon!,
       ),
     );
   }

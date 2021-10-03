@@ -6,7 +6,7 @@ A collection of stylish bottom navigation bar like animated bottom bar and bubbl
 ## ⭐  Installing
 
     dependencies:
-        stylish_bottom_bar: ^0.0.2
+        stylish_bottom_bar: ^0.0.3
         
 ## ⚡ Import
 
@@ -74,6 +74,7 @@ StylishBarFabLocation.end
 ```dart
 BarAnimation.fade
 BarAnimation.blink
+BarAnimation.transform3D
 ```
 
 ### Event
@@ -85,7 +86,16 @@ onTap: (index){
 
 ## Examples
 
+**AnimatedNavigationBar**
 
+`BarAnimation.fade`
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/9.gif?raw=true">
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/10.gif?raw=true">
+
+`BarAnimation.blink`
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/11.gif?raw=true">
 
 ```dart
 
@@ -112,6 +122,7 @@ AnimatedNavigationBar(
     hasNotch: false,
     iconSize: 32,
     barAnimation: BarAnimation.fade,
+    //barAnimation: BarAnimation.blink,
     opacity: 0.3,
     currentIndex: selected ?? 0,
     onTap: (index) {
@@ -122,9 +133,13 @@ AnimatedNavigationBar(
 ),
 
 ```
+**BubbleNavigationBar**
 
-//Bubble
+`BubbleBarStyle.horizotnal`
 
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/6.gif?raw=true">
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/7.gif?raw=true">
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/8.gif?raw=true">
 
 ```dart
 
@@ -177,6 +192,19 @@ BubbleNavigationBar(
 ),
 
 ```
+
+`BubbleBarStyle.vertical`
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/1.gif?raw=true">
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/2.gif?raw=true">
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/3.gif?raw=true">
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/4.gif?raw=true">
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/5.gif?raw=true">
+
+
 
 ```dart
 
