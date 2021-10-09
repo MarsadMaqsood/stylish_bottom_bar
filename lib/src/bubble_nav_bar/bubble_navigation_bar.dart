@@ -8,6 +8,8 @@ import 'cliper.dart';
 
 enum BubbleBarStyle { vertical, horizotnal }
 
+enum BubbleFillStyle { fill, outlined }
+
 const _BottomMargin = 8.0;
 
 // ignore: must_be_immutable
@@ -30,6 +32,7 @@ class BubbleNavigationBar extends StatefulWidget {
     this.inkColor,
     this.fabLocation,
     this.padding = EdgeInsets.zero,
+    this.bubbleFillStyle = BubbleFillStyle.fill,
 
     ///If icon color not provided then
     ///default unselected icon color is [Colors.black]
@@ -115,6 +118,11 @@ class BubbleNavigationBar extends StatefulWidget {
   ///Add padding arround navigation tiles
   ///Default padding is [EdgeInsets.zero]
   final EdgeInsets padding;
+
+  ///Use this to customize bubble background fill style
+  ///You can use border with [BubbleFillStyle.outlined]
+  ///and also fill the background with color using [BubbleFillStyle.fill]
+  final BubbleFillStyle? bubbleFillStyle;
 
   @override
   _BubbleNavigationBarState createState() => _BubbleNavigationBarState();
@@ -232,6 +240,7 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
           ink: widget.inkEffect,
           inkColor: widget.inkColor,
           padding: widget.padding,
+          fillStyle: widget.bubbleFillStyle,
         ),
       );
     }
@@ -263,8 +272,9 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
       ),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-            minHeight:
-                kBottomNavigationBarHeight + additionalBottomPadding + 2),
+            minHeight: kBottomNavigationBarHeight +
+                additionalBottomPadding +
+                4), //increased to 4 from 2
         child: Material(
           type: MaterialType.transparency,
           child: Padding(

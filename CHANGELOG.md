@@ -1,3 +1,11 @@
+## 0.0.4
+ - Added `bubbleFillStyle:`
+```dart
+BubbleFillStyle.fill
+BubbleFillStyle.outlined
+```
+ - Minor bug fixes
+
 ## 0.0.3
  - Added `BarAnimation.transform3D`
  - Performance improvements

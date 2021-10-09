@@ -44,17 +44,17 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     Random random = new Random();
 
-    timer = Timer.periodic(
-        Duration(seconds: 5),
-        (Timer t) => {
-              setState(() {
-                bgColor = Color.fromARGB(
-                    random.nextInt(256),
-                    random.nextInt(255),
-                    random.nextInt(255),
-                    random.nextInt(255));
-              }),
-            });
+    // timer = Timer.periodic(
+    //     Duration(seconds: 5),
+    //     (Timer t) => {
+    //           setState(() {
+    //             bgColor = Color.fromARGB(
+    //                 random.nextInt(256),
+    //                 random.nextInt(255),
+    //                 random.nextInt(255),
+    //                 random.nextInt(255));
+    //           }),
+    //         });
   }
 
   @override
@@ -78,21 +78,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 BubbleNavigationBar(
                   items: [
                     BubbleBarItem(
-                        backgroundColor: Colors.deepPurple,
-                        icon: Icon(
-                          Icons.home,
+                      backgroundColor: Colors.deepPurple,
+                      icon: Icon(
+                        Icons.home,
+                      ),
+                      badge: Text(
+                        ' 1 ',
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
-                        badge: Text(
-                          ' 1 ',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        badgeRadius: BorderRadius.circular(12),
-                        showBadge: true,
-                        badgeColor: Colors.red,
-                        activeIcon: Icon(Icons.home),
-                        title: Text("Home")),
+                      ),
+                      badgeRadius: BorderRadius.circular(12),
+                      showBadge: true,
+                      badgeColor: Colors.red,
+                      activeIcon: Icon(Icons.home),
+                      title: Text("Home"),
+                      borderColor: Colors.purple,
+                    ),
                     BubbleBarItem(
                         backgroundColor: Colors.green,
                         icon: Icon(
@@ -116,7 +118,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ],
-
                   // inkColor: Colors.yellow,
                   barStyle: BubbleBarStyle.vertical,
                   currentIndex: selected ?? 0,
@@ -125,10 +126,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       selected = index;
                     });
                   },
+
                   iconSize: 38,
                   inkEffect: true,
                   opacity: 0.2,
                   hasNotch: false,
+                  bubbleFillStyle: BubbleFillStyle.fill,
+                  padding: EdgeInsets.all(4),
                 ),
                 SizedBox(
                   height: 30.0,

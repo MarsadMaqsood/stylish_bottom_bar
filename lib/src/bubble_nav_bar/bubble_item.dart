@@ -10,6 +10,10 @@ class BubbleBarItem {
   final Color? backgroundColor;
   final BorderRadius badgeRadius;
 
+  ///Use this change border color
+  ///default color is [Colors.black]
+  final Color? borderColor;
+
   BubbleBarItem({
     required this.icon,
     this.title,
@@ -19,5 +23,6 @@ class BubbleBarItem {
     this.backgroundColor = Colors.green,
     this.badge,
     this.badgeRadius = BorderRadius.zero,
+    this.borderColor = Colors.black,
   });
 }

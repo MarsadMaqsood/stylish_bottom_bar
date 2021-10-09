@@ -6,7 +6,7 @@ A collection of stylish bottom navigation bar like animated bottom bar and bubbl
 ## ⭐  Installing
 
     dependencies:
-        stylish_bottom_bar: ^0.0.3
+        stylish_bottom_bar: ^0.0.4
         
 ## ⚡ Import
 
@@ -32,7 +32,7 @@ hasNotch:
 barAnimation:
 barStyle:
 unselectedIconColor:
-
+bubbleFillStyle:
 ```
 
 ## Properties
@@ -55,13 +55,19 @@ hasNotch → bool
 barAnimation → BarAnimation
 barStyle → BubbleBarStyle
 unselectedIconColor → Color
-
+bubbleFillStyle → BubbleFillStyle
 ```
 
 ### BarStyle
 ```dart
 BubbleBarStyle.vertical
 BubbleBarStyle.horizotnal
+```
+
+### BubbleFillStyle
+```dart
+BubbleFillStyle.fill
+BubbleFillStyle.outlined
 ```
 
 ### FabLocation
@@ -123,6 +129,7 @@ AnimatedNavigationBar(
     iconSize: 32,
     barAnimation: BarAnimation.fade,
     //barAnimation: BarAnimation.blink,
+    //barAnimation: BarAnimation.transform3D
     opacity: 0.3,
     currentIndex: selected ?? 0,
     onTap: (index) {
@@ -140,6 +147,12 @@ AnimatedNavigationBar(
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/6.gif?raw=true">
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/7.gif?raw=true">
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/8.gif?raw=true">
+
+`BubbleFillStyle.outlined`
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/14.gif?raw=true">
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/15.gif?raw=true">
+
 
 ```dart
 
@@ -178,6 +191,8 @@ BubbleNavigationBar(
     ],
     unselectedIconColor: Colors.
     barStyle: BubbleBarStyle.horizotnal,
+    //bubbleFillStyle: BubbleFillStyle.outlined,
+    //bubbleFillStyle: BubbleFillStyle.fill,
     currentIndex: selected ?? 0,
     onTap: (index) {
         setState(() {
@@ -203,6 +218,12 @@ BubbleNavigationBar(
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/4.gif?raw=true">
 
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/5.gif?raw=true">
+
+`BubbleFillStyle.outlined`
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/12.gif?raw=true">
+
+<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/13.gif?raw=true">
 
 
 
@@ -243,6 +264,8 @@ BubbleNavigationBar(
     ],
     unselectedIconColor: Colors.
     barStyle: BubbleBarStyle.vertical,
+    //bubbleFillStyle: BubbleFillStyle.outlined,
+    //bubbleFillStyle: BubbleFillStyle.fill,
     currentIndex: selected ?? 0,
     onTap: (index) {
         setState(() {
