@@ -1,3 +1,6 @@
+## 0.0.5
+ - Updated Example Code
+
 ## 0.0.4
  - Added `bubbleFillStyle:`
 ```dart

@@ -58,7 +58,7 @@ class BubbleNavigationBar extends StatefulWidget {
 
   ///BarStyle to align icon and title in horizontal or vertical
   ///[BubbleBarStyle.horizotnal]
-  ///[BubbleBarStyle.vertical]\
+  ///[BubbleBarStyle.vertical]
   ///Default value is [BubbleBarStyle.horizotnal]
   final BubbleBarStyle? barStyle;
 

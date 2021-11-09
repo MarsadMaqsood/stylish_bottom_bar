@@ -68,7 +68,8 @@ class AnimatedNavigationBar extends StatefulWidget {
   ///Default is 26.0
   final double? iconSize;
 
-  ///Used to change the selected item
+  ///Used to change the selected item index
+  /// Default is 0
   int? currentIndex;
 
   ///Add padding arround navigation tiles

@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -35,33 +32,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var selected;
 
-  late Timer timer;
   var bgColor;
   var heart = false;
-
-  @override
-  void initState() {
-    super.initState();
-    Random random = new Random();
-
-    // timer = Timer.periodic(
-    //     Duration(seconds: 5),
-    //     (Timer t) => {
-    //           setState(() {
-    //             bgColor = Color.fromARGB(
-    //                 random.nextInt(256),
-    //                 random.nextInt(255),
-    //                 random.nextInt(255),
-    //                 random.nextInt(255));
-    //           }),
-    //         });
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -239,6 +211,78 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       backgroundColor:
           bgColor != null ? bgColor.withOpacity(1.0) : Colors.white,
+    );
+  }
+}
+
+//
+//Example to setup Stylish Bottom Bar with PageView
+class PageExample extends StatefulWidget {
+  const PageExample({Key? key}) : super(key: key);
+
+  @override
+  _PageExampleState createState() => _PageExampleState();
+}
+
+class _PageExampleState extends State<PageExample> {
+  PageController controller = PageController(initialPage: 0);
+  var selected = 0;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        controller: controller,
+        // physics: NeverScrollableScrollPhysics(),
+        children: [
+          //Home(),
+          //Add(),
+          //Profile(),
+        ],
+      ),
+      bottomNavigationBar: AnimatedNavigationBar(
+        fabLocation: StylishBarFabLocation.end,
+        hasNotch: true,
+        items: [
+          AnimatedBarItems(
+              icon: Icon(
+                Icons.home,
+              ),
+              selectedColor: Colors.deepPurple,
+              backgroundColor: Colors.amber,
+              title: Text('Home')),
+          AnimatedBarItems(
+              icon: Icon(
+                Icons.add_circle_outline,
+              ),
+              selectedColor: Colors.green,
+              backgroundColor: Colors.amber,
+              title: Text('Add')),
+          AnimatedBarItems(
+              icon: Icon(
+                Icons.person,
+              ),
+              backgroundColor: Colors.amber,
+              selectedColor: Colors.pinkAccent,
+              title: Text('Profile')),
+        ],
+        iconSize: 32,
+        barAnimation: BarAnimation.transform3D,
+        opacity: 0.3,
+        currentIndex: selected,
+        onTap: (index) {
+          setState(() {
+            selected = index!;
+            controller.jumpToPage(index);
+          });
+        },
+      ),
     );
   }
 }

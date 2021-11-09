@@ -10,7 +10,7 @@ class BubbleBarItem {
   final Color? backgroundColor;
   final BorderRadius badgeRadius;
 
-  ///Use this change border color
+  ///Use this to change border color
   ///default color is [Colors.black]
   final Color? borderColor;
 
