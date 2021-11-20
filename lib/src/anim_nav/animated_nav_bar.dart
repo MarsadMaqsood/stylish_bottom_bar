@@ -1,18 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/enums.dart';
 import 'package:stylish_bottom_bar/src/bubble_nav_bar/cliper.dart';
 import 'dart:math' as math;
 
 import 'animated_nav_items.dart';
 import 'animated_nav_tiles.dart';
-
-enum StylishBarFabLocation { center, end }
-
-enum BarAnimation {
-  fade,
-  blink,
-  transform3D,
-}
 
 const _BottomMargin = 8.0;
 
@@ -21,6 +14,7 @@ class AnimatedNavigationBar extends StatefulWidget {
   AnimatedNavigationBar({
     Key? key,
     required this.items,
+    this.iconStyle,
     this.backgroundColor,
     this.elevation,
     this.currentIndex = 0,
@@ -112,6 +106,15 @@ class AnimatedNavigationBar extends StatefulWidget {
   ///[BarAnimation.blink]
   ///Default value is [BarAnimation.fade]
   final BarAnimation? barAnimation;
+
+  ///Set icon style
+  ///`IconStyle.simple`
+  ///`IconStyle.animated`
+  ///
+  ///[IconStyle.simple] is used to show icons without title and animations
+  ///
+  ///Default is [IconStyle.animated]
+  final IconStyle? iconStyle;
 
   @override
   _AnimatedNavigationBarState createState() => _AnimatedNavigationBarState();
@@ -289,6 +292,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
         opacity: widget.opacity!,
         animation: _animations[i],
         barAnimation: widget.barAnimation!,
+        iconStyle: widget.iconStyle ?? IconStyle.animated,
         onTap: () {
           if (widget.onTap != null) widget.onTap!(i);
         },

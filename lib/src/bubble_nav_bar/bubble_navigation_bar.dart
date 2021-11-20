@@ -6,10 +6,6 @@ import 'bubble_item.dart';
 import 'bubble_navigation_tile.dart';
 import 'cliper.dart';
 
-enum BubbleBarStyle { vertical, horizotnal }
-
-enum BubbleFillStyle { fill, outlined }
-
 const _BottomMargin = 8.0;
 
 // ignore: must_be_immutable

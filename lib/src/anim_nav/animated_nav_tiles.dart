@@ -1,22 +1,26 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'animated_nav_bar.dart';
+import 'package:stylish_bottom_bar/enums.dart';
 import 'animated_nav_items.dart';
 
 class AnimatedNavigationTiles extends StatelessWidget {
-  const AnimatedNavigationTiles(this.items, this.iconSize, this.padding,
-      {Key? key,
-      this.onTap,
-      this.inkEffect,
-      this.inkColor,
-      required this.selected,
-      required this.opacity,
-      this.animation,
-      this.flex,
-      this.indexLabel,
-      required this.barAnimation})
-      : super(key: key);
+  const AnimatedNavigationTiles(
+    this.items,
+    this.iconSize,
+    this.padding, {
+    Key? key,
+    this.onTap,
+    this.inkEffect,
+    this.inkColor,
+    required this.selected,
+    required this.opacity,
+    this.animation,
+    this.flex,
+    this.indexLabel,
+    required this.barAnimation,
+    required this.iconStyle,
+  }) : super(key: key);
 
   final AnimatedBarItems items;
   final double iconSize;
@@ -30,6 +34,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
   final String? indexLabel;
   final Animation<double>? animation;
   final BarAnimation barAnimation;
+  final IconStyle iconStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -69,27 +74,41 @@ class AnimatedNavigationTiles extends StatelessWidget {
 
   _childItems() {
     var label = LabelWidget(
-        animation: animation!, item: items, color: items.selectedColor!);
+        animation: animation!, item: items, color: items.selectedColor);
 
-    return [
-      IconWidget(
-        items: items,
-        selected: selected,
-        iconSize: iconSize,
-        barAnimation: barAnimation,
-      ),
-      AnimatedCrossFade(
-        alignment: Alignment(0, 0),
-        firstChild: label,
-        secondChild: Container(),
-        duration: Duration(milliseconds: 250),
-        sizeCurve: Curves.fastOutSlowIn,
-        firstCurve: Curves.fastOutSlowIn,
-        secondCurve: Curves.fastOutSlowIn.flipped,
-        crossFadeState:
-            selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      ),
-    ];
+    return iconStyle == IconStyle.animated
+        ? [
+            IconWidget(
+              items: items,
+              selected: selected,
+              iconSize: iconSize,
+              barAnimation: barAnimation,
+            ),
+            AnimatedCrossFade(
+              alignment: Alignment(0, 0),
+              firstChild: label,
+              secondChild: Container(),
+              duration: Duration(milliseconds: 250),
+              sizeCurve: Curves.fastOutSlowIn,
+              firstCurve: Curves.fastOutSlowIn,
+              secondCurve: Curves.fastOutSlowIn.flipped,
+              crossFadeState: selected
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+            ),
+          ]
+        : [
+            Container(
+              alignment: Alignment.center,
+              child: IconTheme(
+                data: IconThemeData(
+                  color: selected ? items.selectedColor : items.unSelectedColor,
+                  size: selected ? iconSize + 4 : iconSize,
+                ),
+                child: items.icon!,
+              ),
+            ),
+          ];
   }
 }
 

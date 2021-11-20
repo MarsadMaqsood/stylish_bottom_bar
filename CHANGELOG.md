@@ -1,3 +1,8 @@
+## 0.0.6
+ - Added `iconStyle:`
+ - `IconStyle.animated` and `IconStyle.simple`
+ - to remove animations and icon title use `IconStyle.simple`
+
 ## 0.0.5
  - Updated Example Code
 

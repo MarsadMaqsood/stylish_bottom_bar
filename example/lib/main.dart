@@ -161,8 +161,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: AnimatedNavigationBar(
-        fabLocation: StylishBarFabLocation.end,
-        hasNotch: true,
         items: [
           AnimatedBarItems(
               icon: Icon(
@@ -188,6 +186,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         iconSize: 32,
         barAnimation: BarAnimation.transform3D,
+        iconStyle: IconStyle.animated,
+        // iconStyle: IconStyle.simple,
+        fabLocation: StylishBarFabLocation.end,
+        hasNotch: true,
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {

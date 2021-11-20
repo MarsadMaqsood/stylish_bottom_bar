@@ -12,6 +12,6 @@ class AnimatedBarItems {
   final Widget? icon;
   final Widget? title;
   final Color? backgroundColor;
-  final Color? selectedColor;
-  final Color? unSelectedColor;
+  final Color selectedColor;
+  final Color unSelectedColor;
 }

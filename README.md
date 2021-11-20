@@ -6,7 +6,7 @@ A collection of stylish bottom navigation bar like animated bottom bar and bubbl
 ## ⭐  Installing
 
     dependencies:
-        stylish_bottom_bar: ^0.0.5
+        stylish_bottom_bar: ^0.0.6
         
 ## ⚡ Import
 
@@ -33,6 +33,7 @@ barAnimation:
 barStyle:
 unselectedIconColor:
 bubbleFillStyle:
+iconStyle:
 ```
 
 ## Properties
@@ -56,6 +57,7 @@ barAnimation → BarAnimation
 barStyle → BubbleBarStyle
 unselectedIconColor → Color
 bubbleFillStyle → BubbleFillStyle
+iconStyle → IconStyle
 ```
 
 ### BarStyle
@@ -81,6 +83,12 @@ StylishBarFabLocation.end
 BarAnimation.fade
 BarAnimation.blink
 BarAnimation.transform3D
+```
+
+### IconStyle
+```dart
+IconStyle.simple
+IconStyle.animated
 ```
 
 ### Event
@@ -127,6 +135,8 @@ AnimatedNavigationBar(
     fabLocation: StylishBarFabLocation.end,
     hasNotch: false,
     iconSize: 32,
+    iconStyle: IconStyle.animated,
+    //iconStyle: IconStyle.simple,
     barAnimation: BarAnimation.fade,
     //barAnimation: BarAnimation.blink,
     //barAnimation: BarAnimation.transform3D

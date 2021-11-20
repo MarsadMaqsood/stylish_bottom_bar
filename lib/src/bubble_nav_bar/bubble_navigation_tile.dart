@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/enums.dart';
 import 'bubble_item.dart';
-import 'bubble_navigation_bar.dart';
 import 'icon_widget.dart';
 import 'label_widget.dart';
 
