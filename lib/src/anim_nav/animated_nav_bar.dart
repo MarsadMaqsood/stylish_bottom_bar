@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/enums.dart';
+import 'package:stylish_bottom_bar/src/helpers/enums.dart';
 import 'package:stylish_bottom_bar/src/bubble_nav_bar/cliper.dart';
+import 'package:stylish_bottom_bar/src/helpers/constant.dart';
+import 'package:stylish_bottom_bar/src/widgets/widgets.dart';
 import 'dart:math' as math;
 
-import 'animated_nav_items.dart';
+import '../model/animated_nav_items.dart';
 import 'animated_nav_tiles.dart';
-
-const _BottomMargin = 8.0;
 
 // ignore: must_be_immutable
 class AnimatedNavigationBar extends StatefulWidget {
@@ -211,8 +211,9 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
 
   @override
   Widget build(BuildContext context) {
-    final double additionalBottomPadding =
-        math.max(MediaQuery.of(context).padding.bottom - _BottomMargin, 0.0);
+    double additionalBottomPadding =
+        math.max(MediaQuery.of(context).padding.bottom - BottomMargin, 0.0);
+
     return Semantics(
       explicitChildNodes: true,
       child: widget.hasNotch
@@ -224,14 +225,16 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
                 geometry: _geometryListenable!,
                 notchMargin: 8,
               ),
-              child: _innerWidget(additionalBottomPadding),
+              child: innerWidget(context, additionalBottomPadding + 2,
+                  widget.fabLocation, childs(), widget.barAnimation!),
             )
           : Material(
               elevation: widget.elevation ?? 8.0,
               color: widget.backgroundColor != null
                   ? widget.backgroundColor
                   : Colors.white,
-              child: _innerWidget(additionalBottomPadding),
+              child: innerWidget(context, additionalBottomPadding + 2,
+                  widget.fabLocation, childs(), widget.barAnimation!),
               borderRadius: widget.borderRadius != null
                   ? widget.borderRadius
                   : BorderRadius.zero,
@@ -239,44 +242,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
     );
   }
 
-  Widget _innerWidget(double additionalBottomPadding) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 10,
-      ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-            minHeight:
-                kBottomNavigationBarHeight + additionalBottomPadding + 2),
-        child: Material(
-          type: MaterialType.transparency,
-          child: Padding(
-            padding: EdgeInsets.only(
-                bottom: additionalBottomPadding,
-                right:
-                    widget.fabLocation == StylishBarFabLocation.end ? 72 : 0),
-            child: MediaQuery.removePadding(
-              context: context,
-              removeBottom: true,
-              child: _container(_childs()),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _container(List<Widget> childs) {
-    return DefaultTextStyle.merge(
-      overflow: TextOverflow.ellipsis,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: childs,
-      ),
-    );
-  }
-
-  List<Widget> _childs() {
+  List<Widget> childs() {
     final List<Widget> list = [];
     final MaterialLocalizations? localizations =
         MaterialLocalizations.of(context);

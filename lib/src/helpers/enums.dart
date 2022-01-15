@@ -4,6 +4,7 @@ enum BarAnimation {
   fade,
   blink,
   transform3D,
+  liquid,
 }
 
 enum IconStyle {

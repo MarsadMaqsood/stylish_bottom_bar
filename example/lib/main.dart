@@ -185,10 +185,10 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Profile')),
         ],
         iconSize: 32,
-        barAnimation: BarAnimation.transform3D,
+        barAnimation: BarAnimation.liquid,
         iconStyle: IconStyle.animated,
         // iconStyle: IconStyle.simple,
-        fabLocation: StylishBarFabLocation.end,
+        // fabLocation: StylishBarFabLocation.end,
         hasNotch: true,
         opacity: 0.3,
         currentIndex: selected ?? 0,
@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
             heart = !heart;
           });
         },
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.yellow,
         child: Icon(
           heart ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
           color: Colors.red,

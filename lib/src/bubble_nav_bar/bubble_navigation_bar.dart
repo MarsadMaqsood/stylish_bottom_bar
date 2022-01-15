@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/src/helpers/constant.dart';
+import 'package:stylish_bottom_bar/src/widgets/widgets.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'dart:math' as math;
-import 'bubble_item.dart';
 import 'bubble_navigation_tile.dart';
 import 'cliper.dart';
-
-const _BottomMargin = 8.0;
 
 // ignore: must_be_immutable
 class BubbleNavigationBar extends StatefulWidget {
@@ -261,40 +260,12 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
     );
   }
 
-  Widget _innerWidgets(double additionalBottomPadding) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 10,
-      ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-            minHeight: kBottomNavigationBarHeight +
-                additionalBottomPadding +
-                4), //increased to 4 from 2
-        child: Material(
-          type: MaterialType.transparency,
-          child: Padding(
-            padding: EdgeInsets.only(
-                bottom: additionalBottomPadding,
-                right:
-                    widget.fabLocation == StylishBarFabLocation.end ? 72 : 0),
-            child: MediaQuery.removePadding(
-              context: context,
-              removeBottom: true,
-              child: _container(_barTiles()),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasDirectionality(context));
     assert(debugCheckHasMaterialLocalizations(context));
     final double additionalBottomPadding =
-        math.max(MediaQuery.of(context).padding.bottom - _BottomMargin, 0.0);
+        math.max(MediaQuery.of(context).padding.bottom - BottomMargin, 0.0);
     return Semantics(
         explicitChildNodes: true,
         child: widget.hasNotch
@@ -306,14 +277,16 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
                   geometry: _geometryListenable!,
                   notchMargin: 8,
                 ),
-                child: _innerWidgets(additionalBottomPadding),
+                child: innerWidget(context, additionalBottomPadding + 4,
+                    widget.fabLocation, _barTiles()),
               )
             : Material(
                 elevation: widget.elevation ?? 8.0,
                 color: widget.backgroundColor != null
                     ? widget.backgroundColor
                     : Colors.white,
-                child: _innerWidgets(additionalBottomPadding),
+                child: innerWidget(context, additionalBottomPadding + 4,
+                    widget.fabLocation, _barTiles()),
                 borderRadius: widget.borderRadius != null
                     ? widget.borderRadius
                     : BorderRadius.zero,

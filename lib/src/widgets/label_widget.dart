@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'bubble_item.dart';
+import '../model/bubble_item.dart';
 
 const activeFontSize = 14.0;
 

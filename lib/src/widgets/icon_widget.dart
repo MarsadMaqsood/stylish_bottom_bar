@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/src/badge/badge.dart';
 
-import 'bubble_item.dart';
+import '../model/bubble_item.dart';
 
 class IconWidget extends StatelessWidget {
   const IconWidget({

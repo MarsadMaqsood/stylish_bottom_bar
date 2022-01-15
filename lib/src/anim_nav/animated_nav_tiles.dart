@@ -1,8 +1,8 @@
-import 'dart:math';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:stylish_bottom_bar/enums.dart';
-import 'animated_nav_items.dart';
+import 'package:stylish_bottom_bar/src/helpers/constant.dart';
+import 'package:stylish_bottom_bar/src/helpers/enums.dart';
+import '../model/animated_nav_items.dart';
 
 class AnimatedNavigationTiles extends StatelessWidget {
   const AnimatedNavigationTiles(
@@ -46,7 +46,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: this.padding,
+              padding: padding,
               child: InkWell(
                 onTap: onTap,
                 splashColor: inkEffect! ? inkColor : Colors.transparent,
@@ -60,9 +60,13 @@ class AnimatedNavigationTiles extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: selected
-                          ? MainAxisAlignment.spaceEvenly
+                          ? barAnimation == BarAnimation.liquid
+                              ? MainAxisAlignment.spaceBetween
+                              : MainAxisAlignment.spaceEvenly
                           : MainAxisAlignment.center,
-                      children: _childItems(),
+                      children: barAnimation == BarAnimation.liquid
+                          ? _liquidItems()
+                          : _childItems(),
                     )),
               ),
             ),
@@ -70,6 +74,40 @@ class AnimatedNavigationTiles extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _liquidItems() {
+    var label = LabelWidget(
+        animation: animation!, item: items, color: items.selectedColor);
+    return [
+      Spacer(),
+      AnimatedCrossFade(
+        firstChild: label,
+        secondChild: Center(child: items.icon!),
+        duration: Duration(milliseconds: 600),
+        sizeCurve: Curves.fastOutSlowIn,
+        firstCurve: Curves.fastOutSlowIn,
+        secondCurve: Curves.fastOutSlowIn.flipped,
+        crossFadeState:
+            selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      ),
+      Spacer(),
+      if (selected)
+        AnimatedPositioned(
+          child: Container(
+            height: 20,
+            width: 22,
+            decoration: BoxDecoration(
+              color: items.selectedColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.elliptical(12, 20),
+                topRight: Radius.elliptical(12, 20),
+              ),
+            ),
+          ),
+          duration: Duration(milliseconds: 300),
+        ),
+    ];
   }
 
   _childItems() {
@@ -112,8 +150,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 }
 
-const _activeFontSize = 14.0;
-
 class LabelWidget extends StatelessWidget {
   LabelWidget({
     Key? key,
@@ -137,7 +173,7 @@ class LabelWidget extends StatelessWidget {
           opacity: animation,
           child: DefaultTextStyle.merge(
             style: TextStyle(
-              fontSize: _activeFontSize,
+              fontSize: ActiveFontSize,
               fontWeight: FontWeight.w600,
               color: color,
             ),
@@ -225,65 +261,20 @@ class _IconWidgetState extends State<IconWidget>
               ? widget.barAnimation == BarAnimation.transform3D
                   ? widget.items.selectedColor
                   : animationColor.value
-              : Colors.grey,
+              : widget.items.unSelectedColor,
           size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
         ),
-        child:
-            widget.barAnimation == BarAnimation.transform3D && widget.selected
+        child: widget.selected
+            ? widget.barAnimation == BarAnimation.transform3D
                 ? Transform(
                     transform: Matrix4.identity()
-                      ..setEntry(3, 0, 0.003)
-                      ..rotateY(0),
+                      ..setEntry(2, 3, 0.003) //..setEntry(3, 0, 0.003)
+                      ..rotateY(0), //..rotateY(0),
                     child: widget.items.icon!,
                   )
-                : widget.items.icon!,
+                : widget.items.icon!
+            : widget.items.icon!,
       ),
     );
-  }
-}
-
-class LiquidPainter extends CustomPainter {
-  static const _pi2 = 2 * pi;
-  final GlobalKey textKey;
-  final double waveValue;
-  final double loadValue;
-  final double boxHeight;
-  final Color waveColor;
-
-  LiquidPainter({
-    required this.textKey,
-    required this.waveValue,
-    required this.loadValue,
-    required this.boxHeight,
-    required this.waveColor,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final RenderBox? textBox =
-        textKey.currentContext!.findRenderObject() as RenderBox;
-    if (textBox == null) return;
-    final textHeight = textBox.size.height;
-    final baseHeight =
-        (boxHeight / 2) + (textHeight / 2) - (loadValue * textHeight);
-
-    final width = size.width;
-    final height = size.height;
-    final path = Path();
-    path.moveTo(0.0, baseHeight);
-    for (var i = 0.0; i < width; i++) {
-      path.lineTo(i, baseHeight + sin(_pi2 * (i / width + waveValue)) * 8);
-    }
-
-    path.lineTo(width, height);
-    path.lineTo(0.0, height);
-    path.close();
-    final wavePaint = Paint()..color = waveColor;
-    canvas.drawPath(path, wavePaint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
   }
 }
