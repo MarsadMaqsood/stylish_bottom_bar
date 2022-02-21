@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/src/helpers/constant.dart';
 import 'package:stylish_bottom_bar/src/helpers/enums.dart';
@@ -93,19 +92,16 @@ class AnimatedNavigationTiles extends StatelessWidget {
       ),
       Spacer(),
       if (selected)
-        AnimatedPositioned(
-          child: Container(
-            height: 20,
-            width: 22,
-            decoration: BoxDecoration(
-              color: items.selectedColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.elliptical(12, 20),
-                topRight: Radius.elliptical(12, 20),
-              ),
+        Container(
+          height: 20,
+          width: 22,
+          decoration: BoxDecoration(
+            color: items.selectedColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.elliptical(12, 20),
+              topRight: Radius.elliptical(12, 20),
             ),
           ),
-          duration: Duration(milliseconds: 300),
         ),
     ];
   }

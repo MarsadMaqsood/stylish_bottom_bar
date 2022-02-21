@@ -38,16 +38,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true, //to make floating action button notch transparent
       body: AnimatedContainer(
         duration: Duration(milliseconds: 2000),
-        color: bgColor ?? Colors.white,
+        color: bgColor ?? Colors.red.withOpacity(0.5),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 30.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                BubbleNavigationBar(
+                StylishBottomBar(
                   items: [
                     BubbleBarItem(
                       backgroundColor: Colors.deepPurple,
@@ -89,7 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Profile",
                       ),
                     ),
+                    // AnimatedBarItems(icon: Icon(Icons.abc), title: Text('ss')),
                   ],
+
                   // inkColor: Colors.yellow,
                   barStyle: BubbleBarStyle.vertical,
                   currentIndex: selected ?? 0,
@@ -160,36 +163,42 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: AnimatedNavigationBar(
+      bottomNavigationBar: BubbleNavigationBar(
         items: [
-          AnimatedBarItems(
-              icon: Icon(
-                Icons.home,
-              ),
-              selectedColor: Colors.deepPurple,
-              backgroundColor: Colors.amber,
-              title: Text('Home')),
-          AnimatedBarItems(
-              icon: Icon(
-                Icons.add_circle_outline,
-              ),
-              selectedColor: Colors.green,
-              backgroundColor: Colors.amber,
-              title: Text('Add')),
-          AnimatedBarItems(
-              icon: Icon(
-                Icons.person,
-              ),
-              backgroundColor: Colors.amber,
-              selectedColor: Colors.pinkAccent,
-              title: Text('Profile')),
+          // AnimatedBarItems(
+          //     icon: Icon(
+          //       Icons.home,
+          //     ),
+          //     selectedColor: Colors.deepPurple,
+          //     backgroundColor: Colors.amber,
+          //     title: Text('Home')),
+          // AnimatedBarItems(
+          //     icon: Icon(
+          //       Icons.add_circle_outline,
+          //     ),
+          //     selectedColor: Colors.green,
+          //     backgroundColor: Colors.amber,
+          //     title: Text('Add')),
+          // AnimatedBarItems(
+          //     icon: Icon(
+          //       Icons.person,
+          //     ),
+          //     backgroundColor: Colors.amber,
+          //     selectedColor: Colors.pinkAccent,
+          //     title: Text('Profile')),
+
+          BubbleBarItem(icon: Icon(Icons.abc), title: Text('a')),
+          BubbleBarItem(icon: Icon(Icons.safety_divider), title: Text('b')),
+          BubbleBarItem(icon: Icon(Icons.cabin), title: Text('c')),
         ],
         iconSize: 32,
-        barAnimation: BarAnimation.liquid,
-        iconStyle: IconStyle.animated,
+        // barAnimation: BarAnimation.liquid,
+        // iconStyle: IconStyle.animated,
         // iconStyle: IconStyle.simple,
         // fabLocation: StylishBarFabLocation.end,
         hasNotch: true,
+
+        fabLocation: StylishBarFabLocation.center,
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {
@@ -204,15 +213,15 @@ class _MyHomePageState extends State<MyHomePage> {
             heart = !heart;
           });
         },
-        backgroundColor: Colors.yellow,
+        backgroundColor: Colors.white,
         child: Icon(
           heart ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      backgroundColor:
-          bgColor != null ? bgColor.withOpacity(1.0) : Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // backgroundColor:
+      //     bgColor != null ? bgColor.withOpacity(1.0) : Colors.white,
     );
   }
 }

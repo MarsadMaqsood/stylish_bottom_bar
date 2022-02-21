@@ -250,22 +250,24 @@ class _BubbleNavigationBarState extends State<BubbleNavigationBar>
     return children;
   }
 
-  Widget _container(List<Widget> tiles) {
-    return DefaultTextStyle.merge(
-      overflow: TextOverflow.ellipsis,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: tiles,
-      ),
-    );
-  }
+  // Widget _container(List<Widget> tiles) {
+  //   return DefaultTextStyle.merge(
+  //     overflow: TextOverflow.ellipsis,
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: tiles,
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasDirectionality(context));
     assert(debugCheckHasMaterialLocalizations(context));
+
     final double additionalBottomPadding =
         math.max(MediaQuery.of(context).padding.bottom - BottomMargin, 0.0);
+
     return Semantics(
         explicitChildNodes: true,
         child: widget.hasNotch
