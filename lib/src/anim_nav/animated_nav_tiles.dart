@@ -91,8 +91,21 @@ class AnimatedNavigationTiles extends StatelessWidget {
             selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       ),
       Spacer(),
-      if (selected)
-        Container(
+      // if (selected)
+      // Container(
+      //   height: 20,
+      //   width: 22,
+      //   decoration: BoxDecoration(
+      //     color: items.selectedColor,
+      //     borderRadius: BorderRadius.only(
+      //       topLeft: Radius.elliptical(12, 20),
+      //       topRight: Radius.elliptical(12, 20),
+      //     ),
+      //   ),
+      // ),
+      AnimatedCrossFade(
+        firstChild: Container(),
+        secondChild: Container(
           height: 20,
           width: 22,
           decoration: BoxDecoration(
@@ -103,6 +116,13 @@ class AnimatedNavigationTiles extends StatelessWidget {
             ),
           ),
         ),
+        duration: Duration(milliseconds: 300),
+        sizeCurve: Curves.linear,
+        firstCurve: Curves.fastOutSlowIn,
+        secondCurve: Curves.fastOutSlowIn.flipped,
+        crossFadeState:
+            selected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      ),
     ];
   }
 

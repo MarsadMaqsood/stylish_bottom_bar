@@ -90,7 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Profile",
                       ),
                     ),
-                    // AnimatedBarItems(icon: Icon(Icons.abc), title: Text('ss')),
                   ],
 
                   // inkColor: Colors.yellow,
@@ -163,42 +162,39 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: BubbleNavigationBar(
+      bottomNavigationBar: StylishBottomBar(
         items: [
-          // AnimatedBarItems(
-          //     icon: Icon(
-          //       Icons.home,
-          //     ),
-          //     selectedColor: Colors.deepPurple,
-          //     backgroundColor: Colors.amber,
-          //     title: Text('Home')),
-          // AnimatedBarItems(
-          //     icon: Icon(
-          //       Icons.add_circle_outline,
-          //     ),
-          //     selectedColor: Colors.green,
-          //     backgroundColor: Colors.amber,
-          //     title: Text('Add')),
-          // AnimatedBarItems(
-          //     icon: Icon(
-          //       Icons.person,
-          //     ),
-          //     backgroundColor: Colors.amber,
-          //     selectedColor: Colors.pinkAccent,
-          //     title: Text('Profile')),
-
-          BubbleBarItem(icon: Icon(Icons.abc), title: Text('a')),
-          BubbleBarItem(icon: Icon(Icons.safety_divider), title: Text('b')),
-          BubbleBarItem(icon: Icon(Icons.cabin), title: Text('c')),
+          AnimatedBarItems(
+              icon: Icon(
+                Icons.home,
+              ),
+              selectedColor: Colors.deepPurple,
+              backgroundColor: Colors.amber,
+              title: Text('Home')),
+          AnimatedBarItems(
+              icon: Icon(
+                Icons.add_circle_outline,
+              ),
+              selectedColor: Colors.green,
+              backgroundColor: Colors.amber,
+              title: Text('Add')),
+          AnimatedBarItems(
+              icon: Icon(
+                Icons.person,
+              ),
+              backgroundColor: Colors.amber,
+              selectedColor: Colors.pinkAccent,
+              title: Text('Profile')),
+          // BubbleBarItem(icon: Icon(Icons.abc), title: Text('a')),
+          // BubbleBarItem(icon: Icon(Icons.safety_divider), title: Text('b')),
+          // BubbleBarItem(icon: Icon(Icons.cabin), title: Text('c')),
         ],
         iconSize: 32,
-        // barAnimation: BarAnimation.liquid,
+        barAnimation: BarAnimation.liquid,
         // iconStyle: IconStyle.animated,
         // iconStyle: IconStyle.simple,
-        // fabLocation: StylishBarFabLocation.end,
         hasNotch: true,
-
-        fabLocation: StylishBarFabLocation.center,
+        fabLocation: StylishBarFabLocation.end,
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {
@@ -219,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       // backgroundColor:
       //     bgColor != null ? bgColor.withOpacity(1.0) : Colors.white,
     );
