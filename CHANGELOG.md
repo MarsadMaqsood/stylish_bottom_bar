@@ -1,3 +1,8 @@
+## 0.0.7
+- Added `BarAnimation.liquid`
+- Merged `AnimatedNavigationBar` and `BubbleNavigationBar` into `StylishBottomBar` [See how to migrate](https://github.com/MarsadMaqsood/stylish_bottom_bar#migrate)
+- Fixed some minor performance issues
+
 ## 0.0.6
  - Added `iconStyle:`
  - `IconStyle.animated` and `IconStyle.simple`

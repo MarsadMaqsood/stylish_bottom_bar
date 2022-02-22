@@ -3,10 +3,18 @@
 
 A collection of stylish bottom navigation bar like animated bottom bar and bubble bottom bar for flutter.
 
-## ⭐  Installing
+
+## Table of contents
+- [Installing](#installing)
+- [How To Use](#how_to_use)
+- [Examples](#examples)
+- [Migrate to 0.0.7](#migrate)
+
+
+## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^0.0.6
+        stylish_bottom_bar: ^0.0.7
         
 ## ⚡ Import
 
@@ -14,7 +22,7 @@ A collection of stylish bottom navigation bar like animated bottom bar and bubbl
 import 'package:stylish_bottom_bar/stylish_nav.dart';
 ```
 
-## 📙 How To Use
+## 📙 How To Use <a name="how_to_use"></a>
 ```dart
 items:
 backgroundColor:
@@ -41,6 +49,7 @@ iconStyle:
 ```dart
 items → List<AnimatedBarItems>
 items → List<BubbleBarItem>
+items → List<dynamic>
 backgroundColor → Color
 elevation → double
 currentIndex → int
@@ -83,6 +92,7 @@ StylishBarFabLocation.end
 BarAnimation.fade
 BarAnimation.blink
 BarAnimation.transform3D
+BarAnimation.liquid
 ```
 
 ### IconStyle
@@ -98,7 +108,7 @@ onTap: (index){
 }
 ```
 
-## Examples
+## Examples <a name="examples"></a>
 
 **AnimatedNavigationBar**
 
@@ -290,3 +300,66 @@ BubbleNavigationBar(
 ),
 
 ```
+
+## Migrate to 0.0.7 <a name="migrate"></a>
+
+`AnimatedNavigationBar` and `BubbleNavigationBar` are merged into `StylishBottomBar`.
+From version **0.0.7** `StylishBottomBar` will be used to access the both bubble nav bar and animated nav bar.
+
+`List<BubbleBarItem> items` and `List<AnimatedBarItems> items` is simplified into `List<dynamic> items`. You can assign `AnimatedBarItems` and `BubbleBarItem` to `items:` but not the both in same `items:`.
+
+```dart
+StylishBottomBar(
+    items: [
+        AnimatedBarItems(
+            icon: Icon(
+                Icons.home,
+            ),
+            selectedColor: Colors.deepPurple,
+            backgroundColor: Colors.amber,
+            title: Text('Home')),
+        AnimatedBarItems(
+            icon: Icon(
+                Icons.add_circle_outline,
+            ),
+            selectedColor: Colors.green,
+            backgroundColor: Colors.amber,
+          title: Text('Add')),
+      AnimatedBarItems(
+          icon: Icon(
+            Icons.person,
+          ),
+          backgroundColor: Colors.amber,
+          selectedColor: Colors.pinkAccent,
+          title: Text('Profile')),
+    // BubbleBarItem(icon: Icon(Icons.home), title: Text('Home')),
+    // BubbleBarItem(icon: Icon(Icons.add_circle_outline), title: Text('Add')),
+    // BubbleBarItem(icon: Icon(Icons.person), title: Text('Profile')),
+    
+    ],
+    
+    iconSize: 32,
+    barAnimation: BarAnimation.liquid,
+    // iconStyle: IconStyle.animated,
+    // iconStyle: IconStyle.simple,
+    hasNotch: true,
+    fabLocation: StylishBarFabLocation.end,
+    opacity: 0.3,
+    currentIndex: selected ?? 0,
+    
+    //Bubble bar specific style properties
+    //unselectedIconColor: Colors.grey,
+    //barStyle: BubbleBarStyle.horizotnal,
+    //bubbleFillStyle: BubbleFillStyle.fill,
+    
+    onTap: (index) {
+        setState(() {
+            selected = index;
+        });
+    },
+    
+  );
+
+```
+
+
