@@ -57,6 +57,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                 child: Container(
                     height: iconSize <= 26 ? 48 : 48 + (iconSize - 26),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: selected
                           ? barAnimation == BarAnimation.liquid
@@ -284,7 +285,8 @@ class _IconWidgetState extends State<IconWidget>
             ? widget.barAnimation == BarAnimation.transform3D
                 ? Transform(
                     transform: Matrix4.identity()
-                      ..setEntry(2, 3, 0.003) //..setEntry(3, 0, 0.003)
+                      // ..setEntry(2, 3, 0.003)
+                      ..setEntry(3, 0, 0.002)
                       ..rotateY(0), //..rotateY(0),
                     child: widget.items.icon!,
                   )
