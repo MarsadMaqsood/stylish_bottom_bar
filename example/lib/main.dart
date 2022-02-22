@@ -190,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // BubbleBarItem(icon: Icon(Icons.cabin), title: Text('c')),
         ],
         iconSize: 32,
-        barAnimation: BarAnimation.transform3D,
+        barAnimation: BarAnimation.liquid,
         // iconStyle: IconStyle.animated,
         // iconStyle: IconStyle.simple,
         hasNotch: true,

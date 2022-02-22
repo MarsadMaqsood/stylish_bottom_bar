@@ -83,22 +83,80 @@ class StylishBottomBar extends StatefulWidget {
   //==============//
   //==============//
 
+  ///Add navigation bar items
+  ///[AnimatedBarItems] and [BubbleBarItem]
   final List<dynamic> items;
+
+  ///Change animated navigation bar background color
   final Color? backgroundColor;
+
+  ///Add elevation to bottom navigation bar
+  ///
+  ///Default value is 8.0
   final double? elevation;
 
+  ///Change Icon size
+  ///Default is 26.0
   final double? iconSize;
+
+  ///Used to change the selected item index
+  /// Default is 0
   int? currentIndex;
+
+  ///Add padding arround navigation tiles
+  ///Default padding is [EdgeInsets.zero]
   final EdgeInsets? padding;
+
+  ///Enable ink effect to bubble navigation bar item
+  ///Default value is false
   final bool? inkEffect;
+
+  ///Add notch effect to floating action button
   final bool hasNotch;
 
+  ///Change ink color
+  ///Default color is [Colors.grey]
   final Color? inkColor;
+
+  ///Function to return current selected item index
+  ///
+  ///```dart
+  /// onTap: (index){
+  ///
+  /// },
+  ///
+  ///```
   final ValueChanged<int?>? onTap;
+
+  ///Change navigation bar items background color opacity
   final double? opacity;
+
+  ///Change navigation bar border radius
   final BorderRadius? borderRadius;
+
+  ///Adjust bubble navigation items according to the fab location
+  ///
+  ///You can change Fab Location [StylishBarFabLocation.center]
+  ///
+  ///and [StylishBarFabLocation.end]
   final StylishBarFabLocation? fabLocation;
+
+  ///BarAnimation to animate items when current index changes
+  ///[BarAnimation.fade]
+  ///[BarAnimation.blink]
+  ///[BarAnimation.transform3D]
+  ///[BarAnimation.liquid]
+  ///
+  ///Default value is [BarAnimation.fade]
   final BarAnimation? barAnimation;
+
+  ///Set icon style
+  ///`IconStyle.simple`
+  ///`IconStyle.animated`
+  ///
+  ///[IconStyle.simple] is used to show icons without title and animations
+  ///
+  ///Default is [IconStyle.animated]
   final IconStyle? iconStyle;
 
   @override
