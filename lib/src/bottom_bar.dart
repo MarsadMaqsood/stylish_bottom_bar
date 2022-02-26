@@ -150,7 +150,7 @@ class StylishBottomBar extends StatefulWidget {
   ///Default value is [BarAnimation.fade]
   final BarAnimation? barAnimation;
 
-  ///Set icon style
+  ///Change icon style
   ///`IconStyle.simple`
   ///`IconStyle.animated`
   ///
