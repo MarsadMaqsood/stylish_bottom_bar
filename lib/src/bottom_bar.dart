@@ -108,7 +108,7 @@ class StylishBottomBar extends StatefulWidget {
   final EdgeInsets? padding;
 
   ///Enable ink effect to bubble navigation bar item
-  ///Default value is false
+  ///Default value is `false`
   final bool? inkEffect;
 
   ///Add notch effect to floating action button

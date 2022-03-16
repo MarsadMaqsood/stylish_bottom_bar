@@ -5,10 +5,10 @@ enum BarAnimation {
   blink,
   transform3D,
 
-  ///Add effect where icon hides when clicked and a rectangular
-  /// shape with circled radius shape is appear with title
+  ///Adds liquid type effect on icon hides when clicked
+  /// and a rectangular shape with circle radius is appeared with the title
   ///
-  ///This animation is not yet fully customized
+  /// This animation is not yet fully customized
   liquid,
 }
 
