@@ -1,3 +1,6 @@
+## 0.0.8
+- Added `selectedIcon` in `AnimatedBarItems`.
+
 ## 0.0.7
 - Added `BarAnimation.liquid`
 - Merged `AnimatedNavigationBar` and `BubbleNavigationBar` into `StylishBottomBar` [See how to migrate](https://github.com/MarsadMaqsood/stylish_bottom_bar#migrate)

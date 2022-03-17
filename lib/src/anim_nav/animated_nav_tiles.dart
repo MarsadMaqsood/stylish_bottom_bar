@@ -160,7 +160,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   color: selected ? items.selectedColor : items.unSelectedColor,
                   size: selected ? iconSize + 4 : iconSize,
                 ),
-                child: items.icon!,
+                child: selected && items.selectedIcon != null
+                    ? items.selectedIcon!
+                    : items.icon!,
               ),
             ),
           ];

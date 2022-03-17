@@ -166,18 +166,18 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           AnimatedBarItems(
               icon: Icon(
-                Icons.home,
+                Icons.house_outlined,
               ),
+              selectedIcon: Icon(Icons.house_rounded),
               selectedColor: Colors.deepPurple,
               backgroundColor: Colors.amber,
               title: Text('Home')),
           AnimatedBarItems(
-              icon: Icon(
-                Icons.add_circle_outline,
-              ),
+              icon: Icon(Icons.map_outlined),
+              selectedIcon: Icon(Icons.map),
               selectedColor: Colors.green,
               backgroundColor: Colors.amber,
-              title: Text('Add')),
+              title: Text('Map')),
           AnimatedBarItems(
               icon: Icon(
                 Icons.person,
@@ -190,9 +190,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // BubbleBarItem(icon: Icon(Icons.cabin), title: Text('c')),
         ],
         iconSize: 32,
-        barAnimation: BarAnimation.liquid,
+        // barAnimation: BarAnimation.liquid,
         // iconStyle: IconStyle.animated,
-        // iconStyle: IconStyle.simple,
+        iconStyle: IconStyle.simple,
         hasNotch: true,
         fabLocation: StylishBarFabLocation.end,
         opacity: 0.3,

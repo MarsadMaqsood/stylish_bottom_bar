@@ -4,12 +4,14 @@ class AnimatedBarItems {
   AnimatedBarItems({
     required this.icon,
     required this.title,
+    this.selectedIcon,
     this.backgroundColor = Colors.black,
     this.unSelectedColor = Colors.grey,
     this.selectedColor = Colors.green,
   });
 
   final Widget? icon;
+  final Widget? selectedIcon;
   final Widget? title;
   final Color? backgroundColor;
   final Color selectedColor;
