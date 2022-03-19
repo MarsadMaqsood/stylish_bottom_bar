@@ -65,7 +65,7 @@ class StylishBottomBar extends StatefulWidget {
   ///Only Availble for Bubble Bottom Bar
   final Color? unselectedIconColor;
 
-  ///Use this to customize bubble background fill style
+  ///Use this to customize the bubble background fill style
   ///You can use border with [BubbleFillStyle.outlined]
   ///and also fill the background with color using [BubbleFillStyle.fill]
   ///
