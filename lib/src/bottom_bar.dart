@@ -81,7 +81,6 @@ class StylishBottomBar extends StatefulWidget {
   final BubbleBarStyle? barStyle;
 
   //==============//
-  //==============//
 
   ///Add navigation bar items
   ///[AnimatedBarItems] and [BubbleBarItem]
