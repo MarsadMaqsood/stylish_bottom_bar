@@ -49,6 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 StylishBottomBar(
+                  fabLocation: StylishBarFabLocation.center,
+
                   items: [
                     BubbleBarItem(
                       backgroundColor: Colors.deepPurple,
@@ -104,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   iconSize: 38,
                   inkEffect: true,
                   opacity: 0.2,
-                  hasNotch: false,
+                  hasNotch: true,
                   bubbleFillStyle: BubbleFillStyle.fill,
                   padding: EdgeInsets.all(4),
                 ),
@@ -185,6 +187,14 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: Colors.amber,
               selectedColor: Colors.pinkAccent,
               title: Text('Profile')),
+          // AnimatedBarItems(
+          //     icon: Icon(
+          //       Icons.person,
+          //     ),
+          //     backgroundColor: Colors.amber,
+          //     selectedColor: Colors.pinkAccent,
+          //     title: Text('Profile')),
+
           // BubbleBarItem(icon: Icon(Icons.abc), title: Text('Abc')),
           // BubbleBarItem(icon: Icon(Icons.safety_divider), title: Text('Safety')),
           // BubbleBarItem(icon: Icon(Icons.cabin), title: Text('Cabin')),
@@ -195,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         iconStyle: IconStyle.Default,
         hasNotch: true,
-        fabLocation: StylishBarFabLocation.end,
+        fabLocation: StylishBarFabLocation.center,
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {
@@ -216,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // backgroundColor:
       //     bgColor != null ? bgColor.withOpacity(1.0) : Colors.white,
     );
@@ -255,7 +265,7 @@ class _PageExampleState extends State<PageExample> {
         ],
       ),
       bottomNavigationBar: AnimatedNavigationBar(
-        fabLocation: StylishBarFabLocation.end,
+        fabLocation: StylishBarFabLocation.center,
         hasNotch: true,
         items: [
           AnimatedBarItems(

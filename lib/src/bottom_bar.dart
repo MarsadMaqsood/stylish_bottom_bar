@@ -235,14 +235,14 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       _controllers[widget.currentIndex!].forward();
 
       if (widget.fabLocation == StylishBarFabLocation.center) {
-        dynamic _currentItem = widget.items[oldWidget.currentIndex!];
-        dynamic _nextItem = widget.items[widget.currentIndex!]!;
+        // dynamic _currentItem = widget.items[oldWidget.currentIndex!];
+        // dynamic _nextItem = widget.items[widget.currentIndex!]!;
 
-        widget.items[0] = _nextItem;
-        widget.items[widget.currentIndex!] = _currentItem;
+        // widget.items[0] = _nextItem;
+        // widget.items[widget.currentIndex!] = _currentItem;
         _controllers[oldWidget.currentIndex!].reverse();
         _controllers[widget.currentIndex!].forward();
-        widget.currentIndex = 0;
+        // widget.currentIndex = 0;
         _state();
       }
     } else {
@@ -340,7 +340,8 @@ class _StylishBottomBarState extends State<StylishBottomBar>
     final MaterialLocalizations? localizations =
         MaterialLocalizations.of(context);
 
-    for (int i = 0; i < widget.items.length; i += 1) {
+    for (int i = 0; i < widget.items.length; ++i) {
+      //i+=1
       list.add(AnimatedNavigationTiles(
         widget.items[i],
         widget.iconSize!,
@@ -362,10 +363,16 @@ class _StylishBottomBarState extends State<StylishBottomBar>
     }
     if (widget.fabLocation == StylishBarFabLocation.center) {
       list.insert(
-          1,
-          Spacer(
-            flex: 2,
-          ));
+        2,
+        list.length > 3
+            ? Flex(
+                direction: Axis.horizontal,
+                children: [Padding(padding: const EdgeInsets.all(12))],
+              )
+            : Spacer(
+                flex: 2,
+              ),
+      );
     }
     return list;
   }
