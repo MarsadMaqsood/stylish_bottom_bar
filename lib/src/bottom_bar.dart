@@ -351,7 +351,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         opacity: widget.opacity!,
         animation: _animations[i],
         barAnimation: widget.barAnimation!,
-        iconStyle: widget.iconStyle ?? IconStyle.animated,
+        iconStyle: widget.iconStyle ?? IconStyle.Default,
         onTap: () {
           if (widget.onTap != null) widget.onTap!(i);
         },

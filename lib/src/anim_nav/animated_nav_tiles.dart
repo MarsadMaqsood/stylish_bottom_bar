@@ -41,7 +41,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
       child: Semantics(
         container: true,
         header: true,
-        selected: this.selected,
+        selected: selected,
         child: Stack(
           children: [
             Padding(
@@ -76,14 +76,55 @@ class AnimatedNavigationTiles extends StatelessWidget {
     );
   }
 
+  _defaultItems() {
+    var label = LabelWidget(
+      iconStyle: iconStyle,
+      animation: animation!,
+      item: items,
+      color: selected ? items.selectedColor : items.unSelectedColor,
+    );
+    return [
+      Container(
+        alignment: Alignment.center,
+        child: IconTheme(
+          data: IconThemeData(
+            color: selected ? items.selectedColor : items.unSelectedColor,
+            size: iconSize,
+            // size: selected ? iconSize + 4 : iconSize,
+          ),
+          child: selected && items.selectedIcon != null
+              ? items.selectedIcon!
+              : items.icon!,
+        ),
+      ),
+      label,
+    ];
+  }
+
   _liquidItems() {
     var label = LabelWidget(
-        animation: animation!, item: items, color: items.selectedColor);
+        iconStyle: iconStyle,
+        animation: animation!,
+        item: items,
+        color: items.selectedColor);
     return [
       Spacer(),
       AnimatedCrossFade(
         firstChild: label,
-        secondChild: Center(child: items.icon!),
+        // secondChild: Center(child: items.icon!),
+        secondChild: Container(
+          alignment: Alignment.center,
+          child: IconTheme(
+            data: IconThemeData(
+              color: selected ? items.selectedColor : items.unSelectedColor,
+              size: iconSize,
+            ),
+            child: selected && items.selectedIcon != null
+                ? items.selectedIcon!
+                : items.icon!,
+          ),
+        ),
+
         duration: Duration(milliseconds: 600),
         sizeCurve: Curves.fastOutSlowIn,
         firstCurve: Curves.fastOutSlowIn,
@@ -92,18 +133,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
             selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       ),
       Spacer(),
-      // if (selected)
-      // Container(
-      //   height: 20,
-      //   width: 22,
-      //   decoration: BoxDecoration(
-      //     color: items.selectedColor,
-      //     borderRadius: BorderRadius.only(
-      //       topLeft: Radius.elliptical(12, 20),
-      //       topRight: Radius.elliptical(12, 20),
-      //     ),
-      //   ),
-      // ),
       AnimatedCrossFade(
         firstChild: Container(),
         secondChild: Container(
@@ -129,43 +158,50 @@ class AnimatedNavigationTiles extends StatelessWidget {
 
   _childItems() {
     var label = LabelWidget(
-        animation: animation!, item: items, color: items.selectedColor);
+        iconStyle: iconStyle,
+        animation: animation!,
+        item: items,
+        color: items.selectedColor);
 
-    return iconStyle == IconStyle.animated
-        ? [
-            IconWidget(
-              items: items,
-              selected: selected,
-              iconSize: iconSize,
-              barAnimation: barAnimation,
-            ),
-            AnimatedCrossFade(
-              alignment: Alignment(0, 0),
-              firstChild: label,
-              secondChild: Container(),
-              duration: Duration(milliseconds: 250),
-              sizeCurve: Curves.fastOutSlowIn,
-              firstCurve: Curves.fastOutSlowIn,
-              secondCurve: Curves.fastOutSlowIn.flipped,
-              crossFadeState: selected
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-            ),
-          ]
-        : [
-            Container(
-              alignment: Alignment.center,
-              child: IconTheme(
-                data: IconThemeData(
-                  color: selected ? items.selectedColor : items.unSelectedColor,
-                  size: selected ? iconSize + 4 : iconSize,
+    return iconStyle == IconStyle.Default
+        ? _defaultItems()
+        : iconStyle == IconStyle.animated
+            ? [
+                IconWidget(
+                  items: items,
+                  selected: selected,
+                  iconSize: iconSize,
+                  barAnimation: barAnimation,
                 ),
-                child: selected && items.selectedIcon != null
-                    ? items.selectedIcon!
-                    : items.icon!,
-              ),
-            ),
-          ];
+                AnimatedCrossFade(
+                  alignment: Alignment(0, 0),
+                  firstChild: label,
+                  secondChild: Container(),
+                  duration: Duration(milliseconds: 250),
+                  sizeCurve: Curves.fastOutSlowIn,
+                  firstCurve: Curves.fastOutSlowIn,
+                  secondCurve: Curves.fastOutSlowIn.flipped,
+                  crossFadeState: selected
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                ),
+              ]
+            : [
+                Container(
+                  alignment: Alignment.center,
+                  child: IconTheme(
+                    data: IconThemeData(
+                      color: selected
+                          ? items.selectedColor
+                          : items.unSelectedColor,
+                      size: selected ? iconSize + 4 : iconSize,
+                    ),
+                    child: selected && items.selectedIcon != null
+                        ? items.selectedIcon!
+                        : items.icon!,
+                  ),
+                ),
+              ];
   }
 }
 
@@ -175,11 +211,13 @@ class LabelWidget extends StatelessWidget {
     required this.animation,
     required this.item,
     required this.color,
+    required this.iconStyle,
   }) : super(key: key);
 
   final Animation<double> animation;
   final AnimatedBarItems item;
   final Color color;
+  final IconStyle iconStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -187,18 +225,27 @@ class LabelWidget extends StatelessWidget {
       alignment: Alignment.center,
       heightFactor: 1.0,
       child: Container(
-        child: FadeTransition(
-          alwaysIncludeSemantics: true,
-          opacity: animation,
-          child: DefaultTextStyle.merge(
-            style: TextStyle(
-              fontSize: ActiveFontSize,
-              fontWeight: FontWeight.w600,
-              color: color,
-            ),
-            child: item.title!,
-          ),
-        ),
+        child: iconStyle == IconStyle.Default
+            ? DefaultTextStyle.merge(
+                style: TextStyle(
+                  fontSize: ActiveFontSize,
+                  fontWeight: FontWeight.w600,
+                  color: color,
+                ),
+                child: item.title!,
+              )
+            : FadeTransition(
+                alwaysIncludeSemantics: true,
+                opacity: animation,
+                child: DefaultTextStyle.merge(
+                  style: TextStyle(
+                    fontSize: ActiveFontSize,
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+                  child: item.title!,
+                ),
+              ),
       ),
     );
   }

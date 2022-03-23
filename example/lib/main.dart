@@ -190,9 +190,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // BubbleBarItem(icon: Icon(Icons.cabin), title: Text('c')),
         ],
         iconSize: 32,
-        // barAnimation: BarAnimation.liquid,
+        // barAnimation: BarAnimation.fade,
         // iconStyle: IconStyle.animated,
-        iconStyle: IconStyle.simple,
+
+        iconStyle: IconStyle.Default,
         hasNotch: true,
         fabLocation: StylishBarFabLocation.end,
         opacity: 0.3,

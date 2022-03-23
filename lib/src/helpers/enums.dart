@@ -13,6 +13,9 @@ enum BarAnimation {
 }
 
 enum IconStyle {
+  ///Both the icon and title widgets are visible and change the color of the selected item
+  Default,
+
   ///Show simple style icons without any animation
   simple,
 
