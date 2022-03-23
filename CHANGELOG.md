@@ -1,3 +1,6 @@
+# 0.1.0
+Fixed issue [#2](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/2)
+
 # 0.0.9
 - Fix icon size issue
 - Added default `IconStyle.Default`
@@ -36,8 +39,7 @@ BubbleFillStyle.outlined
 
 ## 0.0.1+1
 - Added `badgeRadius: `
-* Minor bug fixes
+- Minor bug fixes
 
 ## 0.0.1
-
-* Initial release.
+- Initial release.
