@@ -1,3 +1,8 @@
+# 0.0.9
+- Fix icon size issue
+- Added default `IconStyle.Default`
+- Updated Example
+
 ## 0.0.8
 - Added `selectedIcon` in `AnimatedBarItems`.
 

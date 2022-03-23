@@ -98,6 +98,7 @@ BarAnimation.liquid
 
 ### IconStyle
 ```dart
+IconStyle.Default
 IconStyle.simple
 IconStyle.animated
 ```
