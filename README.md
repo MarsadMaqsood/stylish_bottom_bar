@@ -14,7 +14,7 @@ A collection of stylish bottom navigation bar like animated bottom bar and bubbl
 ## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^0.0.8
+        stylish_bottom_bar: ^0.0.9
         
 ## ⚡ Import
 
