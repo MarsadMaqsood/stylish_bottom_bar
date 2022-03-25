@@ -139,41 +139,34 @@ class _PageExampleState extends State<PageExample> {
     return Scaffold(
       body: PageView(
         controller: controller,
-        // physics: NeverScrollableScrollPhysics(),
         children: [
           //Home(),
           //Add(),
           //Profile(),
         ],
       ),
-      bottomNavigationBar: AnimatedNavigationBar(
-        fabLocation: StylishBarFabLocation.center,
-        hasNotch: true,
+      bottomNavigationBar: StylishBottomBar(
         items: [
-          AnimatedBarItems(
-              icon: Icon(
-                Icons.home,
-              ),
-              selectedColor: Colors.deepPurple,
-              backgroundColor: Colors.amber,
-              title: Text('Home')),
-          AnimatedBarItems(
-              icon: Icon(
-                Icons.add_circle_outline,
-              ),
-              selectedColor: Colors.green,
-              backgroundColor: Colors.amber,
-              title: Text('Add')),
-          AnimatedBarItems(
-              icon: Icon(
-                Icons.person,
-              ),
-              backgroundColor: Colors.amber,
-              selectedColor: Colors.pinkAccent,
-              title: Text('Profile')),
+          BubbleBarItem(
+            icon: Icon(Icons.abc),
+            title: Text('Abc'),
+          ),
+          BubbleBarItem(
+            icon: Icon(Icons.safety_divider),
+            title: Text('Safety'),
+          ),
+          BubbleBarItem(
+            icon: Icon(Icons.cabin),
+            title: Text('Cabin'),
+          ),
         ],
-        iconSize: 32,
-        barAnimation: BarAnimation.transform3D,
+        fabLocation: StylishBarFabLocation.end,
+        hasNotch: true,
+        // iconSize: 32,
+        // barStyle: BubbleBarStyle.horizotnal,
+        barStyle: BubbleBarStyle.vertical,
+        bubbleFillStyle: BubbleFillStyle.fill,
+        // bubbleFillStyle: BubbleFillStyle.outlined,
         opacity: 0.3,
         currentIndex: selected,
         onTap: (index) {
@@ -183,6 +176,11 @@ class _PageExampleState extends State<PageExample> {
           });
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.emoji_emotions),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }

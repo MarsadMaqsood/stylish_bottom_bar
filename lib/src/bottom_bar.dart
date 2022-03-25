@@ -112,6 +112,17 @@ class StylishBottomBar extends StatefulWidget {
   final bool? inkEffect;
 
   ///Add notch effect to floating action button
+  ///
+  ///to make floating action button notch transparent set extendBody to true in scaffold
+  ///
+  ///```dart
+  ///  return Scaffold(
+  ///     extendBody: true
+  ///
+  ///   ...
+  ///   );
+  ///```
+
   final bool hasNotch;
 
   ///Change ink color
