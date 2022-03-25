@@ -1,3 +1,6 @@
+# 0.1.1
+- Updated README.MD
+
 # 0.1.0
 - Fixed issue [#2](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/2)
 

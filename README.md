@@ -7,14 +7,16 @@ A collection of stylish bottom navigation bar like animated bottom bar and bubbl
 ## Table of contents
 - [Installing](#installing)
 - [How To Use](#how_to_use)
-- [Examples](#examples)
+- [Showcase](#showcase)
 - [Migrate to 0.0.7](#migrate)
+- [Example](#example)
+
 
 
 ## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^0.1.0
+        stylish_bottom_bar: ^0.1.1
         
 ## ⚡ Import
 
@@ -110,65 +112,61 @@ onTap: (index){
 }
 ```
 
-## Examples <a name="examples"></a>
+## Showcase <a name="showcase"></a>
 
 **AnimatedNavigationBar**
+
+`IconStyle.Default`
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/29.gif">
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/27.gif">
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/28.gif">
+
+---
+
+`IconStyle.simple`
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/25.gif">
+
+---
+
+`IconStyle.animated`
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/21.gif">
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/20.gif">
+
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/26.gif">
+
+---
 
 `BarAnimation.fade`
 
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/9.gif?raw=true">
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/10.gif?raw=true">
 
+---
+
 `BarAnimation.blink`
 
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/11.gif?raw=true">
 
-```dart
+---
+`BarAnimation.liquid`
 
-AnimatedNavigationBar(
-    items: [
-        AnimatedBarItems(
-            icon: Icon(
-                Icons.home,
-            ),
-            selectedColor: Colors.deepPurple,
-            backgroundColor: Colors.amber,
-            title: Text('Home'),
-        ),
-        AnimatedBarItems(
-            icon: Icon(
-                Icons.add_circle_outline,
-            ),
-            selectedColor: Colors.green,
-            backgroundColor: Colors.amber,
-            title: Text('Add'),
-        ),
-    ],
-    fabLocation: StylishBarFabLocation.end,
-    hasNotch: false,
-    iconSize: 32,
-    iconStyle: IconStyle.animated,
-    //iconStyle: IconStyle.simple,
-    barAnimation: BarAnimation.fade,
-    //barAnimation: BarAnimation.blink,
-    //barAnimation: BarAnimation.transform3D
-    opacity: 0.3,
-    currentIndex: selected ?? 0,
-    onTap: (index) {
-        setState(() {
-            selected = index;
-        });
-    },
-),
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/23.gif">
 
-```
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/24.gif">
+
 **BubbleNavigationBar**
 
 `BubbleBarStyle.horizotnal`
 
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/6.gif?raw=true">
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/7.gif?raw=true">
-<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/8.gif?raw=true">
 
 `BubbleFillStyle.outlined`
 
@@ -176,70 +174,10 @@ AnimatedNavigationBar(
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/15.gif?raw=true">
 
 
-```dart
-
-BubbleNavigationBar(
-    items: [
-        BubbleBarItem(
-            backgroundColor: Colors.deepPurple,
-            icon: Icon(
-                    Icons.home,
-                ),
-            activeIcon: Icon(Icons.home),
-            title: Text("Home"),
-        ),
-        
-        BubbleBarItem(
-            backgroundColor: Colors.green,
-            icon: Icon(
-                    Icons.add,
-                    color: Colors.black,
-                ),
-            activeIcon: Icon(
-                    Icons.add_circle_outline_outlined,
-                    color: Colors.green,
-                ),
-            title: Text("Add"),
-        ),
-        BubbleBarItem(
-            backgroundColor: Colors.pinkAccent,
-            icon: Icon(
-                Icons.person,
-            ),
-            title: Text(
-              "Profile",
-            ),
-          ),
-    ],
-    unselectedIconColor: Colors.
-    barStyle: BubbleBarStyle.horizotnal,
-    //bubbleFillStyle: BubbleFillStyle.outlined,
-    //bubbleFillStyle: BubbleFillStyle.fill,
-    currentIndex: selected ?? 0,
-    onTap: (index) {
-        setState(() {
-            selected = index;
-        });
-    },
-    iconSize: 38,
-    inkEffect: true,
-    inkColor: Colors.purple,
-    opacity: 0.2,
-    hasNotch: false,
-),
-
-```
-
 `BubbleBarStyle.vertical`
-
-<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/1.gif?raw=true">
-
-<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/2.gif?raw=true">
-<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/3.gif?raw=true">
 
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/4.gif?raw=true">
 
-<img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/5.gif?raw=true">
 
 `BubbleFillStyle.outlined`
 
@@ -247,68 +185,14 @@ BubbleNavigationBar(
 
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/13.gif?raw=true">
 
-
-
-```dart
-
-BubbleNavigationBar(
-    items: [
-        BubbleBarItem(
-            backgroundColor: Colors.deepPurple,
-            icon: Icon(
-                    Icons.home,
-                ),
-            activeIcon: Icon(Icons.home),
-            title: Text("Home"),
-        ),
-        
-        BubbleBarItem(
-            backgroundColor: Colors.green,
-            icon: Icon(
-                    Icons.add,
-                    color: Colors.black,
-                ),
-            activeIcon: Icon(
-                    Icons.add_circle_outline_outlined,
-                    color: Colors.green,
-                ),
-            title: Text("Add"),
-        ),
-        BubbleBarItem(
-            backgroundColor: Colors.pinkAccent,
-            icon: Icon(
-                Icons.person,
-            ),
-            title: Text(
-              "Profile",
-            ),
-          ),
-    ],
-    unselectedIconColor: Colors.
-    barStyle: BubbleBarStyle.vertical,
-    //bubbleFillStyle: BubbleFillStyle.outlined,
-    //bubbleFillStyle: BubbleFillStyle.fill,
-    currentIndex: selected ?? 0,
-    onTap: (index) {
-        setState(() {
-            selected = index;
-        });
-    },
-    iconSize: 38,
-    inkEffect: true,
-    inkColor: Colors.purple,
-    opacity: 0.2,
-    hasNotch: false,
-),
-
-```
-
 ## Migrate to 0.0.7 <a name="migrate"></a>
 
 `AnimatedNavigationBar` and `BubbleNavigationBar` are merged into `StylishBottomBar`.
 From version **0.0.7** `StylishBottomBar` will be used to access the both bubble nav bar and animated nav bar.
 
 `List<BubbleBarItem> items` and `List<AnimatedBarItems> items` is simplified into `List<dynamic> items`. You can assign `AnimatedBarItems` and `BubbleBarItem` to `items:` but not the both in same `items:`.
+
+## Example <a name="example"></a>
 
 ```dart
 StylishBottomBar(
