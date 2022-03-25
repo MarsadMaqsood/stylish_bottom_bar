@@ -39,131 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true, //to make floating action button notch transparent
-      body: AnimatedContainer(
-        duration: Duration(milliseconds: 2000),
-        color: bgColor ?? Colors.red.withOpacity(0.5),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                StylishBottomBar(
-                  fabLocation: StylishBarFabLocation.center,
-
-                  items: [
-                    BubbleBarItem(
-                      backgroundColor: Colors.deepPurple,
-                      icon: Icon(
-                        Icons.home,
-                      ),
-                      badge: Text(
-                        ' 1 ',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      badgeRadius: BorderRadius.circular(12),
-                      showBadge: true,
-                      badgeColor: Colors.red,
-                      activeIcon: Icon(Icons.home),
-                      title: Text("Home"),
-                      borderColor: Colors.purple,
-                    ),
-                    BubbleBarItem(
-                        backgroundColor: Colors.green,
-                        icon: Icon(
-                          Icons.add,
-                          color: Colors.black,
-                        ),
-                        activeIcon: Icon(
-                          Icons.add_circle_outline_outlined,
-                          color: Colors.green,
-                        ),
-                        title: Text(
-                          "Add",
-                        )),
-                    BubbleBarItem(
-                      backgroundColor: Colors.pinkAccent,
-                      icon: Icon(
-                        Icons.person,
-                      ),
-                      title: Text(
-                        "Profile",
-                      ),
-                    ),
-                  ],
-
-                  // inkColor: Colors.yellow,
-                  barStyle: BubbleBarStyle.vertical,
-                  currentIndex: selected ?? 0,
-                  onTap: (index) {
-                    setState(() {
-                      selected = index;
-                    });
-                  },
-
-                  iconSize: 38,
-                  inkEffect: true,
-                  opacity: 0.2,
-                  hasNotch: true,
-                  bubbleFillStyle: BubbleFillStyle.fill,
-                  padding: EdgeInsets.all(4),
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-                BubbleNavigationBar(
-                  items: [
-                    BubbleBarItem(
-                        backgroundColor: Colors.deepPurple,
-                        icon: Icon(
-                          Icons.home,
-                        ),
-                        activeIcon: Icon(Icons.home),
-                        title: Text("Home")),
-                    BubbleBarItem(
-                        backgroundColor: Colors.green,
-                        icon: Icon(
-                          Icons.add,
-                          color: Colors.black,
-                        ),
-                        activeIcon: Icon(
-                          Icons.add_circle_outline_outlined,
-                          color: Colors.green,
-                        ),
-                        title: Text(
-                          "Add",
-                        )),
-                    BubbleBarItem(
-                      backgroundColor: Colors.pinkAccent,
-                      icon: Icon(
-                        Icons.person,
-                      ),
-                      title: Text(
-                        "Profile",
-                      ),
-                    ),
-                  ],
-                  unselectedIconColor: Colors.black,
-                  // inkColor: Colors.yellow,
-                  barStyle: BubbleBarStyle.horizotnal,
-                  currentIndex: selected ?? 0,
-                  onTap: (index) {
-                    setState(() {
-                      selected = index;
-                    });
-                  },
-                  iconSize: 38,
-                  inkEffect: true,
-                  opacity: 0.2,
-                  hasNotch: false,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
       bottomNavigationBar: StylishBottomBar(
         items: [
           AnimatedBarItems(
@@ -175,37 +50,44 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: Colors.amber,
               title: Text('Home')),
           AnimatedBarItems(
-              icon: Icon(Icons.map_outlined),
-              selectedIcon: Icon(Icons.map),
+              icon: Icon(Icons.star_border_rounded),
+              selectedIcon: Icon(Icons.star_rounded),
               selectedColor: Colors.green,
               backgroundColor: Colors.amber,
-              title: Text('Map')),
+              title: Text('Star')),
+
           AnimatedBarItems(
               icon: Icon(
+                Icons.style_outlined,
+              ),
+              selectedIcon: Icon(
+                Icons.style,
+              ),
+              backgroundColor: Colors.amber,
+              selectedColor: Colors.deepOrangeAccent,
+              title: Text('Style')),
+
+          AnimatedBarItems(
+              icon: Icon(
+                Icons.person_outline,
+              ),
+              selectedIcon: Icon(
                 Icons.person,
               ),
               backgroundColor: Colors.amber,
               selectedColor: Colors.pinkAccent,
               title: Text('Profile')),
-          // AnimatedBarItems(
-          //     icon: Icon(
-          //       Icons.person,
-          //     ),
-          //     backgroundColor: Colors.amber,
-          //     selectedColor: Colors.pinkAccent,
-          //     title: Text('Profile')),
 
           // BubbleBarItem(icon: Icon(Icons.abc), title: Text('Abc')),
           // BubbleBarItem(icon: Icon(Icons.safety_divider), title: Text('Safety')),
           // BubbleBarItem(icon: Icon(Icons.cabin), title: Text('Cabin')),
         ],
         iconSize: 32,
-        // barAnimation: BarAnimation.fade,
+        barAnimation: BarAnimation.fade,
         // iconStyle: IconStyle.animated,
-
         iconStyle: IconStyle.Default,
         hasNotch: true,
-        fabLocation: StylishBarFabLocation.center,
+        fabLocation: StylishBarFabLocation.end,
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {
@@ -226,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       // backgroundColor:
       //     bgColor != null ? bgColor.withOpacity(1.0) : Colors.white,
     );
