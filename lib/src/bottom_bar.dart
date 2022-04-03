@@ -193,12 +193,14 @@ class _StylishBottomBarState extends State<StylishBottomBar>
   }
 
   void _state() {
-    for (AnimationController controller in _controllers) controller.dispose();
+    for (AnimationController controller in _controllers) {
+      controller.dispose();
+    }
 
     _controllers =
         List<AnimationController>.generate(widget.items.length, (int index) {
       return AnimationController(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         vsync: this,
       )..addListener(() {
           setState(() {});
@@ -225,7 +227,9 @@ class _StylishBottomBarState extends State<StylishBottomBar>
   @override
   void dispose() {
     ///Dispose controllers
-    for (AnimationController controller in _controllers) controller.dispose();
+    for (AnimationController controller in _controllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -258,23 +262,24 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       }
     } else {
       if (_backgroundColor !=
-          widget.items[widget.currentIndex!].backgroundColor)
+          widget.items[widget.currentIndex!].backgroundColor) {
         _backgroundColor = widget.items[widget.currentIndex!].backgroundColor;
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var additionalBottomPadding, listWidget;
+    dynamic additionalBottomPadding, listWidget;
 
     if (widget.items[0].runtimeType == AnimatedBarItems) {
       additionalBottomPadding =
-          math.max(MediaQuery.of(context).padding.bottom - BottomMargin, 0.0) +
+          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
               2;
       listWidget = _animatedBarChilds();
     } else if (widget.items[0].runtimeType == BubbleBarItem) {
       additionalBottomPadding =
-          math.max(MediaQuery.of(context).padding.bottom - BottomMargin, 0.0) +
+          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
               4;
       listWidget = _bubbleBarTiles();
     }
@@ -286,7 +291,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
               elevation: widget.elevation ?? 8.0,
               color: widget.backgroundColor ?? Colors.white,
               clipper: BubbleBarClipper(
-                shape: CircularNotchedRectangle(),
+                shape: const CircularNotchedRectangle(),
                 geometry: _geometryListenable!,
                 notchMargin: 8,
               ),
@@ -295,14 +300,10 @@ class _StylishBottomBarState extends State<StylishBottomBar>
             )
           : Material(
               elevation: widget.elevation ?? 8.0,
-              color: widget.backgroundColor != null
-                  ? widget.backgroundColor
-                  : Colors.white,
+              color: widget.backgroundColor ?? Colors.white,
               child: innerWidget(context, additionalBottomPadding + 2,
                   widget.fabLocation, listWidget, widget.barAnimation!),
-              borderRadius: widget.borderRadius != null
-                  ? widget.borderRadius
-                  : BorderRadius.zero,
+              borderRadius: widget.borderRadius ?? BorderRadius.zero,
             ),
     );
   }
@@ -339,7 +340,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
     if (widget.fabLocation == StylishBarFabLocation.center) {
       children.insert(
           1,
-          Spacer(
+          const Spacer(
             flex: 1500,
           ));
     }
@@ -378,9 +379,9 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         list.length > 3
             ? Flex(
                 direction: Axis.horizontal,
-                children: [Padding(padding: const EdgeInsets.all(12))],
+                children: const [Padding(padding: EdgeInsets.all(12))],
               )
-            : Spacer(
+            : const Spacer(
                 flex: 2,
               ),
       );

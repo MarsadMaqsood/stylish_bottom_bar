@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/src/badge/badge.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-import '../model/bubble_item.dart';
+enum BadgeAnimationType {
+  slide,
+  fade,
+  scale,
+}
+enum BadgeShape { circle, square }
 
 class IconWidget extends StatelessWidget {
   const IconWidget({
@@ -30,18 +36,16 @@ class IconWidget extends StatelessWidget {
         badgeColor: item.badgeColor,
         animationType: BadgeAnimationType.fade,
         borderRadius: item.badgeRadius,
-        child: Container(
-          child: IconTheme(
-            data: IconThemeData(
-              color: selected ? item.backgroundColor : unselectedIconColor,
-              size: iconSize,
-            ),
-            child: selected
-                ? item.activeIcon != null
-                    ? item.activeIcon!
-                    : item.icon
-                : item.icon,
+        child: IconTheme(
+          data: IconThemeData(
+            color: selected ? item.backgroundColor : unselectedIconColor,
+            size: iconSize,
           ),
+          child: selected
+              ? item.activeIcon != null
+                  ? item.activeIcon!
+                  : item.icon
+              : item.icon,
         ),
       ),
     );

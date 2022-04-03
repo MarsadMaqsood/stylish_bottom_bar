@@ -1,2 +1,2 @@
-const BottomMargin = 8.0;
-const ActiveFontSize = 14.0;
+const bottomMargin = 8.0;
+const activeFontSize = 14.0;

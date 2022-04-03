@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import '../helpers/constant.dart';
 import '../model/bubble_item.dart';
 
-const activeFontSize = 14.0;
-
 class LabelWidget extends StatelessWidget {
-  LabelWidget({
+  const LabelWidget({
     Key? key,
     required this.animation,
     required this.item,
@@ -20,18 +19,16 @@ class LabelWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       heightFactor: 1.0,
-      child: Container(
-        child: FadeTransition(
-          alwaysIncludeSemantics: true,
-          opacity: animation,
-          child: DefaultTextStyle.merge(
-            style: TextStyle(
-              fontSize: activeFontSize,
-              fontWeight: FontWeight.w600,
-              color: color,
-            ),
-            child: item.title!,
+      child: FadeTransition(
+        alwaysIncludeSemantics: true,
+        opacity: animation,
+        child: DefaultTextStyle.merge(
+          style: TextStyle(
+            fontSize: activeFontSize,
+            fontWeight: FontWeight.w600,
+            color: color,
           ),
+          child: item.title!,
         ),
       ),
     );

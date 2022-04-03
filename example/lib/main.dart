@@ -3,25 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Stylish Bottm Navigation Bar Example',
+      title: 'Stylish Bottom Navigation Bar Example',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({
+  const MyHomePage({
     Key? key,
   }) : super(key: key);
 
@@ -30,9 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var selected;
-
-  var bgColor;
+  dynamic selected;
   var heart = false;
 
   @override
@@ -42,50 +41,51 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: StylishBottomBar(
         items: [
           AnimatedBarItems(
-              icon: Icon(
+              icon: const Icon(
                 Icons.house_outlined,
               ),
-              selectedIcon: Icon(Icons.house_rounded),
+              selectedIcon: const Icon(Icons.house_rounded),
               selectedColor: Colors.deepPurple,
               backgroundColor: Colors.amber,
-              title: Text('Home')),
+              title: const Text('Home')),
           AnimatedBarItems(
-              icon: Icon(Icons.star_border_rounded),
-              selectedIcon: Icon(Icons.star_rounded),
+              icon: const Icon(Icons.star_border_rounded),
+              selectedIcon: const Icon(Icons.star_rounded),
               selectedColor: Colors.green,
               backgroundColor: Colors.amber,
-              title: Text('Star')),
-
+              title: const Text('Star')),
           AnimatedBarItems(
-              icon: Icon(
+              icon: const Icon(
                 Icons.style_outlined,
               ),
-              selectedIcon: Icon(
+              selectedIcon: const Icon(
                 Icons.style,
               ),
               backgroundColor: Colors.amber,
               selectedColor: Colors.deepOrangeAccent,
-              title: Text('Style')),
-
+              title: const Text('Style')),
           AnimatedBarItems(
-              icon: Icon(
+              icon: const Icon(
                 Icons.person_outline,
               ),
-              selectedIcon: Icon(
+              selectedIcon: const Icon(
                 Icons.person,
               ),
               backgroundColor: Colors.amber,
               selectedColor: Colors.pinkAccent,
-              title: Text('Profile')),
-
-          // BubbleBarItem(icon: Icon(Icons.abc), title: Text('Abc')),
-          // BubbleBarItem(icon: Icon(Icons.safety_divider), title: Text('Safety')),
-          // BubbleBarItem(icon: Icon(Icons.cabin), title: Text('Cabin')),
+              title: const Text('Profile')),
+          // BubbleBarItem(icon: const Icon(Icons.abc), title: const Text('Abc')),
+          // BubbleBarItem(
+          //     icon: const Icon(Icons.safety_divider),
+          //     title: const Text('Safety')),
+          // BubbleBarItem(
+          //     icon: const Icon(Icons.cabin), title: const Text('Cabin')),
         ],
         iconSize: 32,
         barAnimation: BarAnimation.fade,
         // iconStyle: IconStyle.animated,
-        iconStyle: IconStyle.Default,
+
+        iconStyle: IconStyle.animated,
         hasNotch: true,
         fabLocation: StylishBarFabLocation.end,
         opacity: 0.3,
@@ -109,8 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      // backgroundColor:
-      //     bgColor != null ? bgColor.withOpacity(1.0) : Colors.white,
     );
   }
 }
@@ -139,25 +137,25 @@ class _PageExampleState extends State<PageExample> {
     return Scaffold(
       body: PageView(
         controller: controller,
-        children: [
-          //Home(),
-          //Add(),
-          //Profile(),
+        children: const [
+          // Home(),
+          // Add(),
+          // Profile(),
         ],
       ),
       bottomNavigationBar: StylishBottomBar(
         items: [
           BubbleBarItem(
-            icon: Icon(Icons.abc),
-            title: Text('Abc'),
+            icon: const Icon(Icons.abc),
+            title: const Text('Abc'),
           ),
           BubbleBarItem(
-            icon: Icon(Icons.safety_divider),
-            title: Text('Safety'),
+            icon: const Icon(Icons.safety_divider),
+            title: const Text('Safety'),
           ),
           BubbleBarItem(
-            icon: Icon(Icons.cabin),
-            title: Text('Cabin'),
+            icon: const Icon(Icons.cabin),
+            title: const Text('Cabin'),
           ),
         ],
         fabLocation: StylishBarFabLocation.end,
@@ -178,7 +176,7 @@ class _PageExampleState extends State<PageExample> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.emoji_emotions),
+        child: const Icon(Icons.emoji_emotions),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );

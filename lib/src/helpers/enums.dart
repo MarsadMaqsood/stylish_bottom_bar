@@ -14,6 +14,7 @@ enum BarAnimation {
 
 enum IconStyle {
   ///Both the icon and title widgets are visible and change the color of the selected item
+  // ignore: constant_identifier_names
   Default,
 
   ///Show simple style icons without any animation

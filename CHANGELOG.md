@@ -1,11 +1,15 @@
-# 0.1.1
+## 0.1.2
+- Removed unnecessary code
+- Performance Improvements
+
+## 0.1.1
 - Removed unnecessary code
 - Updated README.md
 
-# 0.1.0
+## 0.1.0
 - Fixed issue [#2](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/2)
 
-# 0.0.9
+## 0.0.9
 - Fix icon size issue
 - Added default `IconStyle.Default`
 - Updated Example

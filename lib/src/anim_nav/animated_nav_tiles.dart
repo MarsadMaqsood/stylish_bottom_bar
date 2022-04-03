@@ -50,11 +50,11 @@ class AnimatedNavigationTiles extends StatelessWidget {
                 onTap: onTap,
                 splashColor: inkEffect! ? inkColor : Colors.transparent,
                 highlightColor: Colors.transparent,
-                borderRadius: BorderRadius.horizontal(
+                borderRadius: const BorderRadius.horizontal(
                   right: Radius.circular(52),
                   left: Radius.circular(52),
                 ),
-                child: Container(
+                child: SizedBox(
                     height: iconSize <= 26 ? 48 : 48 + (iconSize - 26),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -108,7 +108,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
         item: items,
         color: items.selectedColor);
     return [
-      Spacer(),
+      const Spacer(),
       AnimatedCrossFade(
         firstChild: label,
         // secondChild: Center(child: items.icon!),
@@ -125,14 +125,14 @@ class AnimatedNavigationTiles extends StatelessWidget {
           ),
         ),
 
-        duration: Duration(milliseconds: 600),
+        duration: const Duration(milliseconds: 600),
         sizeCurve: Curves.fastOutSlowIn,
         firstCurve: Curves.fastOutSlowIn,
         secondCurve: Curves.fastOutSlowIn.flipped,
         crossFadeState:
             selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       ),
-      Spacer(),
+      const Spacer(),
       AnimatedCrossFade(
         firstChild: Container(),
         secondChild: Container(
@@ -140,13 +140,13 @@ class AnimatedNavigationTiles extends StatelessWidget {
           width: 22,
           decoration: BoxDecoration(
             color: items.selectedColor,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.elliptical(12, 20),
               topRight: Radius.elliptical(12, 20),
             ),
           ),
         ),
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         sizeCurve: Curves.linear,
         firstCurve: Curves.fastOutSlowIn,
         secondCurve: Curves.fastOutSlowIn.flipped,
@@ -174,10 +174,10 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   barAnimation: barAnimation,
                 ),
                 AnimatedCrossFade(
-                  alignment: Alignment(0, 0),
+                  alignment: const Alignment(0, 0),
                   firstChild: label,
                   secondChild: Container(),
-                  duration: Duration(milliseconds: 250),
+                  duration: const Duration(milliseconds: 250),
                   sizeCurve: Curves.fastOutSlowIn,
                   firstCurve: Curves.fastOutSlowIn,
                   secondCurve: Curves.fastOutSlowIn.flipped,
@@ -206,7 +206,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
 }
 
 class LabelWidget extends StatelessWidget {
-  LabelWidget({
+  const LabelWidget({
     Key? key,
     required this.animation,
     required this.item,
@@ -228,7 +228,7 @@ class LabelWidget extends StatelessWidget {
         child: iconStyle == IconStyle.Default
             ? DefaultTextStyle.merge(
                 style: TextStyle(
-                  fontSize: ActiveFontSize,
+                  fontSize: activeFontSize,
                   fontWeight: FontWeight.w600,
                   color: color,
                 ),
@@ -239,7 +239,7 @@ class LabelWidget extends StatelessWidget {
                 opacity: animation,
                 child: DefaultTextStyle.merge(
                   style: TextStyle(
-                    fontSize: ActiveFontSize,
+                    fontSize: activeFontSize,
                     fontWeight: FontWeight.w600,
                     color: color,
                   ),
@@ -252,7 +252,7 @@ class LabelWidget extends StatelessWidget {
 }
 
 class IconWidget extends StatefulWidget {
-  IconWidget(
+  const IconWidget(
       {Key? key,
       required this.items,
       required this.selected,
@@ -277,11 +277,12 @@ class _IconWidgetState extends State<IconWidget>
   @override
   void initState() {
     super.initState();
-    if (widget.barAnimation != BarAnimation.transform3D)
+    if (widget.barAnimation != BarAnimation.transform3D) {
       controller = AnimationController(
-        duration: Duration(milliseconds: 600),
+        duration: const Duration(milliseconds: 600),
         vsync: this,
       );
+    }
   }
 
   @override
@@ -293,11 +294,9 @@ class _IconWidgetState extends State<IconWidget>
   _assignAnimation() {
     if (widget.barAnimation != BarAnimation.transform3D) {
       if (widget.barAnimation == BarAnimation.fade) {
-        animation =
-            new CurvedAnimation(parent: controller, curve: Curves.easeIn);
+        animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
       } else if (widget.barAnimation == BarAnimation.blink) {
-        animation =
-            new CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+        animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
       }
 
       animationColor = ColorTween(
@@ -320,28 +319,26 @@ class _IconWidgetState extends State<IconWidget>
   }
 
   _buildWidget() {
-    return Container(
-      child: IconTheme(
-        data: IconThemeData(
-          color: widget.selected
-              ? widget.barAnimation == BarAnimation.transform3D
-                  ? widget.items.selectedColor
-                  : animationColor.value
-              : widget.items.unSelectedColor,
-          size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
-        ),
-        child: widget.selected
+    return IconTheme(
+      data: IconThemeData(
+        color: widget.selected
             ? widget.barAnimation == BarAnimation.transform3D
-                ? Transform(
-                    transform: Matrix4.identity()
-                      // ..setEntry(2, 3, 0.003)
-                      ..setEntry(3, 0, 0.002)
-                      ..rotateY(0), //..rotateY(0),
-                    child: widget.items.icon!,
-                  )
-                : widget.items.icon!
-            : widget.items.icon!,
+                ? widget.items.selectedColor
+                : animationColor.value
+            : widget.items.unSelectedColor,
+        size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
       ),
+      child: widget.selected
+          ? widget.barAnimation == BarAnimation.transform3D
+              ? Transform(
+                  transform: Matrix4.identity()
+                    // ..setEntry(2, 3, 0.003)
+                    ..setEntry(3, 0, 0.002)
+                    ..rotateY(0), //..rotateY(0),
+                  child: widget.items.icon!,
+                )
+              : widget.items.icon!
+          : widget.items.icon!,
     );
   }
 }

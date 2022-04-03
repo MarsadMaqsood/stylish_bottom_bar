@@ -10,7 +10,7 @@ Widget innerWidget(
   BarAnimation barAnimation = BarAnimation.fade,
 ]) {
   return Padding(
-    padding: EdgeInsets.symmetric(
+    padding: const EdgeInsets.symmetric(
       horizontal: 10,
     ),
     child: ConstrainedBox(

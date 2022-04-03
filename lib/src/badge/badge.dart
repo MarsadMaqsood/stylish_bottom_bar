@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/icon_widget.dart';
 import 'badge_positioned.dart';
-
-enum BadgeAnimationType {
-  slide,
-  fade,
-  scale,
-}
-enum BadgeShape { circle, square }
 
 class Badge extends StatefulWidget {
   final Widget? badgeContent;
@@ -27,7 +21,8 @@ class Badge extends StatefulWidget {
   final Duration duration;
   final bool toAnimate;
 
-  Badge({
+  const Badge({
+    Key? key,
     this.badgeContent,
     this.badgeColor = Colors.black,
     this.showBadge = true,
@@ -44,8 +39,9 @@ class Badge extends StatefulWidget {
     this.padding = EdgeInsets.zero,
     this.duration = Duration.zero,
     this.toAnimate = true,
-  });
+  }) : super(key: key);
 
+  @override
   _BadgeState createState() => _BadgeState();
 }
 
@@ -150,7 +146,7 @@ class _BadgeState extends State<Badge> with TickerProviderStateMixin {
           ),
         ),
         opacity: widget.showBadge ? 1 : 0,
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
       );
     }
 

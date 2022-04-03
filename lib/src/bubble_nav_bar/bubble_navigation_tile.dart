@@ -12,6 +12,7 @@ class BubbleNavigationTile extends StatelessWidget {
     this.iconSize,
     this.unselectedIconColor,
     this.barStyle, {
+    Key? key,
     this.onTap,
     this.flex,
     this.selected = false,
@@ -20,7 +21,7 @@ class BubbleNavigationTile extends StatelessWidget {
     this.inkColor = Colors.grey,
     this.padding,
     this.fillStyle,
-  });
+  }) : super(key: key);
 
   final BubbleBarItem item;
   final Animation<double> animation;
@@ -64,7 +65,7 @@ class BubbleNavigationTile extends StatelessWidget {
               padding: padding!,
               child: InkWell(
                 onTap: onTap,
-                borderRadius: BorderRadius.horizontal(
+                borderRadius: const BorderRadius.horizontal(
                   right: Radius.circular(52),
                   left: Radius.circular(52),
                 ),
@@ -82,7 +83,7 @@ class BubbleNavigationTile extends StatelessWidget {
                           : 50,
 
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.horizontal(
+                    borderRadius: const BorderRadius.horizontal(
                       right: Radius.circular(52),
                       left: Radius.circular(52),
                     ),
@@ -95,7 +96,7 @@ class BubbleNavigationTile extends StatelessWidget {
                         ? item.backgroundColor!.withOpacity(opacity)
                         : Colors.transparent,
                   ),
-                  child: this.barStyle == BubbleBarStyle.horizotnal
+                  child: barStyle == BubbleBarStyle.horizotnal
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
 
@@ -136,10 +137,10 @@ class BubbleNavigationTile extends StatelessWidget {
         item: item,
       ),
       AnimatedCrossFade(
-        alignment: Alignment(0, 0),
+        alignment: const Alignment(0, 0),
         firstChild: label,
         secondChild: Container(),
-        duration: Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 250),
         sizeCurve: Curves.fastOutSlowIn,
         firstCurve: Curves.fastOutSlowIn,
         secondCurve: Curves.fastOutSlowIn.flipped,
