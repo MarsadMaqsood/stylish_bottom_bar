@@ -16,21 +16,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(),
+      home: const AnimatedBarExample(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({
+class AnimatedBarExample extends StatefulWidget {
+  const AnimatedBarExample({
     Key? key,
   }) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _AnimatedBarExampleState createState() => _AnimatedBarExampleState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _AnimatedBarExampleState extends State<AnimatedBarExample> {
   dynamic selected;
   var heart = false;
 
@@ -74,17 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: Colors.amber,
               selectedColor: Colors.pinkAccent,
               title: const Text('Profile')),
-          // BubbleBarItem(icon: const Icon(Icons.abc), title: const Text('Abc')),
-          // BubbleBarItem(
-          //     icon: const Icon(Icons.safety_divider),
-          //     title: const Text('Safety')),
-          // BubbleBarItem(
-          //     icon: const Icon(Icons.cabin), title: const Text('Cabin')),
         ],
         iconSize: 32,
         barAnimation: BarAnimation.fade,
         // iconStyle: IconStyle.animated,
-
         iconStyle: IconStyle.animated,
         hasNotch: true,
         fabLocation: StylishBarFabLocation.end,
@@ -114,15 +107,15 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 //
-//Example to setup Stylish Bottom Bar with PageView
-class PageExample extends StatefulWidget {
-  const PageExample({Key? key}) : super(key: key);
+//Example to setup Bubble Bottom Bar with PageView
+class BubbelBarExample extends StatefulWidget {
+  const BubbelBarExample({Key? key}) : super(key: key);
 
   @override
-  _PageExampleState createState() => _PageExampleState();
+  _BubbelBarExampleState createState() => _BubbelBarExampleState();
 }
 
-class _PageExampleState extends State<PageExample> {
+class _BubbelBarExampleState extends State<BubbelBarExample> {
   PageController controller = PageController(initialPage: 0);
   var selected = 0;
 
@@ -161,8 +154,8 @@ class _PageExampleState extends State<PageExample> {
         fabLocation: StylishBarFabLocation.end,
         hasNotch: true,
         // iconSize: 32,
-        // barStyle: BubbleBarStyle.horizotnal,
-        barStyle: BubbleBarStyle.vertical,
+        barStyle: BubbleBarStyle.horizotnal,
+        // barStyle: BubbleBarStyle.vertical,
         bubbleFillStyle: BubbleFillStyle.fill,
         // bubbleFillStyle: BubbleFillStyle.outlined,
         opacity: 0.3,
