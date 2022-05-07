@@ -24,6 +24,18 @@ enum IconStyle {
   animated,
 }
 
-enum BubbleBarStyle { vertical, horizotnal }
+enum BubbleBarStyle {
+  ///Align bubble bar items vertically
+  vertical,
 
-enum BubbleFillStyle { fill, outlined }
+  ///Align bubble bar items horizontally
+  horizotnal
+}
+
+enum BubbleFillStyle {
+  ///Fill the bubble bar item backgound
+  fill,
+
+  ///Outline this border of the bubble bar item
+  outlined
+}
