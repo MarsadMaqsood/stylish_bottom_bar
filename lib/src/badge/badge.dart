@@ -42,7 +42,7 @@ class Badge extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BadgeState createState() => _BadgeState();
+  State<Badge> createState() => _BadgeState();
 }
 
 class _BadgeState extends State<Badge> with TickerProviderStateMixin {
@@ -136,6 +136,8 @@ class _BadgeState extends State<Badge> with TickerProviderStateMixin {
 
     Widget _badgeView() {
       return AnimatedOpacity(
+        opacity: widget.showBadge ? 1 : 0,
+        duration: const Duration(milliseconds: 200),
         child: Material(
           shape: border,
           elevation: widget.elevation,
@@ -145,8 +147,6 @@ class _BadgeState extends State<Badge> with TickerProviderStateMixin {
             child: widget.badgeContent,
           ),
         ),
-        opacity: widget.showBadge ? 1 : 0,
-        duration: const Duration(milliseconds: 200),
       );
     }
 

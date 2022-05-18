@@ -265,7 +265,7 @@ class IconWidget extends StatefulWidget {
   final BarAnimation barAnimation;
 
   @override
-  _IconWidgetState createState() => _IconWidgetState();
+  State<IconWidget> createState() => _IconWidgetState();
 }
 
 class _IconWidgetState extends State<IconWidget>

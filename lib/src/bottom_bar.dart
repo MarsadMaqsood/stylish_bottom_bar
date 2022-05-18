@@ -171,7 +171,7 @@ class StylishBottomBar extends StatefulWidget {
   final IconStyle? iconStyle;
 
   @override
-  _StylishBottomBarState createState() => _StylishBottomBarState();
+  State<StylishBottomBar> createState() => _StylishBottomBarState();
 }
 
 class _StylishBottomBarState extends State<StylishBottomBar>
@@ -284,6 +284,13 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       listWidget = _bubbleBarTiles();
     }
 
+    bool isUsingMaterial3 = Theme.of(context)
+        .useMaterial3; //TODO: need to change ui according to the material 3
+
+    if (isUsingMaterial3) {
+      return Container();
+    }
+
     return Semantics(
       explicitChildNodes: true,
       child: widget.hasNotch
@@ -301,17 +308,16 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           : Material(
               elevation: widget.elevation ?? 8.0,
               color: widget.backgroundColor ?? Colors.white,
+              borderRadius: widget.borderRadius ?? BorderRadius.zero,
               child: innerWidget(context, additionalBottomPadding + 2,
                   widget.fabLocation, listWidget, widget.barAnimation!),
-              borderRadius: widget.borderRadius ?? BorderRadius.zero,
             ),
     );
   }
 
   List<Widget> _bubbleBarTiles() {
-    final MaterialLocalizations? localizations =
+    final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
-    assert(localizations != null);
     final List<Widget> children = <Widget>[];
     for (int i = 0; i < widget.items.length; i += 1) {
       children.add(
@@ -327,8 +333,8 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           },
           selected: i == widget.currentIndex,
           flex: _evaluateFlex(_animations[i]),
-          indexLabel: localizations!
-              .tabLabel(tabIndex: i + 1, tabCount: widget.items.length),
+          indexLabel: localizations.tabLabel(
+              tabIndex: i + 1, tabCount: widget.items.length),
           ink: widget.inkEffect!,
           inkColor: widget.inkColor,
           padding: widget.padding,
@@ -349,7 +355,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
   List<Widget> _animatedBarChilds() {
     final List<Widget> list = [];
-    final MaterialLocalizations? localizations =
+    final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
 
     for (int i = 0; i < widget.items.length; ++i) {
@@ -369,8 +375,8 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           if (widget.onTap != null) widget.onTap!(i);
         },
         flex: _evaluateFlex(_animations[i]),
-        indexLabel: localizations!
-            .tabLabel(tabIndex: i + 1, tabCount: widget.items.length),
+        indexLabel: localizations.tabLabel(
+            tabIndex: i + 1, tabCount: widget.items.length),
       ));
     }
     if (widget.fabLocation == StylishBarFabLocation.center) {
