@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../stylish_bottom_bar.dart';
 import 'anim_nav/animated_nav_tiles.dart';
 import 'bubble_nav_bar/bubble_navigation_tile.dart';
-import 'bubble_nav_bar/cliper.dart';
+import 'helpers/cliper.dart';
 import 'helpers/constant.dart';
 import 'widgets/widgets.dart';
 import 'dart:math' as math;
@@ -284,12 +284,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       listWidget = _bubbleBarTiles();
     }
 
-    bool isUsingMaterial3 = Theme.of(context)
-        .useMaterial3; //TODO: need to change ui according to the material 3
-
-    if (isUsingMaterial3) {
-      return Container();
-    }
+    bool isUsingMaterial3 = Theme.of(context).useMaterial3;
 
     return Semantics(
       explicitChildNodes: true,
@@ -297,10 +292,19 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           ? PhysicalShape(
               elevation: widget.elevation ?? 8.0,
               color: widget.backgroundColor ?? Colors.white,
-              clipper: BubbleBarClipper(
-                shape: const CircularNotchedRectangle(),
+              clipper: BarClipper(
+                shape: isUsingMaterial3
+                    ? const AutomaticNotchedShape(
+                        RoundedRectangleBorder(),
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(18),
+                          ),
+                        ),
+                      )
+                    : const CircularNotchedRectangle(),
                 geometry: _geometryListenable!,
-                notchMargin: 8,
+                notchMargin: isUsingMaterial3 ? 6 : 8,
               ),
               child: innerWidget(context, additionalBottomPadding,
                   widget.fabLocation, listWidget, widget.barAnimation!),

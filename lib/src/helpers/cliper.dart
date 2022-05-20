@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class BubbleBarClipper extends CustomClipper<Path> {
-  const BubbleBarClipper({
+class BarClipper extends CustomClipper<Path> {
+  const BarClipper({
     required this.geometry,
     required this.shape,
     required this.notchMargin,
@@ -23,7 +23,7 @@ class BubbleBarClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(BubbleBarClipper oldClipper) {
+  bool shouldReclip(BarClipper oldClipper) {
     return oldClipper.geometry != geometry ||
         oldClipper.shape != shape ||
         oldClipper.notchMargin != notchMargin;

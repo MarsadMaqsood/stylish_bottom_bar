@@ -54,20 +54,20 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   right: Radius.circular(52),
                   left: Radius.circular(52),
                 ),
-                child: SizedBox(
-                    height: iconSize <= 26 ? 48 : 48 + (iconSize - 26),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: selected
-                          ? barAnimation == BarAnimation.liquid
-                              ? MainAxisAlignment.spaceBetween
-                              : MainAxisAlignment.spaceEvenly
-                          : MainAxisAlignment.center,
-                      children: barAnimation == BarAnimation.liquid
-                          ? _liquidItems()
-                          : _childItems(),
-                    )),
+                // child: SizedBox(
+                // height: iconSize <= 26 ? 48 : 48 + (iconSize - 26),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: selected
+                      ? barAnimation == BarAnimation.liquid
+                          ? MainAxisAlignment.spaceBetween
+                          : MainAxisAlignment.spaceEvenly
+                      : MainAxisAlignment.center,
+                  children: barAnimation == BarAnimation.liquid
+                      ? _liquidItems()
+                      : _childItems(),
+                ),
               ),
             ),
           ],
@@ -108,10 +108,12 @@ class AnimatedNavigationTiles extends StatelessWidget {
         item: items,
         color: items.selectedColor);
     return [
-      const Spacer(),
+      // const Spacer(),
       AnimatedCrossFade(
-        firstChild: label,
-        // secondChild: Center(child: items.icon!),
+        firstChild: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: label,
+        ),
         secondChild: Container(
           alignment: Alignment.center,
           child: IconTheme(
@@ -124,7 +126,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
                 : items.icon!,
           ),
         ),
-
         duration: const Duration(milliseconds: 600),
         sizeCurve: Curves.fastOutSlowIn,
         firstCurve: Curves.fastOutSlowIn,
@@ -132,7 +133,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
         crossFadeState:
             selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       ),
-      const Spacer(),
+      // const Spacer(),
       AnimatedCrossFade(
         firstChild: Container(),
         secondChild: Container(

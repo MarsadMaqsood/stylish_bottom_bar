@@ -1,3 +1,8 @@
+## 0.1.3
+- Added support for Material3 design 
+- Fixed height issue
+- Performance Improvements
+
 ## 0.1.2
 - Removed unnecessary code
 - Performance Improvements

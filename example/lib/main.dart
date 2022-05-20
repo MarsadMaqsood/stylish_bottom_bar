@@ -14,8 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Stylish Bottom Navigation Bar Example',
       theme: ThemeData(
+        // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
+      // home: const BubbelBarExample(),
       home: const AnimatedBarExample(),
     );
   }
@@ -27,7 +29,7 @@ class AnimatedBarExample extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AnimatedBarExampleState createState() => _AnimatedBarExampleState();
+  State<AnimatedBarExample> createState() => _AnimatedBarExampleState();
 }
 
 class _AnimatedBarExampleState extends State<AnimatedBarExample> {
@@ -77,7 +79,6 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         ],
         iconSize: 32,
         barAnimation: BarAnimation.fade,
-        // iconStyle: IconStyle.animated,
         iconStyle: IconStyle.animated,
         hasNotch: true,
         fabLocation: StylishBarFabLocation.end,
@@ -112,7 +113,7 @@ class BubbelBarExample extends StatefulWidget {
   const BubbelBarExample({Key? key}) : super(key: key);
 
   @override
-  _BubbelBarExampleState createState() => _BubbelBarExampleState();
+  State<BubbelBarExample> createState() => _BubbelBarExampleState();
 }
 
 class _BubbelBarExampleState extends State<BubbelBarExample> {
