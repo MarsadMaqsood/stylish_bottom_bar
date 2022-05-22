@@ -7,6 +7,7 @@ enum BadgeAnimationType {
   fade,
   scale,
 }
+
 enum BadgeShape { circle, square }
 
 class IconWidget extends StatelessWidget {
