@@ -364,6 +364,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
     for (int i = 0; i < widget.items.length; ++i) {
       //i+=1
+
       list.add(AnimatedNavigationTiles(
         widget.items[i],
         widget.iconSize!,
