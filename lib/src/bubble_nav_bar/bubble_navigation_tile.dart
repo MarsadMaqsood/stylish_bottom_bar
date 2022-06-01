@@ -70,10 +70,7 @@ class BubbleNavigationTile extends StatelessWidget {
                   left: Radius.circular(52),
                 ),
                 highlightColor: Colors.transparent,
-                splashColor: ink
-                    ? inkColor
-                    // : Theme.of(context).splashColor
-                    : Colors.transparent,
+                splashColor: ink ? inkColor : Colors.transparent,
                 child: Container(
                   // height: 48,
                   height: barStyle == BubbleBarStyle.horizotnal
