@@ -35,11 +35,23 @@ class AnimatedBarExample extends StatefulWidget {
 class _AnimatedBarExampleState extends State<AnimatedBarExample> {
   dynamic selected;
   var heart = false;
+  PageController controller = PageController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true, //to make floating action button notch transparent
+
+      //to avoid the floating action button overlapping behavior,
+      // when a soft keyboard is displayed
+      // resizeToAvoidBottomInset: false,
+
       bottomNavigationBar: StylishBottomBar(
         items: [
           AnimatedBarItems(
@@ -85,6 +97,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {
+          controller.jumpToPage(index!);
           setState(() {
             selected = index;
           });
@@ -103,6 +116,17 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      body: SafeArea(
+        child: PageView(
+          controller: controller,
+          children: const [
+            Center(child: Text('Home')),
+            Center(child: Text('Star')),
+            Center(child: Text('Style')),
+            Center(child: Text('Profile')),
+          ],
+        ),
+      ),
     );
   }
 }
