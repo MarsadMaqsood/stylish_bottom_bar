@@ -1,3 +1,7 @@
+## 0.1.4
+- Added `BarAnimation.drop`
+- Performance Improvements
+
 ## 0.1.3
 - Added support for Material3 design 
 - Fixed height issue

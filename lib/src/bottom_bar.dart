@@ -122,7 +122,6 @@ class StylishBottomBar extends StatefulWidget {
   ///   ...
   ///   );
   ///```
-
   final bool hasNotch;
 
   ///Change ink color
@@ -363,8 +362,6 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         MaterialLocalizations.of(context);
 
     for (int i = 0; i < widget.items.length; ++i) {
-      //i+=1
-
       list.add(AnimatedNavigationTiles(
         widget.items[i],
         widget.iconSize!,

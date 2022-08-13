@@ -40,7 +40,7 @@ class BubbleNavigationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ///Size
+    ///flex size
     var flexSize = (flex! * 1000.0).round();
 
     ///Label Widget

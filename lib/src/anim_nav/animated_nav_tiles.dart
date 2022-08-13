@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/src/helpers/constant.dart';
 import 'package:stylish_bottom_bar/src/helpers/enums.dart';
+import 'package:stylish_bottom_bar/src/water_drop/water_drop.dart';
 import '../model/animated_nav_items.dart';
 
 class AnimatedNavigationTiles extends StatelessWidget {
@@ -22,17 +23,29 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }) : super(key: key);
 
   final AnimatedBarItems items;
+
+  ///Icon size
   final double iconSize;
+
+  ///onTap gesture event
   final VoidCallback? onTap;
+
   final bool? inkEffect;
   final Color? inkColor;
   final bool selected;
   final EdgeInsets padding;
+
+  ///Background color opacity
   final double opacity;
   final double? flex;
   final String? indexLabel;
   final Animation<double>? animation;
   final BarAnimation barAnimation;
+
+  ///icon style of the bottom bar items
+  ///[IconStyle.Default]
+  ///[IconStyle.animated]
+  ///[IconStyle.simple]
   final IconStyle iconStyle;
 
   @override
@@ -66,7 +79,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
                       : MainAxisAlignment.center,
                   children: barAnimation == BarAnimation.liquid
                       ? _liquidItems()
-                      : _childItems(),
+                      : barAnimation == BarAnimation.drop
+                          ? _dropItems()
+                          : _childItems(),
                 ),
               ),
             ),
@@ -204,6 +219,52 @@ class AnimatedNavigationTiles extends StatelessWidget {
                 ),
               ];
   }
+
+  _dropItems() {
+    return [
+      AnimatedCrossFade(
+        firstChild: Container(
+          alignment: Alignment.center,
+          child: IconTheme(
+            data: IconThemeData(
+              color: selected ? items.selectedColor : items.unSelectedColor,
+              size: iconSize,
+            ),
+            child: selected && items.selectedIcon != null
+                ? items.selectedIcon!
+                : items.icon!,
+          ),
+        ),
+        secondChild: Align(
+          alignment: Alignment.center,
+          child: WaterDrop(
+            top: 0,
+            size: const Size(48, 48),
+            left: 0,
+            child: Container(
+              color: items.backgroundColor,
+              padding: const EdgeInsets.all(12),
+              child: IconTheme(
+                data: IconThemeData(
+                  color: selected ? items.selectedColor : items.unSelectedColor,
+                  size: iconSize,
+                ),
+                child: selected && items.selectedIcon != null
+                    ? items.selectedIcon!
+                    : items.icon!,
+              ),
+            ),
+          ),
+        ),
+        duration: const Duration(milliseconds: 300),
+        sizeCurve: Curves.linear,
+        firstCurve: Curves.ease,
+        secondCurve: Curves.fastOutSlowIn.flipped,
+        crossFadeState:
+            selected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      )
+    ];
+  }
 }
 
 class LabelWidget extends StatelessWidget {
@@ -278,9 +339,11 @@ class _IconWidgetState extends State<IconWidget>
   @override
   void initState() {
     super.initState();
+
     if (widget.barAnimation != BarAnimation.transform3D) {
       controller = AnimationController(
-        duration: const Duration(milliseconds: 600),
+        duration: const Duration(milliseconds: 300),
+        reverseDuration: const Duration(milliseconds: 300),
         vsync: this,
       );
     }
@@ -294,10 +357,10 @@ class _IconWidgetState extends State<IconWidget>
 
   _assignAnimation() {
     if (widget.barAnimation != BarAnimation.transform3D) {
-      if (widget.barAnimation == BarAnimation.fade) {
-        animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
-      } else if (widget.barAnimation == BarAnimation.blink) {
+      if (widget.barAnimation == BarAnimation.blink) {
         animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+      } else {
+        animation = CurvedAnimation(parent: controller, curve: Curves.ease);
       }
 
       animationColor = ColorTween(
@@ -305,7 +368,7 @@ class _IconWidgetState extends State<IconWidget>
         end: widget.items.selectedColor,
       ).animate(animation)
         ..addListener(() {
-          setState(() {});
+          // setState(() {});
         });
 
       widget.selected ? controller.forward() : controller.reset();

@@ -10,6 +10,9 @@ enum BarAnimation {
   ///
   /// This animation is not yet fully customized
   liquid,
+
+  ///Adds the water drop effect on the icon
+  drop,
 }
 
 enum IconStyle {
@@ -38,4 +41,10 @@ enum BubbleFillStyle {
 
   ///Outline this border of the bubble bar item
   outlined
+}
+
+enum MovingStatus {
+  right,
+  left,
+  none,
 }

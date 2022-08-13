@@ -59,14 +59,14 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
                 Icons.house_outlined,
               ),
               selectedIcon: const Icon(Icons.house_rounded),
-              selectedColor: Colors.deepPurple,
-              backgroundColor: Colors.amber,
+              selectedColor: Colors.teal,
+              backgroundColor: Colors.tealAccent,
               title: const Text('Home')),
           AnimatedBarItems(
               icon: const Icon(Icons.star_border_rounded),
               selectedIcon: const Icon(Icons.star_rounded),
               selectedColor: Colors.green,
-              backgroundColor: Colors.amber,
+              backgroundColor: Colors.lightGreenAccent,
               title: const Text('Star')),
           AnimatedBarItems(
               icon: const Icon(
@@ -85,12 +85,12 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               selectedIcon: const Icon(
                 Icons.person,
               ),
-              backgroundColor: Colors.amber,
-              selectedColor: Colors.pinkAccent,
+              backgroundColor: Colors.purpleAccent,
+              selectedColor: Colors.deepPurple,
               title: const Text('Profile')),
         ],
         iconSize: 32,
-        barAnimation: BarAnimation.fade,
+        barAnimation: BarAnimation.drop,
         iconStyle: IconStyle.animated,
         hasNotch: true,
         fabLocation: StylishBarFabLocation.end,
