@@ -16,7 +16,7 @@ A collection of stylish bottom navigation bar like animated bottom bar and bubbl
 ## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^0.1.3
+        stylish_bottom_bar: ^0.1.4
         
 ## ⚡ Import
 
@@ -96,6 +96,7 @@ BarAnimation.fade
 BarAnimation.blink
 BarAnimation.transform3D
 BarAnimation.liquid
+BarAnimation.drop
 ```
 
 ### IconStyle
@@ -161,6 +162,18 @@ onTap: (index){
 
 <img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/24.gif">
 
+---
+
+`BarAnimation.drop`
+
+<img width="356" height="70" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/1.gif">
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/2.gif">
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/3.gif">
+
+
+---
 **BubbleNavigationBar**
 
 `BubbleBarStyle.horizotnal`
@@ -247,5 +260,4 @@ StylishBottomBar(
   );
 
 ```
-
 
