@@ -1,3 +1,6 @@
+## 0.1.5
+- Fix: issue [#5](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/5) where hover effect is not working properly
+
 ## 0.1.4
 - Added `BarAnimation.drop`
 - Performance Improvements

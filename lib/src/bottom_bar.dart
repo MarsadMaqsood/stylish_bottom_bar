@@ -9,6 +9,65 @@ import 'helpers/constant.dart';
 import 'widgets/widgets.dart';
 import 'dart:math' as math;
 
+///[StylishBottomBar] class to implement beautiful bottom bar widget
+///
+///```dart
+
+/// StylishBottomBar(
+///   items: [
+///     AnimatedBarItems(
+///       icon: Icon(
+///               Icons.home,
+///         ),
+///       selectedColor: Colors.deepPurple,
+///       backgroundColor: Colors.amber,
+///       title: Text('Home')),
+///     AnimatedBarItems(
+///       icon: Icon(
+///               Icons.add_circle_outline,
+///         ),
+///       selectedColor: Colors.green,
+///       backgroundColor: Colors.amber,
+///       title: Text('Add')),
+///     AnimatedBarItems(
+///       icon: Icon(
+///               Icons.person,
+///         ),
+///       backgroundColor: Colors.amber,
+///       selectedColor: Colors.pinkAccent,
+///       title: Text('Profile')),
+///
+///
+///    // BubbleBarItem(icon: Icon(Icons.home), title: Text('Home')),
+///    // BubbleBarItem(icon: Icon(Icons.add_circle_outline), title: Text('Add')),
+///    // BubbleBarItem(icon: Icon(Icons.person), title: Text('Profile')),
+///
+///    ],
+///
+///    iconSize: 32,
+///    barAnimation: BarAnimation.liquid,
+///    // iconStyle: IconStyle.animated,
+///    // iconStyle: IconStyle.simple,
+///    hasNotch: true,
+///    fabLocation: StylishBarFabLocation.end,
+///    opacity: 0.3,
+///    currentIndex: selected ?? 0,
+///
+///    //Bubble bar specific style properties
+///    //unselectedIconColor: Colors.grey,
+///    //barStyle: BubbleBarStyle.horizotnal,
+///    //bubbleFillStyle: BubbleFillStyle.fill,
+///
+///    onTap: (index) {
+///        setState(() {
+///            selected = index;
+///        });
+///    },
+///
+///  );
+
+///```
+
 // ignore: must_be_immutable
 class StylishBottomBar extends StatefulWidget {
   StylishBottomBar({
@@ -85,6 +144,8 @@ class StylishBottomBar extends StatefulWidget {
 
   ///Add navigation bar items
   ///[AnimatedBarItems] and [BubbleBarItem]
+  ///
+  ///You can use one of the `AnimatedBarItems` or `BubbleBarItem` class but not the both in the same List<...> items
   final List<dynamic> items;
 
   ///Change animated navigation bar background color
@@ -305,8 +366,24 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                 geometry: _geometryListenable!,
                 notchMargin: isUsingMaterial3 ? 6 : 8,
               ),
-              child: innerWidget(context, additionalBottomPadding,
-                  widget.fabLocation, listWidget, widget.barAnimation!),
+              child: ClipPath(
+                clipper: BarClipper(
+                  shape: isUsingMaterial3
+                      ? const AutomaticNotchedShape(
+                          RoundedRectangleBorder(),
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(18),
+                            ),
+                          ),
+                        )
+                      : const CircularNotchedRectangle(),
+                  geometry: _geometryListenable!,
+                  notchMargin: isUsingMaterial3 ? 6 : 8,
+                ),
+                child: innerWidget(context, additionalBottomPadding,
+                    widget.fabLocation, listWidget, widget.barAnimation!),
+              ),
             )
           : Material(
               elevation: widget.elevation ?? 8.0,
