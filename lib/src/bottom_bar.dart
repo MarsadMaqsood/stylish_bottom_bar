@@ -71,7 +71,7 @@ import 'dart:math' as math;
 // ignore: must_be_immutable
 class StylishBottomBar extends StatefulWidget {
   StylishBottomBar({
-    Key? key,
+    super.key,
     required this.items,
     this.iconStyle,
     this.backgroundColor,
@@ -110,8 +110,7 @@ class StylishBottomBar extends StatefulWidget {
                 items.every((element) {
                   return element.runtimeType == BubbleBarItem;
                 })),
-            '\n\nProvide one of "AnimatedBarItems" or "BubbleBarItem" to items: \n You can not use both inside one List<...>'),
-        super(key: key);
+            '\n\nProvide one of "AnimatedBarItems" or "BubbleBarItem" to items: \n You can not use both inside one List<...>');
 
   ///Change unselected item color
   ///If you don't want to change every single icon color use this property

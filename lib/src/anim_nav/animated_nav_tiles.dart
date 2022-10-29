@@ -9,7 +9,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
     this.items,
     this.iconSize,
     this.padding, {
-    Key? key,
+    super.key,
     this.onTap,
     this.inkEffect,
     this.inkColor,
@@ -20,7 +20,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
     this.indexLabel,
     required this.barAnimation,
     required this.iconStyle,
-  }) : super(key: key);
+  });
 
   final AnimatedBarItems items;
 

@@ -22,7 +22,7 @@ class Badge extends StatefulWidget {
   final bool toAnimate;
 
   const Badge({
-    Key? key,
+    super.key,
     this.badgeContent,
     this.badgeColor = Colors.black,
     this.showBadge = true,
@@ -39,7 +39,7 @@ class Badge extends StatefulWidget {
     this.padding = EdgeInsets.zero,
     this.duration = Duration.zero,
     this.toAnimate = true,
-  }) : super(key: key);
+  });
 
   @override
   State<Badge> createState() => _BadgeState();
@@ -133,7 +133,7 @@ class _BadgeState extends State<Badge> with TickerProviderStateMixin {
             borderRadius: widget.borderRadius,
           );
 
-    Widget _badgeView() {
+    Widget badgeView() {
       return AnimatedOpacity(
         opacity: widget.showBadge ? 1 : 0,
         duration: const Duration(milliseconds: 200),
@@ -153,21 +153,21 @@ class _BadgeState extends State<Badge> with TickerProviderStateMixin {
       if (widget.animationType == BadgeAnimationType.slide) {
         return SlideTransition(
           position: _positionTween.animate(_animation),
-          child: _badgeView(),
+          child: badgeView(),
         );
       } else if (widget.animationType == BadgeAnimationType.scale) {
         return ScaleTransition(
           scale: _animation,
-          child: _badgeView(),
+          child: badgeView(),
         );
       } else if (widget.animationType == BadgeAnimationType.fade) {
         return FadeTransition(
           opacity: _animation,
-          child: _badgeView(),
+          child: badgeView(),
         );
       }
     }
 
-    return _badgeView();
+    return badgeView();
   }
 }

@@ -12,13 +12,13 @@ enum BadgeShape { circle, square }
 
 class IconWidget extends StatelessWidget {
   const IconWidget({
-    Key? key,
+    super.key,
     required this.animation,
     required this.iconSize,
     required this.selected,
     required this.item,
     required this.unselectedIconColor,
-  }) : super(key: key);
+  });
 
   final Animation<double> animation;
   final double iconSize;

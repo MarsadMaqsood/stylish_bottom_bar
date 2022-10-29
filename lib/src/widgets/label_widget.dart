@@ -4,11 +4,11 @@ import '../model/bubble_item.dart';
 
 class LabelWidget extends StatelessWidget {
   const LabelWidget({
-    Key? key,
+    super.key,
     required this.animation,
     required this.item,
     required this.color,
-  }) : super(key: key);
+  });
 
   final Animation<double> animation;
   final BubbleBarItem item;

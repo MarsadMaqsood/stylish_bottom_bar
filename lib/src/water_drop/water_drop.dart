@@ -8,12 +8,12 @@ class WaterDrop extends StatefulWidget {
   final Widget child;
 
   const WaterDrop({
-    Key? key,
+    super.key,
     required this.size,
     required this.child,
     required this.top,
     required this.left,
-  }) : super(key: key);
+  });
 
   @override
   State<WaterDrop> createState() => __WaterDropState();

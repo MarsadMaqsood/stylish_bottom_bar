@@ -90,10 +90,10 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               title: const Text('Profile')),
         ],
         iconSize: 32,
-        barAnimation: BarAnimation.drop,
-        iconStyle: IconStyle.animated,
+        barAnimation: BarAnimation.blink,
+        iconStyle: IconStyle.Default,
         hasNotch: true,
-        fabLocation: StylishBarFabLocation.end,
+        fabLocation: StylishBarFabLocation.center,
         opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {
@@ -115,7 +115,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
         child: PageView(
           controller: controller,

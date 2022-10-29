@@ -12,7 +12,7 @@ class BubbleNavigationTile extends StatelessWidget {
     this.iconSize,
     this.unselectedIconColor,
     this.barStyle, {
-    Key? key,
+    super.key,
     this.onTap,
     this.flex,
     this.selected = false,
@@ -21,7 +21,7 @@ class BubbleNavigationTile extends StatelessWidget {
     this.inkColor = Colors.grey,
     this.padding,
     this.fillStyle,
-  }) : super(key: key);
+  });
 
   final BubbleBarItem item;
   final Animation<double> animation;
