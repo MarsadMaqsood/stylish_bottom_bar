@@ -2,4 +2,9 @@ include: package:flutter_lints/flutter.yaml
 
 linter: 
   rules:
-    # avoid_print: false
+    avoid_print: true
+    use_key_in_widget_constructors: true
+    # 
+    avoid_dynamic_calls: true
+    avoid_empty_else: true
+    avoid_relative_lib_imports: true

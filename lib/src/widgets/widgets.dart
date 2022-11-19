@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../helpers/enums.dart';
+import 'package:stylish_bottom_bar/src/helpers/enums.dart';
 
 Widget innerWidget(
   context,

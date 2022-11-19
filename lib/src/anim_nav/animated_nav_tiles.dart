@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/src/helpers/constant.dart';
 import 'package:stylish_bottom_bar/src/helpers/enums.dart';
+import 'package:stylish_bottom_bar/src/model/animated_nav_items.dart';
 import 'package:stylish_bottom_bar/src/water_drop/water_drop.dart';
-import '../model/animated_nav_items.dart';
 
 class AnimatedNavigationTiles extends StatelessWidget {
   const AnimatedNavigationTiles(

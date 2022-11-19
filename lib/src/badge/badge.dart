@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/icon_widget.dart';
+import 'package:stylish_bottom_bar/src/widgets/icon_widget.dart';
 import 'badge_positioned.dart';
 
 class Badge extends StatefulWidget {

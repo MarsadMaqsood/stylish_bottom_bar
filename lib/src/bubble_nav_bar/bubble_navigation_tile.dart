@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/src/helpers/enums.dart';
-import '../model/bubble_item.dart';
-import '../widgets/icon_widget.dart';
-import '../widgets/label_widget.dart';
+import 'package:stylish_bottom_bar/src/model/bubble_item.dart';
+import 'package:stylish_bottom_bar/src/widgets/icon_widget.dart';
+import 'package:stylish_bottom_bar/src/widgets/label_widget.dart';
 
 class BubbleNavigationTile extends StatelessWidget {
   const BubbleNavigationTile(

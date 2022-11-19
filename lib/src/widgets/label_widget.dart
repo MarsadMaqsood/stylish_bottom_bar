@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../helpers/constant.dart';
-import '../model/bubble_item.dart';
+import 'package:stylish_bottom_bar/src/helpers/constant.dart';
+import 'package:stylish_bottom_bar/src/model/bubble_item.dart';
 
 class LabelWidget extends StatelessWidget {
   const LabelWidget({
