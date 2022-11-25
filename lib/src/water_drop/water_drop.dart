@@ -32,26 +32,8 @@ class __WaterDropState extends State<WaterDrop> {
       });
     }
 
-    final size = totalSize ?? MediaQuery.of(context).size;
-
-    final alignment = getAlignment(size);
-
-    //used for determining alignments for gradient
-    final alignmentModifier = Alignment(
-      widget.size.width / size.width,
-      widget.size.height / size.height,
-    );
-
-    final begin = alignment - alignmentModifier;
-    final end = alignment + alignmentModifier;
-
     Widget childWithGradient = Container(
       foregroundDecoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: begin,
-          end: end,
-          colors: const [Colors.black, Colors.white],
-        ),
         // backgroundBlendMode: BlendMode.overlay,
         backgroundBlendMode: BlendMode.colorBurn,
       ),
