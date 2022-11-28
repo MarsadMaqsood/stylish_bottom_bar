@@ -4,6 +4,8 @@ import 'package:stylish_bottom_bar/src/helpers/enums.dart';
 import 'package:stylish_bottom_bar/src/model/animated_nav_items.dart';
 import 'package:stylish_bottom_bar/src/water_drop/water_drop.dart';
 
+const double paddingSize = 8;
+
 class AnimatedNavigationTiles extends StatelessWidget {
   const AnimatedNavigationTiles(
     this.items,
@@ -79,8 +81,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
                       : MainAxisAlignment.center,
                   children: barAnimation == BarAnimation.liquid
                       ? _liquidItems()
-                      : barAnimation == BarAnimation.drop
-                          ? _dropItems()
+                      : barAnimation == BarAnimation.drop ||
+                              barAnimation == BarAnimation.fade
+                          ? _dropItems(barAnimation)
                           : _childItems(),
                 ),
               ),
@@ -220,7 +223,13 @@ class AnimatedNavigationTiles extends StatelessWidget {
               ];
   }
 
-  _dropItems() {
+  _dropItems(BarAnimation barAnimation) {
+    var label = LabelWidget(
+      iconStyle: iconStyle,
+      animation: animation!,
+      item: items,
+      color: selected ? items.selectedColor : items.unSelectedColor,
+    );
     return [
       AnimatedCrossFade(
         firstChild: Container(
@@ -230,20 +239,22 @@ class AnimatedNavigationTiles extends StatelessWidget {
               color: selected ? items.selectedColor : items.unSelectedColor,
               size: iconSize,
             ),
-            child: selected && items.selectedIcon != null
-                ? items.selectedIcon!
-                : items.icon!,
+            child: Padding(
+                child: selected && items.selectedIcon != null
+                    ? items.selectedIcon!
+                    : items.icon!,
+                padding: EdgeInsets.all(paddingSize)),
           ),
         ),
         secondChild: Align(
           alignment: Alignment.center,
           child: WaterDrop(
             top: 0,
-            size: const Size(48, 48),
+            size: Size(iconSize + paddingSize, iconSize + paddingSize),
             left: 0,
             child: Container(
               color: items.backgroundColor,
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(paddingSize),
               child: IconTheme(
                 data: IconThemeData(
                   color: selected ? items.selectedColor : items.unSelectedColor,
@@ -262,7 +273,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
         secondCurve: Curves.fastOutSlowIn.flipped,
         crossFadeState:
             selected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-      )
+      ),
+      if (barAnimation == BarAnimation.fade && iconStyle == IconStyle.Default)
+        label
     ];
   }
 }

@@ -32,31 +32,19 @@ class __WaterDropState extends State<WaterDrop> {
       });
     }
 
-    Widget childWithGradient = Container(
-      foregroundDecoration: BoxDecoration(
-        // backgroundBlendMode: BlendMode.overlay,
-        backgroundBlendMode: BlendMode.colorBurn,
-      ),
+    Widget child = Container(
       child: widget.child,
     );
 
     return Stack(
       children: [
-        _OvalShadow(
-          width: widget.size.width,
-          height: widget.size.height,
-        ),
         ClipPath(
           clipper: _OvalClipper(
               center: center,
               width: widget.size.width,
               height: widget.size.height),
           clipBehavior: Clip.hardEdge,
-          child: childWithGradient,
-        ),
-        _LightDot(
-          width: widget.size.width,
-          height: widget.size.height,
+          child: child,
         ),
       ],
     );
@@ -65,8 +53,8 @@ class __WaterDropState extends State<WaterDrop> {
   //A child with gradient on it for light illusion
   ///Get center of a drop
   Offset get center => Offset(
-        widget.left + widget.size.width / 2,
-        widget.top + widget.size.height / 2,
+        widget.left + widget.size.width / 1.65,
+        widget.top + widget.size.height / 1.65,
       );
 
   ///Map Center and Size to Alignment
@@ -97,60 +85,4 @@ class _OvalClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
-}
-
-class _LightDot extends StatelessWidget {
-  final double width, height;
-
-  const _LightDot({Key? key, required this.width, required this.height})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: width / 5,
-      top: height / 5,
-      width: width / 5,
-      height: height / 5,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 2.25,
-              color: Colors.white.withOpacity(0.9),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _OvalShadow extends StatelessWidget {
-  final double width;
-  final double height;
-
-  const _OvalShadow({Key? key, required this.width, required this.height})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      width: width,
-      height: height,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(width / 2),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 3,
-              offset: const Offset(3, 3),
-              color: Colors.black.withOpacity(0.5),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
