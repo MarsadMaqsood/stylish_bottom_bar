@@ -464,7 +464,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         list.length > 3
             ? Flex(
                 direction: Axis.horizontal,
-                children: const [Padding(padding: EdgeInsets.all(12))],
+                children: const [Padding(padding: EdgeInsets.all(36))],
               )
             : const Spacer(
                 flex: 2,
