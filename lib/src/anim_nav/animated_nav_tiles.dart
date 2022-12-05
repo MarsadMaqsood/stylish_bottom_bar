@@ -4,7 +4,7 @@ import 'package:stylish_bottom_bar/src/helpers/enums.dart';
 import 'package:stylish_bottom_bar/src/model/animated_nav_items.dart';
 import 'package:stylish_bottom_bar/src/water_drop/water_drop.dart';
 
-const double paddingSize = 8;
+const double paddingSize = 16;
 
 class AnimatedNavigationTiles extends StatelessWidget {
   const AnimatedNavigationTiles(
@@ -249,11 +249,12 @@ class AnimatedNavigationTiles extends StatelessWidget {
         secondChild: Align(
           alignment: Alignment.center,
           child: WaterDrop(
+            backgroundColor: items.backgroundColor,
             top: 0,
             size: Size(iconSize + paddingSize, iconSize + paddingSize),
             left: 0,
             child: Container(
-              color: items.backgroundColor,
+              // color: items.backgroundColor,
               padding: const EdgeInsets.all(paddingSize),
               child: IconTheme(
                 data: IconThemeData(
