@@ -70,7 +70,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   left: Radius.circular(52),
                 ),
                 // child: SizedBox(
-                // height: iconSize <= 26 ? 48 : 48 + (iconSize - 26),
+                //   height: iconSize <= 26 ? 62 : 48 + (iconSize - 26),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -299,7 +299,7 @@ class LabelWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      heightFactor: 1.0,
+      heightFactor: 0.5,
       child: Container(
         child: iconStyle == IconStyle.Default
             ? DefaultTextStyle.merge(

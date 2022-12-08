@@ -330,17 +330,11 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
   @override
   Widget build(BuildContext context) {
-    dynamic additionalBottomPadding, listWidget;
+    dynamic additionalBottomPadding = 0.0, listWidget;
 
     if (widget.items[0].runtimeType == AnimatedBarItems) {
-      additionalBottomPadding =
-          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
-              2;
       listWidget = _animatedBarChilds();
     } else if (widget.items[0].runtimeType == BubbleBarItem) {
-      additionalBottomPadding =
-          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
-              4;
       listWidget = _bubbleBarTiles();
     }
 
@@ -364,7 +358,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                       )
                     : const CircularNotchedRectangle(),
                 geometry: _geometryListenable!,
-                notchMargin: isUsingMaterial3 ? 6 : 8,
+                notchMargin: isUsingMaterial3 ? 6 : 6,
               ),
               child: ClipPath(
                 clipper: BarClipper(
