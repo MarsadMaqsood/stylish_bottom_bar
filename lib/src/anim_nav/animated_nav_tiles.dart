@@ -59,18 +59,14 @@ class AnimatedNavigationTiles extends StatelessWidget {
         selected: selected,
         child: Stack(
           children: [
-            Padding(
-              padding: padding,
-              child: InkWell(
-                onTap: onTap,
-                splashColor: inkEffect! ? inkColor : Colors.transparent,
-                highlightColor: Colors.transparent,
-                borderRadius: const BorderRadius.horizontal(
-                  right: Radius.circular(52),
-                  left: Radius.circular(52),
-                ),
-                // child: SizedBox(
-                //   height: iconSize <= 26 ? 62 : 48 + (iconSize - 26),
+            InkWell(
+              onTap: onTap,
+              splashColor: inkEffect! ? inkColor : Colors.transparent,
+              highlightColor: Colors.transparent,
+              // child: SizedBox(
+              //   height: iconSize <= 26 ? 62 : 48 + (iconSize - 26),
+              child: Padding(
+                padding: padding,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
