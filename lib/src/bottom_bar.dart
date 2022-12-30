@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/src/helpers/enums.dart';
-import 'package:stylish_bottom_bar/src/model/bubble_item.dart';
+import 'package:stylish_bottom_bar/helpers/enums.dart';
+import 'package:stylish_bottom_bar/model/bubble_item.dart';
 import 'anim_nav/animated_nav_tiles.dart';
 import 'bubble_nav_bar/bubble_navigation_tile.dart';
-import 'helpers/cliper.dart';
-import 'helpers/constant.dart';
-import 'model/animated_nav_items.dart';
+import '../helpers/cliper.dart';
+import '../helpers/constant.dart';
+import '../model/animated_nav_items.dart';
 import 'widgets/widgets.dart';
 import 'dart:math' as math;
 
@@ -88,6 +88,7 @@ class StylishBottomBar extends StatefulWidget {
     this.fabLocation,
     this.hasNotch = false,
     this.barAnimation = BarAnimation.fade,
+    this.itemBorderRadius,
     //======================//
     //===For bubble style===//
     //======================//
@@ -112,6 +113,9 @@ class StylishBottomBar extends StatefulWidget {
                   return element.runtimeType == BubbleBarItem;
                 })),
             '\n\nProvide one of "AnimatedBarItems" or "BubbleBarItem" to items: \n You can not use both inside one List<...>');
+
+  ///Border radius of the [BubbleBarItem]
+  final BorderRadius? itemBorderRadius;
 
   ///Change unselected item color
   ///If you don't want to change every single icon color use this property
@@ -399,7 +403,9 @@ class _StylishBottomBarState extends State<StylishBottomBar>
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
     final List<Widget> children = <Widget>[];
+
     for (int i = 0; i < widget.items.length; i += 1) {
+      print(widget.itemBorderRadius);
       children.add(
         BubbleNavigationTile(
           widget.items[i],
@@ -419,6 +425,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           inkColor: widget.inkColor,
           padding: widget.padding,
           fillStyle: widget.bubbleFillStyle,
+          itemBorderRadius: widget.itemBorderRadius,
         ),
       );
     }

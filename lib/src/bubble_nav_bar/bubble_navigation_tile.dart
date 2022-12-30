@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/src/helpers/enums.dart';
-import 'package:stylish_bottom_bar/src/model/bubble_item.dart';
+import 'package:stylish_bottom_bar/helpers/enums.dart';
+import 'package:stylish_bottom_bar/model/bubble_item.dart';
 import 'package:stylish_bottom_bar/src/widgets/icon_widget.dart';
 import 'package:stylish_bottom_bar/src/widgets/label_widget.dart';
 
@@ -21,6 +21,7 @@ class BubbleNavigationTile extends StatelessWidget {
     this.inkColor = Colors.grey,
     this.padding,
     this.fillStyle,
+    required this.itemBorderRadius,
   });
 
   final BubbleBarItem item;
@@ -37,6 +38,7 @@ class BubbleNavigationTile extends StatelessWidget {
   final EdgeInsets? padding;
   final BubbleBarStyle? barStyle;
   final BubbleFillStyle? fillStyle;
+  final BorderRadius? itemBorderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +67,11 @@ class BubbleNavigationTile extends StatelessWidget {
               padding: padding!,
               child: InkWell(
                 onTap: onTap,
-                borderRadius: const BorderRadius.horizontal(
-                  right: Radius.circular(52),
-                  left: Radius.circular(52),
-                ),
+                borderRadius: itemBorderRadius ??
+                    const BorderRadius.horizontal(
+                      right: Radius.circular(52),
+                      left: Radius.circular(52),
+                    ),
                 highlightColor: Colors.transparent,
                 splashColor: ink ? inkColor : Colors.transparent,
                 child: Container(
@@ -80,10 +83,11 @@ class BubbleNavigationTile extends StatelessWidget {
                           : 50,
 
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.horizontal(
-                      right: Radius.circular(52),
-                      left: Radius.circular(52),
-                    ),
+                    borderRadius: itemBorderRadius ??
+                        const BorderRadius.horizontal(
+                          right: Radius.circular(52),
+                          left: Radius.circular(52),
+                        ),
                     border: Border.all(
                         width: outlined ? 1 : 0,
                         color: item.borderColor!,

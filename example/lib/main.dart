@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      // home: const BubbelBarExample(),
-      home: const AnimatedBarExample(),
+      home: const BubbelBarExample(),
+      // home: const AnimatedBarExample(),
     );
   }
 }
@@ -162,6 +162,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
         ],
       ),
       bottomNavigationBar: StylishBottomBar(
+        itemBorderRadius: BorderRadius.circular(12),
         items: [
           BubbleBarItem(
             icon: const Icon(Icons.abc),
