@@ -6,7 +6,7 @@ Widget innerWidget(
   double additionalBottomPadding,
   fabLocation,
   List<Widget> childs, [
-  BarAnimation barAnimation = BarAnimation.fade,
+  BarAnimation? barAnimation = BarAnimation.fade,
 ]) {
   return Padding(
     padding: const EdgeInsets.symmetric(
