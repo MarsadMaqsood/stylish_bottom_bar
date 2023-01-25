@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/src/badge/badge.dart';
+import 'package:stylish_bottom_bar/src/badge/badge.dart' as badge;
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 enum BadgeAnimationType {
@@ -31,7 +31,7 @@ class IconWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       heightFactor: 1.0,
-      child: Badge(
+      child: badge.Badge(
         showBadge: item.showBadge,
         badgeContent: item.badge,
         badgeColor: item.badgeColor,
