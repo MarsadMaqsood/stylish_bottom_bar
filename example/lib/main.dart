@@ -89,12 +89,8 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               selectedColor: Colors.deepPurple,
               title: const Text('Profile')),
         ],
-        iconSize: 32,
-        barAnimation: BarAnimation.blink,
-        iconStyle: IconStyle.Default,
         hasNotch: true,
         fabLocation: StylishBarFabLocation.center,
-        opacity: 0.3,
         currentIndex: selected ?? 0,
         onTap: (index) {
           controller.jumpToPage(index!);
@@ -102,6 +98,12 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             selected = index;
           });
         },
+        option: AnimatedBarOptions(
+          iconSize: 32,
+          barAnimation: BarAnimation.blink,
+          iconStyle: IconStyle.Default,
+          opacity: 0.3,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -162,7 +164,13 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
         ],
       ),
       bottomNavigationBar: StylishBottomBar(
-        itemBorderRadius: BorderRadius.circular(12),
+        option: BubbleBarOptions(
+          barStyle: BubbleBarStyle.horizotnal,
+          // barStyle: BubbleBarStyle.vertical,
+          bubbleFillStyle: BubbleFillStyle.fill,
+          // bubbleFillStyle: BubbleFillStyle.outlined,
+          opacity: 0.3,
+        ),
         items: [
           BubbleBarItem(
             icon: const Icon(Icons.abc),
@@ -180,11 +188,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
         fabLocation: StylishBarFabLocation.end,
         hasNotch: true,
         // iconSize: 32,
-        barStyle: BubbleBarStyle.horizotnal,
-        // barStyle: BubbleBarStyle.vertical,
-        bubbleFillStyle: BubbleFillStyle.fill,
-        // bubbleFillStyle: BubbleFillStyle.outlined,
-        opacity: 0.3,
+
         currentIndex: selected,
         onTap: (index) {
           setState(() {
