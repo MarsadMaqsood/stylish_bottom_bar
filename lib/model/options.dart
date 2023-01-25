@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
-
-abstract class BottomBarOption {}
 
 class BubbleBarOptions extends BottomBarOption {
   ///Change unselected item color
@@ -9,7 +8,7 @@ class BubbleBarOptions extends BottomBarOption {
   ///this will bulk change all the unselected icon color which does'nt have color property.
   ///
   ///If icon color not provided then
-  ///default unselected icon color is [Color(0xFF000000)]
+  ///default unselected icon color is [Colors.black]
   ///this is also used to set bulk color to unselected icons
   ///
   ///Only Availble for Bubble Bottom Bar
@@ -60,7 +59,7 @@ class BubbleBarOptions extends BottomBarOption {
     this.unselectedIconColor,
     this.borderRadius,
     this.padding = EdgeInsets.zero,
-    this.inkColor = Colors.grey,
+    this.inkColor,
     this.opacity = 0.8,
   });
 }
