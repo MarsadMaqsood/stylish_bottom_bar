@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 
 // class AnimatedBarItems {
 //   AnimatedBarItems({
@@ -28,7 +27,7 @@ import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 //   final Color unSelectedColor;
 // }
 
-class AnimatedBarItems extends BottomBar {
+class AnimatedBarItems {
   AnimatedBarItems({
     required this.icon,
     required this.title,

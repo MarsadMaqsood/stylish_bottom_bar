@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 
-class BubbleBarItem extends BottomBar {
+class BubbleBarItem {
   final Widget icon;
   final Widget? title;
   final Widget? activeIcon;
@@ -27,3 +26,5 @@ class BubbleBarItem extends BottomBar {
     this.borderColor = Colors.black,
   });
 }
+
+class BottomBarItem {}
