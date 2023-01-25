@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
-import 'package:stylish_bottom_bar/model/bubble_item.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/src/widgets/icon_widget.dart';
 import 'package:stylish_bottom_bar/src/widgets/label_widget.dart';
 
@@ -24,7 +24,8 @@ class BubbleNavigationTile extends StatelessWidget {
     required this.itemBorderRadius,
   });
 
-  final BubbleBarItem item;
+  // final BubbleBarItem item;
+  final BottomBarItem item;
   final Animation<double> animation;
   final double iconSize;
   final VoidCallback? onTap;

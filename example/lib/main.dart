@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 void main() {
@@ -17,8 +18,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      home: const BubbelBarExample(),
-      // home: const AnimatedBarExample(),
+      // home: const BubbelBarExample(),
+      home: const AnimatedBarExample(),
     );
   }
 }
@@ -54,7 +55,42 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
 
       bottomNavigationBar: StylishBottomBar(
         items: [
-          AnimatedBarItems(
+          // AnimatedBarItems(
+          //     icon: const Icon(
+          //       Icons.house_outlined,
+          //     ),
+          //     selectedIcon: const Icon(Icons.house_rounded),
+          //     selectedColor: Colors.teal,
+          //     backgroundColor: Colors.tealAccent,
+          //     title: const Text('Home')),
+          // AnimatedBarItems(
+          //     icon: const Icon(Icons.star_border_rounded),
+          //     selectedIcon: const Icon(Icons.star_rounded),
+          //     selectedColor: Colors.green,
+          //     backgroundColor: Colors.lightGreenAccent,
+          //     title: const Text('Star')),
+          // AnimatedBarItems(
+          //     icon: const Icon(
+          //       Icons.style_outlined,
+          //     ),
+          //     selectedIcon: const Icon(
+          //       Icons.style,
+          //     ),
+          //     backgroundColor: Colors.amber,
+          //     selectedColor: Colors.deepOrangeAccent,
+          //     title: const Text('Style')),
+          // AnimatedBarItems(
+          //     icon: const Icon(
+          //       Icons.person_outline,
+          //     ),
+          //     selectedIcon: const Icon(
+          //       Icons.person,
+          //     ),
+          //     backgroundColor: Colors.purpleAccent,
+          //     selectedColor: Colors.deepPurple,
+          //     title: const Text('Profile')),
+
+          BottomBarItem(
               icon: const Icon(
                 Icons.house_outlined,
               ),
@@ -62,13 +98,13 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               selectedColor: Colors.teal,
               backgroundColor: Colors.tealAccent,
               title: const Text('Home')),
-          AnimatedBarItems(
+          BottomBarItem(
               icon: const Icon(Icons.star_border_rounded),
               selectedIcon: const Icon(Icons.star_rounded),
               selectedColor: Colors.green,
               backgroundColor: Colors.lightGreenAccent,
               title: const Text('Star')),
-          AnimatedBarItems(
+          BottomBarItem(
               icon: const Icon(
                 Icons.style_outlined,
               ),
@@ -78,7 +114,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               backgroundColor: Colors.amber,
               selectedColor: Colors.deepOrangeAccent,
               title: const Text('Style')),
-          AnimatedBarItems(
+          BottomBarItem(
               icon: const Icon(
                 Icons.person_outline,
               ),
@@ -172,23 +208,23 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           opacity: 0.3,
         ),
         items: [
-          BubbleBarItem(
+          BottomBarItem(
             icon: const Icon(Icons.abc),
             title: const Text('Abc'),
+            backgroundColor: Colors.red,
+            selectedIcon: const Icon(Icons.read_more),
           ),
-          BubbleBarItem(
+          BottomBarItem(
             icon: const Icon(Icons.safety_divider),
             title: const Text('Safety'),
           ),
-          BubbleBarItem(
+          BottomBarItem(
             icon: const Icon(Icons.cabin),
             title: const Text('Cabin'),
           ),
         ],
         fabLocation: StylishBarFabLocation.end,
         hasNotch: true,
-        // iconSize: 32,
-
         currentIndex: selected,
         onTap: (index) {
           setState(() {

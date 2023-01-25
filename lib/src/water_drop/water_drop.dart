@@ -16,10 +16,10 @@ class WaterDrop extends StatefulWidget {
   });
 
   @override
-  State<WaterDrop> createState() => __WaterDropState();
+  State<WaterDrop> createState() => _WaterDropState();
 }
 
-class __WaterDropState extends State<WaterDrop> {
+class _WaterDropState extends State<WaterDrop> {
   // Size of the child widget, needed to provide gradient on the drop.
   Size? totalSize;
 

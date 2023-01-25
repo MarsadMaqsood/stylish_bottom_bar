@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/src/badge/badge.dart' as badge;
-import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 enum BadgeAnimationType {
   slide,
@@ -24,7 +24,8 @@ class IconWidget extends StatelessWidget {
   final double iconSize;
   final bool selected;
   final Color? unselectedIconColor;
-  final BubbleBarItem item;
+  // final BubbleBarItem item;
+  final BottomBarItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +44,10 @@ class IconWidget extends StatelessWidget {
             size: iconSize,
           ),
           child: selected
-              ? item.activeIcon != null
-                  ? item.activeIcon!
-                  : item.icon
-              : item.icon,
+              ? item.selectedIcon != null
+                  ? item.selectedIcon!
+                  : item.icon!
+              : item.icon!,
         ),
       ),
     );

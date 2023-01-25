@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/helpers/constant.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
-import 'package:stylish_bottom_bar/model/animated_nav_items.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/src/water_drop/water_drop.dart';
 
 class AnimatedNavigationTiles extends StatelessWidget {
@@ -22,7 +22,8 @@ class AnimatedNavigationTiles extends StatelessWidget {
     required this.iconStyle,
   });
 
-  final AnimatedBarItems items;
+  // final AnimatedBarItems items;
+  final BottomBarItem items;
 
   ///Icon size
   final double iconSize;
@@ -277,7 +278,8 @@ class LabelWidget extends StatelessWidget {
   }) : super(key: key);
 
   final Animation<double> animation;
-  final AnimatedBarItems item;
+  // final AnimatedBarItems item;
+  final BottomBarItem item;
   final Color color;
   final IconStyle iconStyle;
 
@@ -321,7 +323,8 @@ class IconWidget extends StatefulWidget {
       required this.iconSize,
       required this.barAnimation})
       : super(key: key);
-  final AnimatedBarItems items;
+  // final AnimatedBarItems items;
+  final BottomBarItem items;
   final bool selected;
   final double iconSize;
   final BarAnimation barAnimation;

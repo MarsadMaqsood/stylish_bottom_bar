@@ -6,7 +6,7 @@ Widget innerWidget(
   double additionalBottomPadding,
   fabLocation,
   List<Widget> childs, [
-  BarAnimation? barAnimation = BarAnimation.fade,
+  BarAnimation? barAnimation,
 ]) {
   return Padding(
     padding: const EdgeInsets.symmetric(
@@ -19,9 +19,10 @@ Widget innerWidget(
         type: MaterialType.transparency,
         child: Padding(
           padding: EdgeInsets.only(
-              bottom: barAnimation == BarAnimation.liquid
-                  ? 0
-                  : additionalBottomPadding,
+              bottom:
+                  barAnimation != null && barAnimation == BarAnimation.liquid
+                      ? 0
+                      : additionalBottomPadding,
               right: fabLocation == StylishBarFabLocation.end ? 72 : 0),
           child: MediaQuery.removePadding(
             context: context,
@@ -39,7 +40,10 @@ Widget _container(List<Widget> childs) {
     overflow: TextOverflow.ellipsis,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: childs,
+      children: [
+        ...childs,
+        // Text('as'),
+      ],
     ),
   );
 }

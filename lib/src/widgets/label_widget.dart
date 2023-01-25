@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/helpers/constant.dart';
-import 'package:stylish_bottom_bar/model/bubble_item.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
 
 class LabelWidget extends StatelessWidget {
   const LabelWidget({
@@ -11,7 +11,8 @@ class LabelWidget extends StatelessWidget {
   });
 
   final Animation<double> animation;
-  final BubbleBarItem item;
+  // final BubbleBarItem item;
+  final BottomBarItem item;
   final Color color;
 
   @override
