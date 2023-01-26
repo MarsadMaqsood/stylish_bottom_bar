@@ -8,15 +8,13 @@ A collection of stylish bottom navigation bar like animated bottom bar and bubbl
 - [Installing](#installing)
 - [How To Use](#how_to_use)
 - [Showcase](#showcase)
-- [Migrate to 0.0.7](#migrate)
+- [Migrate to 1.0.0](#migrate)
 - [Example](#example)
-
-
 
 ## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^0.1.5
+        stylish_bottom_bar: ^1.0.0
         
 ## ⚡ Import
 
@@ -27,6 +25,7 @@ import 'package:stylish_bottom_bar/stylish_nav.dart';
 ## 📙 How To Use <a name="how_to_use"></a>
 ```dart
 items:
+option:
 backgroundColor:
 elevation:
 currentIndex:
@@ -50,9 +49,9 @@ selectedIcon:
 ## Properties
 
 ```dart
-items → List<AnimatedBarItems>
-items → List<BubbleBarItem>
-items → List<dynamic>
+items → List<BottomBarItem>
+option → AnimatedBarOptions
+option → BubbleBarOptions
 backgroundColor → Color
 elevation → double
 currentIndex → int
@@ -198,66 +197,56 @@ onTap: (index){
 
 <img src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/13.gif?raw=true">
 
-## Migrate to 0.0.7 <a name="migrate"></a>
+## Migrate to 1.0.0 <a name="migrate"></a>
 
-`AnimatedNavigationBar` and `BubbleNavigationBar` are merged into `StylishBottomBar`.
-From version **0.0.7** `StylishBottomBar` will be used to access the both bubble nav bar and animated nav bar.
+`List<dynamic> items` is changed to `List<BottomBarItem> items`
 
-`List<BubbleBarItem> items` and `List<AnimatedBarItems> items` is simplified into `List<dynamic> items`. You can assign `AnimatedBarItems` and `BubbleBarItem` to `items:` but not the both in same `items:`.
+From version **1.0.0** `option:` `AnimatedBarOptions` and `BubbleBarOptions` will be used to change the bar items type and properties.
 
 ## Example <a name="example"></a>
 
 ```dart
 StylishBottomBar(
-    items: [
-        AnimatedBarItems(
-            icon: Icon(
-                Icons.home,
-            ),
-            selectedColor: Colors.deepPurple,
-            backgroundColor: Colors.amber,
-            title: Text('Home')),
-        AnimatedBarItems(
-            icon: Icon(
-                Icons.add_circle_outline,
-            ),
-            selectedColor: Colors.green,
-            backgroundColor: Colors.amber,
-          title: Text('Add')),
-      AnimatedBarItems(
-          icon: Icon(
-            Icons.person,
-          ),
-          backgroundColor: Colors.amber,
-          selectedColor: Colors.pinkAccent,
-          title: Text('Profile')),
-    // BubbleBarItem(icon: Icon(Icons.home), title: Text('Home')),
-    // BubbleBarItem(icon: Icon(Icons.add_circle_outline), title: Text('Add')),
-    // BubbleBarItem(icon: Icon(Icons.person), title: Text('Profile')),
-    
-    ],
-    
-    iconSize: 32,
-    barAnimation: BarAnimation.liquid,
-    // iconStyle: IconStyle.animated,
-    // iconStyle: IconStyle.simple,
-    hasNotch: true,
-    fabLocation: StylishBarFabLocation.end,
+//  option: AnimatedBarOptions(
+//    iconSize: 32,
+//    barAnimation: BarAnimation.liquid,
+//    iconStyle: IconStyle.animated,
+//    opacity: 0.3,
+//  ),
+  option: BubbleBarOptions(
+    barStyle: BubbleBarStyle.horizotnal,
+    // barStyle: BubbleBarStyle.vertical,
+    bubbleFillStyle: BubbleFillStyle.fill,
+    // bubbleFillStyle: BubbleFillStyle.outlined,
     opacity: 0.3,
-    currentIndex: selected ?? 0,
-    
-    //Bubble bar specific style properties
-    //unselectedIconColor: Colors.grey,
-    //barStyle: BubbleBarStyle.horizotnal,
-    //bubbleFillStyle: BubbleFillStyle.fill,
-    
-    onTap: (index) {
-        setState(() {
-            selected = index;
-        });
-    },
-    
-  );
+  ),
+  items: [
+    BottomBarItem(
+      icon: const Icon(Icons.abc),
+      title: const Text('Abc'),
+      backgroundColor: Colors.red,
+      selectedIcon: const Icon(Icons.read_more),
+    ),
+    BottomBarItem(
+      icon: const Icon(Icons.safety_divider),
+      title: const Text('Safety'),
+      backgroundColor: Colors.orange,
+    ),
+    BottomBarItem(
+      icon: const Icon(Icons.cabin),
+      title: const Text('Cabin'),
+      backgroundColor: Colors.purple,
+    ),
+  ],
+  fabLocation: StylishBarFabLocation.end,
+  hasNotch: true,
+  currentIndex: selected,
+  onTap: (index) {
+    setState(() {
+      selected = index;
+      controller.jumpToPage(index);
+    });
+  },
+)
 
 ```
-

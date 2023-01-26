@@ -1,3 +1,8 @@
+## 1.0.0
+- Changed: `items: List<dynamic>` to `List<BottomBarItem>`
+- Added: `option:` `BubbleBarOptions` and `AnimatedBarOptions`
+- Fix: Flutter 3.7 compatibility issue [#8](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/8). Thanks to PR [#7](https://github.com/MarsadMaqsood/stylish_bottom_bar/pull/7)
+
 ## 0.1.5
 - Fix: issue [#5](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/5) where hover effect is not working properly
 
