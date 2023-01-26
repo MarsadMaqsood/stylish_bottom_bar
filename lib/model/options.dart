@@ -10,43 +10,38 @@ class BubbleBarOptions extends BottomBarOption {
   ///If icon color not provided then
   ///default unselected icon color is [Colors.black]
   ///this is also used to set bulk color to unselected icons
-  ///
-  ///Only Availble for Bubble Bottom Bar
-  final Color? unselectedIconColor;
+  final Color unselectedIconColor;
 
   ///BarStyle to align icon and title in horizontal or vertical
   ///[BubbleBarStyle.horizotnal]
   ///[BubbleBarStyle.vertical]
   ///Default value is [BubbleBarStyle.horizotnal]
-  ///
-  ///Only Availble for Bubble Bottom Bar
   final BubbleBarStyle barStyle;
 
   ///Use this to customize the bubble background fill style
   ///You can use border with [BubbleFillStyle.outlined]
   ///and also fill the background with color using [BubbleFillStyle.fill]
-  ///
-  ///Only Availble for Bubble Bottom Bar
   final BubbleFillStyle bubbleFillStyle;
 
   ///Change Icon size
   ///Default is 26.0
-  final double? iconSize;
+  final double iconSize;
 
   ///Enable ink effect to bubble navigation bar item
   ///Default value is `false`
-  final bool? inkEffect;
+  final bool inkEffect;
 
   ///Border radius of the `BubbleBarItem`
   final BorderRadius? borderRadius;
 
   ///Add padding arround navigation tiles
   ///Default padding is [EdgeInsets.zero]
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
 
   ///Change ink color
+  ///
   ///Default color is [Colors.grey]
-  final Color? inkColor;
+  final Color inkColor;
 
   ///Change navigation bar items background color opacity
   final double? opacity;
@@ -56,10 +51,10 @@ class BubbleBarOptions extends BottomBarOption {
     this.bubbleFillStyle = BubbleFillStyle.fill,
     this.iconSize = 26.0,
     this.inkEffect = false,
-    this.unselectedIconColor,
+    this.unselectedIconColor = Colors.black,
     this.borderRadius,
     this.padding = EdgeInsets.zero,
-    this.inkColor,
+    this.inkColor = Colors.grey,
     this.opacity = 0.8,
   });
 }
@@ -67,7 +62,7 @@ class BubbleBarOptions extends BottomBarOption {
 class AnimatedBarOptions extends BottomBarOption {
   ///Change Icon size
   ///Default is 26.0
-  final double? iconSize;
+  final double iconSize;
 
   ///Change animated navigation bar background color
   final Color? backgroundColor;
@@ -77,10 +72,12 @@ class AnimatedBarOptions extends BottomBarOption {
   final EdgeInsets? padding;
 
   ///Enable ink effect to bubble navigation bar item
+  ///
   ///Default value is `false`
-  final bool? inkEffect;
+  final bool inkEffect;
 
   ///Change ink color
+  ///
   ///Default color is [Colors.grey]
   final Color? inkColor;
 
@@ -94,7 +91,7 @@ class AnimatedBarOptions extends BottomBarOption {
   ///[BarAnimation.liquid]
   ///
   ///Default value is [BarAnimation.fade]
-  final BarAnimation? barAnimation;
+  final BarAnimation barAnimation;
 
   ///Change icon style
   ///`IconStyle.simple`
@@ -102,7 +99,7 @@ class AnimatedBarOptions extends BottomBarOption {
   ///
   ///[IconStyle.simple] is used to show icons without title and animations
   ///
-  ///Default is [IconStyle.animated]
+  ///Default is [IconStyle.Default]
   final IconStyle? iconStyle;
 
   AnimatedBarOptions({
@@ -112,7 +109,7 @@ class AnimatedBarOptions extends BottomBarOption {
     this.inkEffect = false,
     this.inkColor = Colors.grey,
     this.opacity = 0.8,
-    this.barAnimation,
-    this.iconStyle = IconStyle.animated,
+    this.barAnimation = BarAnimation.fade,
+    this.iconStyle = IconStyle.Default,
   });
 }

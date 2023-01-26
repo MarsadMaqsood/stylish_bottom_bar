@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      // home: const BubbelBarExample(),
-      home: const AnimatedBarExample(),
+      home: const BubbelBarExample(),
+      // home: const AnimatedBarExample(),
     );
   }
 }
@@ -55,41 +55,6 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
 
       bottomNavigationBar: StylishBottomBar(
         items: [
-          // AnimatedBarItems(
-          //     icon: const Icon(
-          //       Icons.house_outlined,
-          //     ),
-          //     selectedIcon: const Icon(Icons.house_rounded),
-          //     selectedColor: Colors.teal,
-          //     backgroundColor: Colors.tealAccent,
-          //     title: const Text('Home')),
-          // AnimatedBarItems(
-          //     icon: const Icon(Icons.star_border_rounded),
-          //     selectedIcon: const Icon(Icons.star_rounded),
-          //     selectedColor: Colors.green,
-          //     backgroundColor: Colors.lightGreenAccent,
-          //     title: const Text('Star')),
-          // AnimatedBarItems(
-          //     icon: const Icon(
-          //       Icons.style_outlined,
-          //     ),
-          //     selectedIcon: const Icon(
-          //       Icons.style,
-          //     ),
-          //     backgroundColor: Colors.amber,
-          //     selectedColor: Colors.deepOrangeAccent,
-          //     title: const Text('Style')),
-          // AnimatedBarItems(
-          //     icon: const Icon(
-          //       Icons.person_outline,
-          //     ),
-          //     selectedIcon: const Icon(
-          //       Icons.person,
-          //     ),
-          //     backgroundColor: Colors.purpleAccent,
-          //     selectedColor: Colors.deepPurple,
-          //     title: const Text('Profile')),
-
           BottomBarItem(
               icon: const Icon(
                 Icons.house_outlined,
@@ -129,16 +94,16 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         fabLocation: StylishBarFabLocation.center,
         currentIndex: selected ?? 0,
         onTap: (index) {
-          controller.jumpToPage(index!);
+          controller.jumpToPage(index);
           setState(() {
             selected = index;
           });
         },
         option: AnimatedBarOptions(
-          iconSize: 32,
-          barAnimation: BarAnimation.blink,
-          iconStyle: IconStyle.Default,
-          opacity: 0.3,
+          // iconSize: 32,
+          barAnimation: BarAnimation.liquid,
+          iconStyle: IconStyle.animated,
+          // opacity: 0.3,
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -217,10 +182,12 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           BottomBarItem(
             icon: const Icon(Icons.safety_divider),
             title: const Text('Safety'),
+            backgroundColor: Colors.orange,
           ),
           BottomBarItem(
             icon: const Icon(Icons.cabin),
             title: const Text('Cabin'),
+            backgroundColor: Colors.purple,
           ),
         ],
         fabLocation: StylishBarFabLocation.end,
@@ -228,7 +195,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
         currentIndex: selected,
         onTap: (index) {
           setState(() {
-            selected = index!;
+            selected = index;
             controller.jumpToPage(index);
           });
         },

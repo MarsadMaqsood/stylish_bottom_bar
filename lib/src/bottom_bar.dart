@@ -17,49 +17,33 @@ import 'dart:math' as math;
 
 /// StylishBottomBar(
 ///   items: [
-///     AnimatedBarItems(
+///     BottomBarItem(
 ///       icon: Icon(
 ///               Icons.home,
 ///         ),
 ///       selectedColor: Colors.deepPurple,
 ///       backgroundColor: Colors.amber,
 ///       title: Text('Home')),
-///     AnimatedBarItems(
+///     BottomBarItem(
 ///       icon: Icon(
 ///               Icons.add_circle_outline,
 ///         ),
 ///       selectedColor: Colors.green,
 ///       backgroundColor: Colors.amber,
 ///       title: Text('Add')),
-///     AnimatedBarItems(
+///     BottomBarItem(
 ///       icon: Icon(
 ///               Icons.person,
 ///         ),
 ///       backgroundColor: Colors.amber,
 ///       selectedColor: Colors.pinkAccent,
 ///       title: Text('Profile')),
-///
-///
-///    // BubbleBarItem(icon: Icon(Icons.home), title: Text('Home')),
-///    // BubbleBarItem(icon: Icon(Icons.add_circle_outline), title: Text('Add')),
-///    // BubbleBarItem(icon: Icon(Icons.person), title: Text('Profile')),
-///
 ///    ],
-///
-///    iconSize: 32,
-///    barAnimation: BarAnimation.liquid,
-///    // iconStyle: IconStyle.animated,
-///    // iconStyle: IconStyle.simple,
-///    hasNotch: true,
-///    fabLocation: StylishBarFabLocation.end,
-///    opacity: 0.3,
-///    currentIndex: selected ?? 0,
-///
-///    //Bubble bar specific style properties
-///    //unselectedIconColor: Colors.grey,
-///    //barStyle: BubbleBarStyle.horizotnal,
-///    //bubbleFillStyle: BubbleFillStyle.fill,
-///
+///    option: AnimatedBarOptions(
+///        iconStyle: IconStyle.animated,
+///        barAnimation: BarAnimation.liquid,
+///        opacity: 0.3,
+///    ),
 ///    onTap: (index) {
 ///        setState(() {
 ///            selected = index;
@@ -75,27 +59,13 @@ class StylishBottomBar extends StatefulWidget {
   StylishBottomBar({
     super.key,
     required this.items,
-    // this.iconStyle,
     this.backgroundColor,
-    this.elevation,
+    this.elevation = 8.0,
     this.currentIndex = 0,
-    // this.iconSize = 26.0,
-    // this.padding = EdgeInsets.zero,
-    // this.inkEffect = false,
-    // this.inkColor = Colors.grey,
     this.onTap,
-    // this.opacity = 0.8,
     this.borderRadius,
     this.fabLocation,
     this.hasNotch = false,
-    // this.barAnimation = BarAnimation.fade,
-    // this.itemBorderRadius,
-    //======================//
-    //===For bubble style===//
-    //======================//
-    // this.bubbleFillStyle = BubbleFillStyle.fill,
-    // this.unselectedIconColor = Colors.black,
-    // this.barStyle = BubbleBarStyle.horizotnal,
     required this.option,
   })  : assert(items.length >= 2,
             '\n\nStylish Bottom Navigation must have 2 or more items'),
@@ -103,30 +73,15 @@ class StylishBottomBar extends StatefulWidget {
           items.every((BottomBarItem item) => item.title != null) == true,
           '\n\nEvery item must have a non-null title',
         ),
-        assert((currentIndex! >= items.length) == false,
+        assert((currentIndex >= items.length) == false,
             '\n\nCurrent index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}'),
-        assert((currentIndex! < 0) == false,
-            '\n\nCurrent index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}')
-  // assert(
-  //   items.every((dynamic item) => item.title != null) == true,
-  //   '\n\nEvery item must have a non-null title',
-  // ),
-
-  // assert(
-  //     (items.every((element) {
-  //           return element.runtimeType == AnimatedBarItems;
-  //         }) ||
-  //         items.every((element) {
-  //           return element.runtimeType == BubbleBarItem;
-  //         })),
-  //     '\n\nProvide one of "AnimatedBarItems" or "BubbleBarItem" to items: \n You can not use both inside one List<...>')
-  ;
+        assert((currentIndex < 0) == false,
+            '\n\nCurrent index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}');
 
   ///Add navigation bar items
-  ///[AnimatedBarItems] and [BubbleBarItem]
+  ///[BottomBarItem]
   ///
-  ///You can use one of the `AnimatedBarItems` or `BubbleBarItem` class but not the both in the same List<...> items
-  // final List<dynamic> items;
+  ///You can use `BottomBarItem` class to add navigation bar items
   final List<BottomBarItem> items;
 
   ///Change animated navigation bar background color
@@ -135,7 +90,7 @@ class StylishBottomBar extends StatefulWidget {
   ///Add elevation to bottom navigation bar
   ///
   ///Default value is 8.0
-  final double? elevation;
+  final double elevation;
 
   ///Change Icon size
   ///Default is 26.0
@@ -143,7 +98,7 @@ class StylishBottomBar extends StatefulWidget {
 
   ///Used to change the selected item index
   /// Default is 0
-  int? currentIndex;
+  int currentIndex;
 
   ///Add notch effect to floating action button
   ///
@@ -166,7 +121,7 @@ class StylishBottomBar extends StatefulWidget {
   /// },
   ///
   ///```
-  final ValueChanged<int?>? onTap;
+  final ValueChanged<int>? onTap;
 
   ///Change navigation bar items background color opacity
   // final double? opacity;
@@ -182,6 +137,10 @@ class StylishBottomBar extends StatefulWidget {
   final StylishBarFabLocation? fabLocation;
 
   /// Customize bottom bar items style and other properties
+  ///
+  /// You can use
+  /// [AnimatedBarOptions] and [BubbleBarOptions]
+  /// to change the properties.
   final BottomBarOption option;
 
   @override
@@ -228,8 +187,8 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         reverseCurve: Curves.fastOutSlowIn.flipped,
       );
     });
-    _controllers[widget.currentIndex!].value = 1.0;
-    _backgroundColor = widget.items[widget.currentIndex!].backgroundColor;
+    _controllers[widget.currentIndex].value = 1.0;
+    _backgroundColor = widget.items[widget.currentIndex].backgroundColor;
   }
 
   @override
@@ -260,8 +219,8 @@ class _StylishBottomBarState extends State<StylishBottomBar>
     }
 
     if (widget.currentIndex != oldWidget.currentIndex) {
-      _controllers[oldWidget.currentIndex!].reverse();
-      _controllers[widget.currentIndex!].forward();
+      _controllers[oldWidget.currentIndex].reverse();
+      _controllers[widget.currentIndex].forward();
 
       if (widget.fabLocation == StylishBarFabLocation.center) {
         // dynamic _currentItem = widget.items[oldWidget.currentIndex!];
@@ -269,15 +228,15 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
         // widget.items[0] = _nextItem;
         // widget.items[widget.currentIndex!] = _currentItem;
-        _controllers[oldWidget.currentIndex!].reverse();
-        _controllers[widget.currentIndex!].forward();
+        _controllers[oldWidget.currentIndex].reverse();
+        _controllers[widget.currentIndex].forward();
         // widget.currentIndex = 0;
         _state();
       }
     } else {
       if (_backgroundColor !=
-          widget.items[widget.currentIndex!].backgroundColor) {
-        _backgroundColor = widget.items[widget.currentIndex!].backgroundColor;
+          widget.items[widget.currentIndex].backgroundColor) {
+        _backgroundColor = widget.items[widget.currentIndex].backgroundColor;
       }
     }
   }
@@ -309,7 +268,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       explicitChildNodes: true,
       child: widget.hasNotch
           ? PhysicalShape(
-              elevation: widget.elevation ?? 8.0,
+              elevation: widget.elevation,
               color: widget.backgroundColor ?? Colors.white,
               clipper: BarClipper(
                 shape: isUsingMaterial3
@@ -351,7 +310,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
               ),
             )
           : Material(
-              elevation: widget.elevation ?? 8.0,
+              elevation: widget.elevation,
               color: widget.backgroundColor ?? Colors.white,
               borderRadius: widget.borderRadius ?? BorderRadius.zero,
               child: innerWidget(
@@ -377,7 +336,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           widget.items[i],
           options.opacity!,
           _animations[i],
-          options.iconSize!,
+          options.iconSize,
           options.unselectedIconColor,
           options.barStyle,
           onTap: () {
@@ -387,7 +346,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           flex: _evaluateFlex(_animations[i]),
           indexLabel: localizations.tabLabel(
               tabIndex: i + 1, tabCount: widget.items.length),
-          ink: options.inkEffect!,
+          ink: options.inkEffect,
           inkColor: options.inkColor,
           padding: options.padding,
           fillStyle: options.bubbleFillStyle,
@@ -416,14 +375,14 @@ class _StylishBottomBarState extends State<StylishBottomBar>
     for (int i = 0; i < widget.items.length; ++i) {
       list.add(AnimatedNavigationTiles(
         widget.items[i],
-        options.iconSize!,
+        options.iconSize,
         options.padding!,
         inkEffect: options.inkEffect,
         inkColor: options.inkColor,
         selected: widget.currentIndex == i,
         opacity: options.opacity!,
         animation: _animations[i],
-        barAnimation: options.barAnimation!,
+        barAnimation: options.barAnimation,
         iconStyle: options.iconStyle ?? IconStyle.Default,
         onTap: () {
           if (widget.onTap != null) widget.onTap!(i);
