@@ -190,8 +190,15 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             backgroundColor: Colors.purple,
           ),
         ],
+        gradient: const LinearGradient(
+          colors: [
+            Colors.green,
+            Colors.yellow,
+          ],
+        ),
+        backgroundColor: Colors.red,
         fabLocation: StylishBarFabLocation.end,
-        hasNotch: true,
+        // hasNotch: true,
         currentIndex: selected,
         onTap: (index) {
           setState(() {

@@ -14,7 +14,7 @@ import 'dart:math' as math;
 ///[StylishBottomBar] class to implement beautiful bottom bar widget
 ///
 ///```dart
-
+///
 /// StylishBottomBar(
 ///   items: [
 ///     BottomBarItem(
@@ -67,6 +67,7 @@ class StylishBottomBar extends StatefulWidget {
     this.fabLocation,
     this.hasNotch = false,
     required this.option,
+    this.gradient,
   })  : assert(items.length >= 2,
             '\n\nStylish Bottom Navigation must have 2 or more items'),
         assert(
@@ -142,6 +143,19 @@ class StylishBottomBar extends StatefulWidget {
   /// [AnimatedBarOptions] and [BubbleBarOptions]
   /// to change the properties.
   final BottomBarOption option;
+
+  /// The gradient property defines a gradient color pattern for the widget.
+  /// The gradient can be used to add a colorful background or add gradient colors to the widget.
+  /// The gradient is defined using the [Gradient] class, which provides various options to specify the gradient colors and direction.
+  /// Example usage:
+  /// ```dart
+  /// final gradient = LinearGradient(
+  ///   colors: [Colors.red, Colors.yellow],
+  ///   begin: Alignment.topLeft,
+  ///   end: Alignment.bottomRight,
+  /// );
+  /// ```
+  final Gradient? gradient;
 
   @override
   State<StylishBottomBar> createState() => _StylishBottomBarState();
@@ -311,14 +325,22 @@ class _StylishBottomBarState extends State<StylishBottomBar>
             )
           : Material(
               elevation: widget.elevation,
-              color: widget.backgroundColor ?? Colors.white,
+              // color: widget.backgroundColor ?? Colors.white,
               borderRadius: widget.borderRadius ?? BorderRadius.zero,
-              child: innerWidget(
-                  context,
-                  additionalBottomPadding + 2,
-                  widget.fabLocation,
-                  listWidget,
-                  options is AnimatedBarOptions ? options.barAnimation : null),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: widget.gradient,
+                  color: widget.backgroundColor ?? Colors.white,
+                ),
+                child: innerWidget(
+                    context,
+                    additionalBottomPadding + 2,
+                    widget.fabLocation,
+                    listWidget,
+                    options is AnimatedBarOptions
+                        ? options.barAnimation
+                        : null),
+              ),
             ),
     );
   }
