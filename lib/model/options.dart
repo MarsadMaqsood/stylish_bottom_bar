@@ -64,9 +64,6 @@ class AnimatedBarOptions extends BottomBarOption {
   ///Default is 26.0
   final double iconSize;
 
-  ///Change animated navigation bar background color
-  final Color? backgroundColor;
-
   ///Add padding arround navigation tiles
   ///Default padding is [EdgeInsets.zero]
   final EdgeInsets? padding;
@@ -104,7 +101,6 @@ class AnimatedBarOptions extends BottomBarOption {
 
   AnimatedBarOptions({
     this.iconSize = 26.0,
-    this.backgroundColor,
     this.padding = EdgeInsets.zero,
     this.inkEffect = false,
     this.inkColor = Colors.grey,
