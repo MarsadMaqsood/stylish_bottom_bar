@@ -314,21 +314,21 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                   notchMargin: isUsingMaterial3 ? 6 : 8,
                 ),
                 child: innerWidget(
-                    context,
-                    additionalBottomPadding,
-                    widget.fabLocation,
-                    listWidget,
-                    options is AnimatedBarOptions
-                        ? options.barAnimation
-                        : null),
+                  context,
+                  additionalBottomPadding,
+                  widget.fabLocation,
+                  listWidget,
+                  options is AnimatedBarOptions ? options.barAnimation : null,
+                ),
               ),
             )
           : Material(
               elevation: widget.elevation,
               // color: widget.backgroundColor ?? Colors.white,
-              borderRadius: widget.borderRadius ?? BorderRadius.zero,
+              borderRadius: widget.borderRadius,
               child: Container(
                 decoration: BoxDecoration(
+                  borderRadius: widget.borderRadius,
                   gradient: widget.gradient,
                   color: widget.backgroundColor ?? Colors.white,
                 ),
