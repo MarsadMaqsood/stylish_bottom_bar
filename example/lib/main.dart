@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      home: const BubbelBarExample(),
-      // home: const AnimatedBarExample(),
+      // home: const BubbelBarExample(),
+      home: const AnimatedBarExample(),
     );
   }
 }
@@ -56,19 +56,22 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       bottomNavigationBar: StylishBottomBar(
         items: [
           BottomBarItem(
-              icon: const Icon(
-                Icons.house_outlined,
-              ),
-              selectedIcon: const Icon(Icons.house_rounded),
-              selectedColor: Colors.teal,
-              backgroundColor: Colors.tealAccent,
-              title: const Text('Home')),
+            icon: const Icon(
+              Icons.house_outlined,
+            ),
+            selectedIcon: const Icon(Icons.house_rounded),
+            // selectedColor: Colors.teal,
+            backgroundColor: Colors.red,
+            title: const Text('Home'),
+          ),
           BottomBarItem(
-              icon: const Icon(Icons.star_border_rounded),
-              selectedIcon: const Icon(Icons.star_rounded),
-              selectedColor: Colors.green,
-              backgroundColor: Colors.lightGreenAccent,
-              title: const Text('Star')),
+            icon: const Icon(Icons.star_border_rounded),
+            selectedIcon: const Icon(Icons.star_rounded),
+            selectedColor: Colors.red,
+            // unSelectedColor: Colors.purple,
+            // backgroundColor: Colors.orange,
+            title: const Text('Star'),
+          ),
           BottomBarItem(
               icon: const Icon(
                 Icons.style_outlined,
@@ -101,7 +104,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         },
         option: AnimatedBarOptions(
           // iconSize: 32,
-          barAnimation: BarAnimation.liquid,
+          barAnimation: BarAnimation.blink,
           iconStyle: IconStyle.animated,
           // opacity: 0.3,
         ),

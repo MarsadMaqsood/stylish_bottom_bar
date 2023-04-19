@@ -93,18 +93,21 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   _defaultItems() {
+    Color itemColor = items.backgroundColor ??
+        (selected ? items.selectedColor : items.unSelectedColor);
+
     var label = LabelWidget(
       iconStyle: iconStyle,
       animation: animation!,
       item: items,
-      color: selected ? items.selectedColor : items.unSelectedColor,
+      color: itemColor,
     );
     return [
       Container(
         alignment: Alignment.center,
         child: IconTheme(
           data: IconThemeData(
-            color: selected ? items.selectedColor : items.unSelectedColor,
+            color: itemColor,
             size: iconSize,
             // size: selected ? iconSize + 4 : iconSize,
           ),
@@ -118,11 +121,17 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   _liquidItems() {
+    Color itemColor = items.backgroundColor ??
+        (selected ? items.selectedColor : items.unSelectedColor);
+
+    Color itemColorOnSelected = items.backgroundColor ?? items.selectedColor;
+
     var label = LabelWidget(
-        iconStyle: iconStyle,
-        animation: animation!,
-        item: items,
-        color: items.selectedColor);
+      iconStyle: iconStyle,
+      animation: animation!,
+      item: items,
+      color: itemColorOnSelected,
+    );
     return [
       // const Spacer(),
       AnimatedCrossFade(
@@ -134,7 +143,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
           alignment: Alignment.center,
           child: IconTheme(
             data: IconThemeData(
-              color: selected ? items.selectedColor : items.unSelectedColor,
+              color: itemColor,
               size: iconSize,
             ),
             child: selected && items.selectedIcon != null
@@ -156,7 +165,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
           height: 20,
           width: 22,
           decoration: BoxDecoration(
-            color: items.selectedColor,
+            color: itemColorOnSelected,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.elliptical(12, 20),
               topRight: Radius.elliptical(12, 20),
@@ -174,11 +183,16 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   _childItems() {
+    Color itemColorOnSelected = items.backgroundColor ?? items.selectedColor;
+    Color itemColor = items.backgroundColor ??
+        (selected ? items.selectedColor : items.unSelectedColor);
+
     var label = LabelWidget(
-        iconStyle: iconStyle,
-        animation: animation!,
-        item: items,
-        color: items.selectedColor);
+      iconStyle: iconStyle,
+      animation: animation!,
+      item: items,
+      color: itemColorOnSelected,
+    );
 
     return iconStyle == IconStyle.Default
         ? _defaultItems()
@@ -208,9 +222,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   alignment: Alignment.center,
                   child: IconTheme(
                     data: IconThemeData(
-                      color: selected
-                          ? items.selectedColor
-                          : items.unSelectedColor,
+                      color: itemColor,
                       size: selected ? iconSize + 4 : iconSize,
                     ),
                     child: selected && items.selectedIcon != null
@@ -222,13 +234,16 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   _dropItems() {
+    Color itemColor = items.backgroundColor ??
+        (selected ? items.selectedColor : items.unSelectedColor);
+
     return [
       AnimatedCrossFade(
         firstChild: Container(
           alignment: Alignment.center,
           child: IconTheme(
             data: IconThemeData(
-              color: selected ? items.selectedColor : items.unSelectedColor,
+              color: itemColor,
               size: iconSize,
             ),
             child: selected && items.selectedIcon != null
@@ -247,7 +262,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child: IconTheme(
                 data: IconThemeData(
-                  color: selected ? items.selectedColor : items.unSelectedColor,
+                  color: itemColor,
                   size: iconSize,
                 ),
                 child: selected && items.selectedIcon != null
@@ -335,7 +350,7 @@ class IconWidget extends StatefulWidget {
 
 class _IconWidgetState extends State<IconWidget>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller;
+  AnimationController? controller;
   late Animation<Color?> animationColor;
   late Animation<double> animation;
 
@@ -343,6 +358,10 @@ class _IconWidgetState extends State<IconWidget>
   void initState() {
     super.initState();
 
+    _init();
+  }
+
+  _init() {
     if (widget.barAnimation != BarAnimation.transform3D) {
       controller = AnimationController(
         duration: const Duration(milliseconds: 300),
@@ -350,37 +369,45 @@ class _IconWidgetState extends State<IconWidget>
         vsync: this,
       );
     }
+    _assignAnimation();
   }
 
   @override
   void dispose() {
-    if (widget.barAnimation != BarAnimation.transform3D) controller.dispose();
+    if (widget.barAnimation != BarAnimation.transform3D) controller?.dispose();
     super.dispose();
   }
 
   _assignAnimation() {
     if (widget.barAnimation != BarAnimation.transform3D) {
       if (widget.barAnimation == BarAnimation.blink) {
-        animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+        animation =
+            CurvedAnimation(parent: controller!, curve: Curves.bounceIn);
       } else {
-        animation = CurvedAnimation(parent: controller, curve: Curves.ease);
+        animation = CurvedAnimation(parent: controller!, curve: Curves.ease);
       }
 
       animationColor = ColorTween(
-        begin: widget.items.unSelectedColor,
+        begin: widget.items.backgroundColor ?? widget.items.unSelectedColor,
         end: widget.items.selectedColor,
       ).animate(animation)
         ..addListener(() {
-          // setState(() {});
+          setState(() {});
         });
+    }
+  }
 
-      widget.selected ? controller.forward() : controller.reset();
+  _playAnimation() {
+    if (widget.barAnimation != BarAnimation.transform3D) {
+      widget.selected ? controller?.forward() : controller?.reset();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _assignAnimation();
+    if (controller == null) _init();
+    // _assignAnimation();
+    _playAnimation();
 
     return _buildWidget();
   }
@@ -388,11 +415,12 @@ class _IconWidgetState extends State<IconWidget>
   _buildWidget() {
     return IconTheme(
       data: IconThemeData(
-        color: widget.selected
-            ? widget.barAnimation == BarAnimation.transform3D
-                ? widget.items.selectedColor
-                : animationColor.value
-            : widget.items.unSelectedColor,
+        color: widget.items.backgroundColor ??
+            (widget.selected
+                ? widget.barAnimation == BarAnimation.transform3D
+                    ? widget.items.selectedColor
+                    : animationColor.value
+                : widget.items.unSelectedColor),
         size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
       ),
       child: widget.selected

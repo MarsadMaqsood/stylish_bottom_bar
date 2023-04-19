@@ -5,7 +5,8 @@ class BottomBarItem {
     required this.icon,
     required this.title,
     this.selectedIcon,
-    this.backgroundColor = Colors.black,
+    this.backgroundColor,
+    // this.backgroundColor = Colors.black,
     this.unSelectedColor = Colors.grey,
     this.selectedColor = Colors.green,
     //
@@ -52,8 +53,11 @@ class BottomBarItem {
   ///default color is [Colors.black]
   final Color? borderColor;
 
-  ///Use this to change the background color
-  ///default color is [Colors.black]
+  ///The `backgroundColor` property is used to assign a [backgroundColor] to [BottomBarItem].
+  /// If a value is assigned to this property, the [BottomBarItem] will be displayed
+  /// with the specified [backgroundColor]. If value is not assigned or null,
+  /// the [selectedColor] and [unSelectedColor] properties will be
+  /// used to determine the color of the [BottomBarItem].
   final Color? backgroundColor;
 
   ///Use this to change the selected item's icon color
