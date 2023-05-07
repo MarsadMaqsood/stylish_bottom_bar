@@ -61,7 +61,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             ),
             selectedIcon: const Icon(Icons.house_rounded),
             // selectedColor: Colors.teal,
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.teal,
             title: const Text('Home'),
           ),
           BottomBarItem(
@@ -104,7 +104,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         },
         option: AnimatedBarOptions(
           // iconSize: 32,
-          barAnimation: BarAnimation.blink,
+          barAnimation: BarAnimation.fade,
           iconStyle: IconStyle.animated,
           // opacity: 0.3,
         ),
@@ -169,7 +169,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
       ),
       bottomNavigationBar: StylishBottomBar(
         option: BubbleBarOptions(
-          barStyle: BubbleBarStyle.horizotnal,
+          barStyle: BubbleBarStyle.vertical,
           // barStyle: BubbleBarStyle.vertical,
           bubbleFillStyle: BubbleFillStyle.fill,
           // bubbleFillStyle: BubbleFillStyle.outlined,
@@ -180,12 +180,14 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             icon: const Icon(Icons.abc),
             title: const Text('Abc'),
             backgroundColor: Colors.red,
+
+            // selectedColor: Colors.pink,
             selectedIcon: const Icon(Icons.read_more),
           ),
           BottomBarItem(
             icon: const Icon(Icons.safety_divider),
             title: const Text('Safety'),
-            backgroundColor: Colors.orange,
+            selectedColor: Colors.orange,
           ),
           BottomBarItem(
             icon: const Icon(Icons.cabin),
@@ -193,13 +195,6 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             backgroundColor: Colors.purple,
           ),
         ],
-        gradient: const LinearGradient(
-          colors: [
-            Colors.green,
-            Colors.yellow,
-          ],
-        ),
-        backgroundColor: Colors.red,
         fabLocation: StylishBarFabLocation.end,
         // hasNotch: true,
         currentIndex: selected,
