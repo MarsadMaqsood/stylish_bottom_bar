@@ -51,13 +51,17 @@ class BottomBarItem {
   ///Use this to change the border color
   ///
   ///default color is [Colors.black]
-  final Color? borderColor;
+  final Color borderColor;
 
   ///The `backgroundColor` property is used to assign a [backgroundColor] to [BottomBarItem].
   /// If a value is assigned to this property, the [BottomBarItem] will be displayed
   /// with the specified [backgroundColor]. If value is not assigned or null,
   /// the [selectedColor] and [unSelectedColor] properties will be
   /// used to determine the color of the [BottomBarItem].
+  ///
+  /// When using the `BubbleBarOptions` the [backgroundColor] will also be
+  /// used to change the background color [selectedColor]
+  ///  and [unSelectedColor] and [borderColor] of the item
   final Color? backgroundColor;
 
   ///Use this to change the selected item's icon color
