@@ -40,7 +40,9 @@ class IconWidget extends StatelessWidget {
         borderRadius: item.badgeRadius,
         child: IconTheme(
           data: IconThemeData(
-            color: selected ? item.backgroundColor : unselectedIconColor,
+            color: selected
+                ? item.backgroundColor ?? item.selectedColor
+                : unselectedIconColor,
             size: iconSize,
           ),
           child: selected

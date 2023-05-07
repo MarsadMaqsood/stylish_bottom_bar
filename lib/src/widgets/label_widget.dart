@@ -7,13 +7,11 @@ class LabelWidget extends StatelessWidget {
     super.key,
     required this.animation,
     required this.item,
-    required this.color,
   });
 
   final Animation<double> animation;
   // final BubbleBarItem item;
   final BottomBarItem item;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class LabelWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: activeFontSize,
             fontWeight: FontWeight.w600,
-            color: color,
+            color: item.backgroundColor ?? item.selectedColor,
           ),
           child: item.title!,
         ),
