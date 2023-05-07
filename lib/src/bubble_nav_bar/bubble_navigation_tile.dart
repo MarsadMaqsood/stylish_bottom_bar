@@ -50,7 +50,7 @@ class BubbleNavigationTile extends StatelessWidget {
     var label = LabelWidget(
       animation: animation,
       item: item,
-      color: item.backgroundColor!,
+      // color: item.backgroundColor,
     );
 
     var outlined = selected && fillStyle == BubbleFillStyle.outlined;
@@ -91,10 +91,10 @@ class BubbleNavigationTile extends StatelessWidget {
                         ),
                     border: Border.all(
                         width: outlined ? 1 : 0,
-                        color: item.borderColor!,
+                        color: item.borderColor,
                         style: outlined ? BorderStyle.solid : BorderStyle.none),
                     color: fill
-                        ? item.backgroundColor!.withOpacity(opacity)
+                        ? item.backgroundColor?.withOpacity(opacity)
                         : Colors.transparent,
                   ),
                   child: barStyle == BubbleBarStyle.horizotnal
