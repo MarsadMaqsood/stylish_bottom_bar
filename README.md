@@ -1,7 +1,7 @@
 [![Hello](https://img.shields.io/badge/Hello-Sweet%20World-teal)](https://github.com/MarsadMaqsood) [![stylish_bottom_bar](https://img.shields.io/badge/Flutter-Stylish%20Bottom%20Bar-blueviolet)](https://pub.dev/packages/stylish_bottom_bar) [![Version](https://img.shields.io/pub/v/stylish_bottom_bar?color=%2354C92F&logo=dart)](https://pub.dev/packages/stylish_bottom_bar/install)
 
 
-A collection of stylish bottom navigation bar like animated bottom bar and bubble bottom bar for flutter.
+A collection of stylish bottom navigation bars like animated bottom bar and bubble bottom bar for flutter.
 
 
 ## Table of contents
