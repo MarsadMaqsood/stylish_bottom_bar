@@ -15,7 +15,7 @@ A collection of stylish bottom navigation bars like animated bottom bar and bubb
 
     dependencies:
         stylish_bottom_bar: ^1.0.1
-        
+
 ## ⚡ Import
 
 ```dart

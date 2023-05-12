@@ -24,7 +24,6 @@ class IconWidget extends StatelessWidget {
   final double iconSize;
   final bool selected;
   final Color? unselectedIconColor;
-  // final BubbleBarItem item;
   final BottomBarItem item;
 
   @override

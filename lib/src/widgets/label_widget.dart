@@ -10,7 +10,6 @@ class LabelWidget extends StatelessWidget {
   });
 
   final Animation<double> animation;
-  // final BubbleBarItem item;
   final BottomBarItem item;
 
   @override

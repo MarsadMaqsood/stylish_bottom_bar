@@ -28,12 +28,13 @@ class _WaterDropState extends State<WaterDrop> {
     /// Rebuild the widget if [totalSize] is null
     if (totalSize == null) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        setState(() => totalSize = context.size!);
+        if (context.size != null) {
+          setState(() => totalSize = context.size);
+        }
       });
     }
 
     final size = totalSize ?? MediaQuery.of(context).size;
-
     final alignment = getAlignment(size);
 
     //used for determining alignments for gradient
@@ -120,8 +121,7 @@ class _OvalClipper extends CustomClipper<Path> {
 class _LightDot extends StatelessWidget {
   final double width, height;
 
-  const _LightDot({Key? key, required this.width, required this.height})
-      : super(key: key);
+  const _LightDot({required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -149,8 +149,7 @@ class _OvalShadow extends StatelessWidget {
   final double width;
   final double height;
 
-  const _OvalShadow({Key? key, required this.width, required this.height})
-      : super(key: key);
+  const _OvalShadow({required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {

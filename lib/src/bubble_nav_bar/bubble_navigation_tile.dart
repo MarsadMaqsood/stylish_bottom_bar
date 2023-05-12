@@ -14,7 +14,7 @@ class BubbleNavigationTile extends StatelessWidget {
     this.barStyle, {
     super.key,
     this.onTap,
-    this.flex,
+    required this.flex,
     this.selected = false,
     this.indexLabel,
     this.ink = false,
@@ -29,7 +29,7 @@ class BubbleNavigationTile extends StatelessWidget {
   final Animation<double> animation;
   final double iconSize;
   final VoidCallback? onTap;
-  final double? flex;
+  final double flex;
   final bool selected;
   final String? indexLabel;
   final double opacity;
@@ -44,7 +44,7 @@ class BubbleNavigationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ///flex size
-    var flexSize = (flex! * 1000.0).round();
+    var flexSize = (flex * 1000.0).round();
 
     ///Label Widget
     var label = LabelWidget(
@@ -82,7 +82,6 @@ class BubbleNavigationTile extends StatelessWidget {
                       : iconSize > 30 //decreased to 30 from 32
                           ? 50 + (iconSize - 30) //decreased to 30 from 32
                           : 50,
-
                   decoration: BoxDecoration(
                     borderRadius: itemBorderRadius ??
                         const BorderRadius.horizontal(
@@ -128,7 +127,7 @@ class BubbleNavigationTile extends StatelessWidget {
     );
   }
 
-  items(label) {
+  List<Widget> items(label) {
     return [
       IconWidget(
         animation: animation,

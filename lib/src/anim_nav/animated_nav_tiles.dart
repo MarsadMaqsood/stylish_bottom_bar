@@ -361,7 +361,7 @@ class _IconWidgetState extends State<IconWidget>
     _init();
   }
 
-  _init() {
+  void _init() {
     if (widget.barAnimation != BarAnimation.transform3D) {
       controller = AnimationController(
         duration: const Duration(milliseconds: 300),
