@@ -51,7 +51,7 @@ import 'dart:math' as math;
 ///    },
 ///
 ///  );
-
+///
 ///```
 
 // ignore: must_be_immutable
