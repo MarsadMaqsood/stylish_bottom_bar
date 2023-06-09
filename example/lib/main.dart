@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      // home: const BubbelBarExample(),
-      home: const AnimatedBarExample(),
+      home: const BubbelBarExample(),
+      // home: const AnimatedBarExample(),
     );
   }
 }
@@ -169,8 +169,8 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
       ),
       bottomNavigationBar: StylishBottomBar(
         option: BubbleBarOptions(
-          barStyle: BubbleBarStyle.vertical,
           // barStyle: BubbleBarStyle.vertical,
+          barStyle: BubbleBarStyle.horizotnal,
           bubbleFillStyle: BubbleFillStyle.fill,
           // bubbleFillStyle: BubbleFillStyle.outlined,
           opacity: 0.3,
@@ -188,6 +188,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             icon: const Icon(Icons.safety_divider),
             title: const Text('Safety'),
             selectedColor: Colors.orange,
+            backgroundColor: Colors.orange,
           ),
           BottomBarItem(
             icon: const Icon(Icons.cabin),
@@ -195,7 +196,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             backgroundColor: Colors.purple,
           ),
         ],
-        fabLocation: StylishBarFabLocation.end,
+        // fabLocation: StylishBarFabLocation.end,
         // hasNotch: true,
         currentIndex: selected,
         onTap: (index) {
@@ -205,11 +206,11 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           });
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.emoji_emotions),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: const Icon(Icons.emoji_emotions),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }
