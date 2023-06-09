@@ -1,5 +1,5 @@
 ## 1.0.2
-- Fix: Bug fixes
+- Fix: [#11](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/11)
 
 ## 1.0.1
 - Fix: background color is not changing issue [#10](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/10)
