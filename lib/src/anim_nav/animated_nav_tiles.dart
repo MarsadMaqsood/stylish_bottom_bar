@@ -106,13 +106,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
   Color get itemColor =>
       items.backgroundColor ??
       (selected ? items.selectedColor : items.unSelectedColor);
-
   Color get itemColorOnSelected => items.backgroundColor ?? items.selectedColor;
 
   List<Widget> _defaultItems() {
-    // Color itemColor = items.backgroundColor ??
-    //     (selected ? items.selectedColor : items.unSelectedColor);
-
     var label = LabelWidget(
       iconStyle: iconStyle,
       animation: animation!,
@@ -138,11 +134,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   List<Widget> _liquidItems() {
-    // Color itemColor = items.backgroundColor ??
-    //     (selected ? items.selectedColor : items.unSelectedColor);
-
-    // Color itemColorOnSelected = items.backgroundColor ?? items.selectedColor;
-
     var label = LabelWidget(
       iconStyle: iconStyle,
       animation: animation!,
@@ -198,10 +189,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   List<Widget> _childItems() {
-    // Color itemColorOnSelected = items.backgroundColor ?? items.selectedColor;
-    // Color itemColor = items.backgroundColor ??
-    //     (selected ? items.selectedColor : items.unSelectedColor);
-
     var label = LabelWidget(
       iconStyle: iconStyle,
       animation: animation!,
@@ -249,9 +236,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   List<Widget> _dropItems() {
-    // Color itemColor = items.backgroundColor ??
-    //     (selected ? items.selectedColor : items.unSelectedColor);
-
     return [
       AnimatedCrossFade(
         firstChild: Container(
