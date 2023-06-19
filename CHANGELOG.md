@@ -1,3 +1,7 @@
+## 1.0.3
+- Fix: badge display issue when using `AnimatedBarOptions`
+- Removed unnecessary code
+
 ## 1.0.2
 - Fix: [#11](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/11)
 
