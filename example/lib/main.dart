@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      home: const BubbelBarExample(),
-      // home: const AnimatedBarExample(),
+      // home: const BubbelBarExample(),
+      home: const AnimatedBarExample(),
     );
   }
 }
@@ -54,6 +54,12 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       // resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: StylishBottomBar(
+        option: AnimatedBarOptions(
+          // iconSize: 32,
+          barAnimation: BarAnimation.fade,
+          iconStyle: IconStyle.animated,
+          // opacity: 0.3,
+        ),
         items: [
           BottomBarItem(
             icon: const Icon(
@@ -63,6 +69,8 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             // selectedColor: Colors.teal,
             backgroundColor: Colors.teal,
             title: const Text('Home'),
+            badge: const Text('9+'),
+            showBadge: true,
           ),
           BottomBarItem(
             icon: const Icon(Icons.star_border_rounded),
@@ -102,12 +110,6 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             selected = index;
           });
         },
-        option: AnimatedBarOptions(
-          // iconSize: 32,
-          barAnimation: BarAnimation.fade,
-          iconStyle: IconStyle.animated,
-          // opacity: 0.3,
-        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -183,6 +185,8 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
 
             // selectedColor: Colors.pink,
             selectedIcon: const Icon(Icons.read_more),
+            badge: const Badge(),
+            showBadge: true,
           ),
           BottomBarItem(
             icon: const Icon(Icons.safety_divider),
