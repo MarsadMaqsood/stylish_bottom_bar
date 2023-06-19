@@ -7,9 +7,9 @@ import 'package:stylish_bottom_bar/src/water_drop/water_drop.dart';
 class AnimatedNavigationTiles extends StatelessWidget {
   const AnimatedNavigationTiles(
     this.items,
-    this.iconSize,
-    this.padding, {
+    this.iconSize, {
     super.key,
+    this.padding,
     this.onTap,
     this.inkEffect,
     this.inkColor,
@@ -34,7 +34,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
   final bool? inkEffect;
   final Color? inkColor;
   final bool selected;
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   ///Background color opacity
   final double opacity;
@@ -56,40 +56,51 @@ class AnimatedNavigationTiles extends StatelessWidget {
         container: true,
         header: true,
         selected: selected,
-        child: Stack(
-          children: [
-            Padding(
-              padding: padding,
-              child: InkWell(
-                onTap: onTap,
-                splashColor: inkEffect! ? inkColor : Colors.transparent,
-                highlightColor: Colors.transparent,
-                borderRadius: const BorderRadius.horizontal(
-                  right: Radius.circular(52),
-                  left: Radius.circular(52),
-                ),
-                // child: SizedBox(
-                // height: iconSize <= 26 ? 48 : 48 + (iconSize - 26),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: selected
-                      ? barAnimation == BarAnimation.liquid
-                          ? MainAxisAlignment.spaceBetween
-                          : MainAxisAlignment.spaceEvenly
-                      : MainAxisAlignment.center,
-                  children: barAnimation == BarAnimation.liquid
-                      ? _liquidItems()
-                      : barAnimation == BarAnimation.drop
-                          ? _dropItems()
-                          : _childItems(),
-                ),
+        child: Padding(
+          padding: padding ??
+              (items.showBadge && iconStyle != IconStyle.simple
+                  ? const EdgeInsets.only(
+                      top: 6.0,
+                    )
+                  : EdgeInsets.zero),
+          child: Badge(
+            label: items.badge,
+            isLabelVisible: items.showBadge,
+            child: InkWell(
+              onTap: onTap,
+              splashColor: inkEffect! ? inkColor : Colors.transparent,
+              highlightColor: Colors.transparent,
+              borderRadius: const BorderRadius.horizontal(
+                right: Radius.circular(52),
+                left: Radius.circular(52),
+              ),
+              // child: SizedBox(
+              // height: iconSize <= 26 ? 48 : 48 + (iconSize - 26),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: selected
+                    ? barAnimation == BarAnimation.liquid
+                        ? MainAxisAlignment.spaceBetween
+                        : MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.center,
+                children: _getBarItems(),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  List<Widget> _getBarItems() {
+    if (barAnimation == BarAnimation.liquid) {
+      return _liquidItems();
+    } else if (barAnimation == BarAnimation.drop) {
+      return _dropItems();
+    } else {
+      return _childItems();
+    }
   }
 
   _defaultItems() {
@@ -182,7 +193,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
     ];
   }
 
-  _childItems() {
+  List<Widget> _childItems() {
     Color itemColorOnSelected = items.backgroundColor ?? items.selectedColor;
     Color itemColor = items.backgroundColor ??
         (selected ? items.selectedColor : items.unSelectedColor);
@@ -233,7 +244,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
               ];
   }
 
-  _dropItems() {
+  List<Widget> _dropItems() {
     Color itemColor = items.backgroundColor ??
         (selected ? items.selectedColor : items.unSelectedColor);
 

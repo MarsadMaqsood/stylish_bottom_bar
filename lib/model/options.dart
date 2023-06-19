@@ -65,7 +65,9 @@ class AnimatedBarOptions extends BottomBarOption {
   final double iconSize;
 
   ///Add padding arround navigation tiles
-  ///Default padding is [EdgeInsets.zero]
+  ///
+  ///Default padding is `EdgeInsets.only(top: 6.0)` if badge is displayed
+  /// otherwise `EdgeInsets.zero`
   final EdgeInsets? padding;
 
   ///Enable ink effect to bubble navigation bar item
@@ -101,7 +103,7 @@ class AnimatedBarOptions extends BottomBarOption {
 
   AnimatedBarOptions({
     this.iconSize = 26.0,
-    this.padding = EdgeInsets.zero,
+    this.padding,
     this.inkEffect = false,
     this.inkColor = Colors.grey,
     this.opacity = 0.8,

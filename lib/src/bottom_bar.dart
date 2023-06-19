@@ -398,7 +398,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       list.add(AnimatedNavigationTiles(
         widget.items[i],
         options.iconSize,
-        options.padding!,
+        padding: options.padding,
         inkEffect: options.inkEffect,
         inkColor: options.inkColor,
         selected: widget.currentIndex == i,
