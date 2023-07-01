@@ -32,7 +32,7 @@ enum BubbleBarStyle {
   vertical,
 
   ///Align bubble bar items horizontally
-  horizotnal
+  horizontal
 }
 
 enum BubbleFillStyle {
