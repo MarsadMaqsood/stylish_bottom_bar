@@ -8,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,16 +18,14 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      // home: const BubbelBarExample(),
-      home: const AnimatedBarExample(),
+      home: const BubbelBarExample(),
+      // home: const AnimatedBarExample(),
     );
   }
 }
 
 class AnimatedBarExample extends StatefulWidget {
-  const AnimatedBarExample({
-    Key? key,
-  }) : super(key: key);
+  const AnimatedBarExample({super.key});
 
   @override
   State<AnimatedBarExample> createState() => _AnimatedBarExampleState();
@@ -71,6 +69,8 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             title: const Text('Home'),
             badge: const Text('9+'),
             showBadge: true,
+            badgeColor: Colors.purple,
+            badgePadding: const EdgeInsets.only(left: 4, right: 4),
           ),
           BottomBarItem(
             icon: const Icon(Icons.star_border_rounded),
@@ -142,7 +142,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
 //
 //Example to setup Bubble Bottom Bar with PageView
 class BubbelBarExample extends StatefulWidget {
-  const BubbelBarExample({Key? key}) : super(key: key);
+  const BubbelBarExample({super.key});
 
   @override
   State<BubbelBarExample> createState() => _BubbelBarExampleState();
@@ -172,7 +172,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
       bottomNavigationBar: StylishBottomBar(
         option: BubbleBarOptions(
           // barStyle: BubbleBarStyle.vertical,
-          barStyle: BubbleBarStyle.horizotnal,
+          barStyle: BubbleBarStyle.horizontal,
           bubbleFillStyle: BubbleFillStyle.fill,
           // bubbleFillStyle: BubbleFillStyle.outlined,
           opacity: 0.3,
@@ -185,7 +185,8 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
 
             // selectedColor: Colors.pink,
             selectedIcon: const Icon(Icons.read_more),
-            badge: const Badge(),
+            badge: const Text('1+'),
+            badgeColor: Colors.red,
             showBadge: true,
           ),
           BottomBarItem(

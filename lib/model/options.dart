@@ -13,9 +13,9 @@ class BubbleBarOptions extends BottomBarOption {
   final Color unselectedIconColor;
 
   ///BarStyle to align icon and title in horizontal or vertical
-  ///[BubbleBarStyle.horizotnal]
+  ///[BubbleBarStyle.horizontal]
   ///[BubbleBarStyle.vertical]
-  ///Default value is [BubbleBarStyle.horizotnal]
+  ///Default value is [BubbleBarStyle.horizontal]
   final BubbleBarStyle barStyle;
 
   ///Use this to customize the bubble background fill style
@@ -47,7 +47,7 @@ class BubbleBarOptions extends BottomBarOption {
   final double? opacity;
 
   BubbleBarOptions({
-    this.barStyle = BubbleBarStyle.horizotnal,
+    this.barStyle = BubbleBarStyle.horizontal,
     this.bubbleFillStyle = BubbleFillStyle.fill,
     this.iconSize = 26.0,
     this.inkEffect = false,

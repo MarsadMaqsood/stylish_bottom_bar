@@ -6,14 +6,13 @@ class BottomBarItem {
     required this.title,
     this.selectedIcon,
     this.backgroundColor,
-    // this.backgroundColor = Colors.black,
     this.unSelectedColor = Colors.grey,
     this.selectedColor = Colors.green,
-    //
+    //badge
     this.badge,
     this.badgeColor = Colors.grey,
     this.showBadge = false,
-    this.badgeRadius = BorderRadius.zero,
+    this.badgePadding,
     this.borderColor = Colors.black,
   });
 
@@ -43,10 +42,9 @@ class BottomBarItem {
   ///default is [Colors.black]
   final Color badgeColor;
 
-  ///Use this to customize the badge [BorderRadius]
-  ///
-  ///default is [BorderRadius.zero]
-  final BorderRadius badgeRadius;
+  ///The badgePadding property is used to set the padding for the badge label.
+  /// It specifies the amount of space to be left around the badge label content.
+  final EdgeInsets? badgePadding;
 
   ///Use this to change the border color
   ///
