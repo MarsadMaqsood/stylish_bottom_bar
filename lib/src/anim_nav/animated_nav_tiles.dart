@@ -66,6 +66,8 @@ class AnimatedNavigationTiles extends StatelessWidget {
           child: Badge(
             label: items.badge,
             isLabelVisible: items.showBadge,
+            backgroundColor: items.badgeColor,
+            padding: items.badgePadding,
             child: InkWell(
               onTap: onTap,
               splashColor: inkEffect! ? inkColor : Colors.transparent,

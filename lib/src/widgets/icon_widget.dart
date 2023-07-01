@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
-import 'package:stylish_bottom_bar/src/badge/badge.dart' as badge;
 
 enum BadgeAnimationType {
   slide,
@@ -31,12 +30,11 @@ class IconWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       heightFactor: 1.0,
-      child: badge.Badge(
-        showBadge: item.showBadge,
-        badgeContent: item.badge,
-        badgeColor: item.badgeColor,
-        animationType: BadgeAnimationType.fade,
-        borderRadius: item.badgeRadius,
+      child: Badge(
+        isLabelVisible: item.showBadge,
+        label: item.badge,
+        backgroundColor: item.badgeColor,
+        padding: item.badgePadding,
         child: IconTheme(
           data: IconThemeData(
             color: selected
