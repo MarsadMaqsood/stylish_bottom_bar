@@ -42,11 +42,15 @@ class IconWidget extends StatelessWidget {
                 : unselectedIconColor,
             size: iconSize,
           ),
-          child: selected
-              ? item.selectedIcon != null
-                  ? item.selectedIcon!
-                  : item.icon!
-              : item.icon!,
+          child: Padding(
+            padding:
+                item.showBadge ? const EdgeInsets.all(8.0) : EdgeInsets.zero,
+            child: selected
+                ? item.selectedIcon != null
+                    ? item.selectedIcon!
+                    : item.icon!
+                : item.icon!,
+          ),
         ),
       ),
     );
