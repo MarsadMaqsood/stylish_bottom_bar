@@ -55,7 +55,7 @@ class BubbleNavigationTile extends StatelessWidget {
 
     var outlined = selected && fillStyle == BubbleFillStyle.outlined;
     var fill = selected && fillStyle == BubbleFillStyle.fill;
-    final height = barStyle == BubbleBarStyle.horizotnal
+    final height = barStyle == BubbleBarStyle.horizontal
         ? 48.0
         : iconSize > 30.0 //decreased to 30 from 32
             ? 50.0 + (iconSize - 30.0) //decreased to 30 from 32
@@ -97,7 +97,7 @@ class BubbleNavigationTile extends StatelessWidget {
                         ? item.backgroundColor?.withOpacity(opacity)
                         : Colors.transparent,
                   ),
-                  child: barStyle == BubbleBarStyle.horizotnal
+                  child: barStyle == BubbleBarStyle.horizontal
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
 

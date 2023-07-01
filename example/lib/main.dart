@@ -172,7 +172,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
       bottomNavigationBar: StylishBottomBar(
         option: BubbleBarOptions(
           // barStyle: BubbleBarStyle.vertical,
-          barStyle: BubbleBarStyle.horizotnal,
+          barStyle: BubbleBarStyle.horizontal,
           bubbleFillStyle: BubbleFillStyle.fill,
           // bubbleFillStyle: BubbleFillStyle.outlined,
           opacity: 0.3,

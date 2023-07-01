@@ -47,7 +47,7 @@ class BubbleBarOptions extends BottomBarOption {
   final double? opacity;
 
   BubbleBarOptions({
-    this.barStyle = BubbleBarStyle.horizotnal,
+    this.barStyle = BubbleBarStyle.horizontal,
     this.bubbleFillStyle = BubbleFillStyle.fill,
     this.iconSize = 26.0,
     this.inkEffect = false,
