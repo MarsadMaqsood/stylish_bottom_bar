@@ -418,7 +418,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       list.insert(
         2,
         list.length > 3
-            ? const Flex(
+            ? Flex(
                 direction: Axis.horizontal,
                 children: [Padding(padding: EdgeInsets.all(12))],
               )
