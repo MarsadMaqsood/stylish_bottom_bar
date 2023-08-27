@@ -68,6 +68,7 @@ class StylishBottomBar extends StatefulWidget {
     this.hasNotch = false,
     required this.option,
     this.gradient,
+    this.iconSpace = 1.5,
   })  : assert(items.length >= 2,
             '\n\nStylish Bottom Navigation must have 2 or more items'),
         assert(
@@ -156,6 +157,9 @@ class StylishBottomBar extends StatefulWidget {
   /// );
   /// ```
   final Gradient? gradient;
+
+  //Assign icon sapce;
+  final double iconSpace;
 
   @override
   State<StylishBottomBar> createState() => _StylishBottomBarState();

@@ -177,6 +177,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           // bubbleFillStyle: BubbleFillStyle.outlined,
           opacity: 0.3,
         ),
+        iconSpace: 12.0,
         items: [
           BottomBarItem(
             icon: const Icon(Icons.abc),
@@ -200,9 +201,14 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             title: const Text('Cabin'),
             backgroundColor: Colors.purple,
           ),
+          BottomBarItem(
+            icon: const Icon(Icons.cabin),
+            title: const Text('Cabin'),
+            backgroundColor: Colors.purple,
+          ),
         ],
-        // fabLocation: StylishBarFabLocation.end,
-        // hasNotch: true,
+        fabLocation: StylishBarFabLocation.center,
+        hasNotch: true,
         currentIndex: selected,
         onTap: (index) {
           setState(() {
@@ -211,11 +217,11 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           });
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: const Icon(Icons.emoji_emotions),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.emoji_emotions),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
