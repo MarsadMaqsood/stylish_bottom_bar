@@ -4,6 +4,7 @@ import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/model/options.dart';
+import 'package:stylish_bottom_bar/src/dot_nav/dot_nav_tile.dart';
 import 'anim_nav/animated_nav_tiles.dart';
 import 'bubble_nav_bar/bubble_navigation_tile.dart';
 import '../helpers/cliper.dart';
@@ -277,6 +278,12 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
               4;
       listWidget = _bubbleBarTiles();
+    } else if (widget.option.runtimeType == DotBarOptions) {
+      options = widget.option as DotBarOptions;
+      additionalBottomPadding =
+          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
+              4;
+      listWidget = _dotBarChilds();
     }
 
     bool isUsingMaterial3 = Theme.of(context).useMaterial3;
@@ -409,6 +416,43 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         animation: _animations[i],
         barAnimation: options.barAnimation,
         iconStyle: options.iconStyle ?? IconStyle.Default,
+        onTap: () {
+          if (widget.onTap != null) widget.onTap!(i);
+        },
+        flex: _evaluateFlex(_animations[i]),
+        indexLabel: localizations.tabLabel(
+            tabIndex: i + 1, tabCount: widget.items.length),
+      ));
+    }
+    if (widget.fabLocation == StylishBarFabLocation.center) {
+      list.insert(
+        2,
+        list.length > 3
+            ? const Flex(
+                direction: Axis.horizontal,
+                children: [Padding(padding: EdgeInsets.all(12))],
+              )
+            : const Spacer(
+                flex: 2,
+              ),
+      );
+    }
+    return list;
+  }
+
+  List<Widget> _dotBarChilds() {
+    final List<Widget> list = [];
+    final MaterialLocalizations localizations =
+        MaterialLocalizations.of(context);
+
+    final DotBarOptions options = widget.option as DotBarOptions;
+
+    for (int i = 0; i < widget.items.length; ++i) {
+      list.add(DotNavigationTiles(
+        widget.items[i],
+        selected: widget.currentIndex == i,
+        animation: _animations[i],
+        options: options,
         onTap: () {
           if (widget.onTap != null) widget.onTap!(i);
         },

@@ -43,7 +43,8 @@ class BubbleBarOptions extends BottomBarOption {
   ///Default color is [Colors.grey]
   final Color inkColor;
 
-  ///Change navigation bar items background color opacity
+  /// Specifies the opacity of the navigation bar items' backgrounds.
+  /// The default value is `0.8`.
   final double? opacity;
 
   BubbleBarOptions({
@@ -80,7 +81,8 @@ class AnimatedBarOptions extends BottomBarOption {
   ///Default color is [Colors.grey]
   final Color? inkColor;
 
-  ///Change navigation bar items background color opacity
+  /// Specifies the opacity of the navigation bar items' backgrounds.
+  /// The default value is `0.8`.
   final double? opacity;
 
   ///BarAnimation to animate items when current index changes
@@ -109,5 +111,53 @@ class AnimatedBarOptions extends BottomBarOption {
     this.opacity = 0.8,
     this.barAnimation = BarAnimation.fade,
     this.iconStyle = IconStyle.Default,
+  });
+}
+
+//
+
+class DotBarOptions extends BottomBarOption {
+  /// Specifies the size of the navigation bar icons.
+  /// The default value is `26.0`.
+  final double iconSize;
+
+  /// Specifies the padding around the navigation bar tiles.
+  /// The default padding is:
+  /// * `EdgeInsets.only(top: 6.0)` if a badge is displayed.
+  /// * `EdgeInsets.zero` otherwise.
+  final EdgeInsets? padding;
+
+  /// Specifies whether or not to enable the ink effect for the navigation bar items.
+  /// The default value is `false`.
+  final bool inkEffect;
+
+  /// Specifies the color of the ink effect.
+  /// The default color is `Colors.grey`.
+  final Color? inkColor;
+
+  /// Specifies the opacity of the navigation bar items' backgrounds.
+  /// The default value is `0.8`.
+  final double? opacity;
+
+  /// Specifies the style of dot.
+
+  /// * **`DotStyle.circle`:** Displays a circular dot.
+  /// * **`DotStyle.tile`:** Displays a tiled dot.
+
+  /// The default value is `DotStyle.circle`.
+  final DotStyle dotStyle;
+
+  /// Specifies the gradient to use for the dot.
+  /// If not specified, the item's `selectedColor` will be used as the default color.
+  final Gradient? gradient;
+
+  DotBarOptions({
+    this.iconSize = 26.0,
+    this.padding,
+    this.inkEffect = false,
+    this.inkColor = Colors.grey,
+    this.opacity = 0.8,
+    this.dotStyle = DotStyle.circle,
+    this.gradient,
   });
 }

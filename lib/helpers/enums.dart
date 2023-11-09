@@ -48,3 +48,9 @@ enum MovingStatus {
   left,
   none,
 }
+
+//
+enum DotStyle {
+  circle,
+  tile,
+}
