@@ -14,7 +14,7 @@ A collection of stylish bottom navigation bars like animated bottom bar and bubb
 ## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^1.0.3
+        stylish_bottom_bar: ^1.1.0-beta
 
 ## ⚡ Import
 
@@ -52,6 +52,7 @@ selectedIcon:
 items → List<BottomBarItem>
 option → AnimatedBarOptions
 option → BubbleBarOptions
+option → DotBarOptions
 backgroundColor → Color
 elevation → double
 currentIndex → int
@@ -104,6 +105,21 @@ IconStyle.Default
 IconStyle.simple
 IconStyle.animated
 ```
+
+### DotStyle
+```dart
+DotStyle.circle
+DotStyle.tile
+```
+
+### NotchStyle
+```dart
+NotchStyle.circle
+NotchStyle.square
+NotchStyle.themeDefault
+```
+
+
 
 ### Event
 ```dart

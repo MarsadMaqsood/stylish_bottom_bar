@@ -48,3 +48,15 @@ enum MovingStatus {
   left,
   none,
 }
+
+//
+enum DotStyle {
+  circle,
+  tile,
+}
+
+enum NotchStyle {
+  circle,
+  square,
+  themeDefault,
+}

@@ -19,7 +19,7 @@ class BubbleNavigationTile extends StatelessWidget {
     this.indexLabel,
     this.ink = false,
     this.inkColor = Colors.grey,
-    this.padding,
+    required this.padding,
     this.fillStyle,
     required this.itemBorderRadius,
   });
@@ -36,7 +36,7 @@ class BubbleNavigationTile extends StatelessWidget {
   final bool ink;
   final Color? inkColor;
   final Color? unselectedIconColor;
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
   final BubbleBarStyle? barStyle;
   final BubbleFillStyle? fillStyle;
   final BorderRadius? itemBorderRadius;
@@ -70,7 +70,7 @@ class BubbleNavigationTile extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: padding!,
+              padding: padding,
               child: InkWell(
                 onTap: onTap,
                 borderRadius: itemBorderRadius ??
@@ -82,6 +82,7 @@ class BubbleNavigationTile extends StatelessWidget {
                 splashColor: ink ? inkColor : Colors.transparent,
                 child: Container(
                   // height: 48,
+
                   height: height,
                   decoration: BoxDecoration(
                     borderRadius: itemBorderRadius ??
@@ -105,7 +106,6 @@ class BubbleNavigationTile extends StatelessWidget {
                           mainAxisAlignment: selected
                               ? MainAxisAlignment.spaceEvenly
                               : MainAxisAlignment.center,
-                          // children: items(label),
                           children: items(label).map((child) {
                             return selected ? Expanded(child: child) : child;
                           }).toList(),

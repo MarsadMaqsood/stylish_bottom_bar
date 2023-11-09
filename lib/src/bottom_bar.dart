@@ -4,6 +4,7 @@ import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/model/options.dart';
+import 'package:stylish_bottom_bar/src/dot_nav/dot_nav_tile.dart';
 import 'anim_nav/animated_nav_tiles.dart';
 import 'bubble_nav_bar/bubble_navigation_tile.dart';
 import '../helpers/cliper.dart';
@@ -54,7 +55,6 @@ import 'dart:math' as math;
 ///
 ///```
 
-// ignore: must_be_immutable
 class StylishBottomBar extends StatefulWidget {
   StylishBottomBar({
     super.key,
@@ -68,6 +68,8 @@ class StylishBottomBar extends StatefulWidget {
     this.hasNotch = false,
     required this.option,
     this.gradient,
+    this.iconSpace = 1.5,
+    this.notchStyle = NotchStyle.themeDefault,
   })  : assert(items.length >= 2,
             '\n\nStylish Bottom Navigation must have 2 or more items'),
         assert(
@@ -99,7 +101,7 @@ class StylishBottomBar extends StatefulWidget {
 
   ///Used to change the selected item index
   /// Default is 0
-  int currentIndex;
+  final int currentIndex;
 
   ///Add notch effect to floating action button
   ///
@@ -156,6 +158,18 @@ class StylishBottomBar extends StatefulWidget {
   /// );
   /// ```
   final Gradient? gradient;
+
+  ///Assign icon sapce;
+  final double iconSpace;
+
+  /// Specify the notch style
+  ///
+  /// [NotchStyle.circle]
+  ///
+  /// [NotchStyle.square] * Similar to material3
+  ///
+  /// [NotchStyle.themeDefault] * Depends on the `Theme.of(context).useMaterial3`
+  final NotchStyle notchStyle;
 
   @override
   State<StylishBottomBar> createState() => _StylishBottomBarState();
@@ -274,9 +288,25 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
               4;
       listWidget = _bubbleBarTiles();
+    } else if (widget.option.runtimeType == DotBarOptions) {
+      options = widget.option as DotBarOptions;
+      additionalBottomPadding =
+          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
+              4;
+      listWidget = _dotBarChilds();
     }
 
-    bool isUsingMaterial3 = Theme.of(context).useMaterial3;
+    bool getStyle() {
+      if (widget.notchStyle == NotchStyle.themeDefault) {
+        return Theme.of(context).useMaterial3;
+      } else if (widget.notchStyle == NotchStyle.square) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    bool isUsingMaterial3 = getStyle();
 
     return Semantics(
       explicitChildNodes: true,
@@ -406,6 +436,43 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         animation: _animations[i],
         barAnimation: options.barAnimation,
         iconStyle: options.iconStyle ?? IconStyle.Default,
+        onTap: () {
+          if (widget.onTap != null) widget.onTap!(i);
+        },
+        flex: _evaluateFlex(_animations[i]),
+        indexLabel: localizations.tabLabel(
+            tabIndex: i + 1, tabCount: widget.items.length),
+      ));
+    }
+    if (widget.fabLocation == StylishBarFabLocation.center) {
+      list.insert(
+        2,
+        list.length > 3
+            ? const Flex(
+                direction: Axis.horizontal,
+                children: [Padding(padding: EdgeInsets.all(12))],
+              )
+            : const Spacer(
+                flex: 2,
+              ),
+      );
+    }
+    return list;
+  }
+
+  List<Widget> _dotBarChilds() {
+    final List<Widget> list = [];
+    final MaterialLocalizations localizations =
+        MaterialLocalizations.of(context);
+
+    final DotBarOptions options = widget.option as DotBarOptions;
+
+    for (int i = 0; i < widget.items.length; ++i) {
+      list.add(DotNavigationTiles(
+        widget.items[i],
+        selected: widget.currentIndex == i,
+        animation: _animations[i],
+        options: options,
         onTap: () {
           if (widget.onTap != null) widget.onTap!(i);
         },

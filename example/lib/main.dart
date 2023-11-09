@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 void main() {
@@ -18,8 +17,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      home: const BubbelBarExample(),
-      // home: const AnimatedBarExample(),
+      // home: const BubbelBarExample(),
+      home: const AnimatedBarExample(),
     );
   }
 }
@@ -52,11 +51,23 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       // resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: StylishBottomBar(
-        option: AnimatedBarOptions(
-          // iconSize: 32,
-          barAnimation: BarAnimation.fade,
-          iconStyle: IconStyle.animated,
-          // opacity: 0.3,
+        // option: AnimatedBarOptions(
+        //   // iconSize: 32,
+        //   barAnimation: BarAnimation.blink,
+        //   iconStyle: IconStyle.animated,
+
+        //   // opacity: 0.3,
+        // ),
+        option: DotBarOptions(
+          dotStyle: DotStyle.tile,
+          gradient: const LinearGradient(
+            colors: [
+              Colors.deepPurple,
+              Colors.pink,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
         items: [
           BottomBarItem(
@@ -64,8 +75,8 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               Icons.house_outlined,
             ),
             selectedIcon: const Icon(Icons.house_rounded),
-            // selectedColor: Colors.teal,
-            backgroundColor: Colors.teal,
+            selectedColor: Colors.teal,
+            unSelectedColor: Colors.grey,
             title: const Text('Home'),
             badge: const Text('9+'),
             showBadge: true,
@@ -87,7 +98,6 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               selectedIcon: const Icon(
                 Icons.style,
               ),
-              backgroundColor: Colors.amber,
               selectedColor: Colors.deepOrangeAccent,
               title: const Text('Style')),
           BottomBarItem(
@@ -97,13 +107,13 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               selectedIcon: const Icon(
                 Icons.person,
               ),
-              backgroundColor: Colors.purpleAccent,
               selectedColor: Colors.deepPurple,
               title: const Text('Profile')),
         ],
         hasNotch: true,
-        fabLocation: StylishBarFabLocation.center,
+        fabLocation: StylishBarFabLocation.end,
         currentIndex: selected ?? 0,
+        notchStyle: NotchStyle.square,
         onTap: (index) {
           controller.jumpToPage(index);
           setState(() {
@@ -123,7 +133,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       body: SafeArea(
         child: PageView(
           controller: controller,
@@ -177,6 +187,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           // bubbleFillStyle: BubbleFillStyle.outlined,
           opacity: 0.3,
         ),
+        iconSpace: 12.0,
         items: [
           BottomBarItem(
             icon: const Icon(Icons.abc),
@@ -200,9 +211,14 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             title: const Text('Cabin'),
             backgroundColor: Colors.purple,
           ),
+          BottomBarItem(
+            icon: const Icon(Icons.cabin),
+            title: const Text('Cabin'),
+            backgroundColor: Colors.purple,
+          ),
         ],
-        // fabLocation: StylishBarFabLocation.end,
-        // hasNotch: true,
+        fabLocation: StylishBarFabLocation.center,
+        hasNotch: true,
         currentIndex: selected,
         onTap: (index) {
           setState(() {
@@ -211,11 +227,11 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           });
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: const Icon(Icons.emoji_emotions),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.emoji_emotions),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
