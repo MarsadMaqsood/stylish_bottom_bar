@@ -168,7 +168,8 @@ class AnimatedNavigationTiles extends StatelessWidget {
             selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       ),
       AnimatedCrossFade(
-        firstChild: Container(),
+        //to improve the animation replaced the Container with theSizedBox
+        firstChild: const SizedBox(),
         secondChild: Container(
           height: 20,
           width: 22,
