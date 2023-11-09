@@ -54,7 +54,6 @@ import 'dart:math' as math;
 ///
 ///```
 
-// ignore: must_be_immutable
 class StylishBottomBar extends StatefulWidget {
   StylishBottomBar({
     super.key,
@@ -100,7 +99,7 @@ class StylishBottomBar extends StatefulWidget {
 
   ///Used to change the selected item index
   /// Default is 0
-  int currentIndex;
+  final int currentIndex;
 
   ///Add notch effect to floating action button
   ///
