@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-
 import 'test_file.dart';
 
 void main() {
@@ -16,6 +15,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byIcon(Icons.star_border_rounded), findsOneWidget);
   });
+
   testWidgets('Test BubbleBarExample', (WidgetTester tester) async {
     // Create and pump AnimatedBarExample widget to test.
     await tester.pumpWidget(const MaterialApp(home: BubbelBarExample()));
@@ -28,6 +28,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byIcon(Icons.star_border_rounded), findsNothing);
   });
+
   testWidgets('Test DotBarExample', (WidgetTester tester) async {
     // Create and pump AnimatedBarExample widget to test.
     await tester.pumpWidget(const MaterialApp(home: DotBarExample()));
