@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      home: const BubbelBarExample(),
-      // home: const AnimatedBarExample(),
+      // home: const BubbelBarExample(),
+      home: const AnimatedBarExample(),
     );
   }
 }
@@ -52,11 +52,23 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       // resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: StylishBottomBar(
-        option: AnimatedBarOptions(
-          // iconSize: 32,
-          barAnimation: BarAnimation.fade,
-          iconStyle: IconStyle.animated,
-          // opacity: 0.3,
+        // option: AnimatedBarOptions(
+        //   // iconSize: 32,
+        //   barAnimation: BarAnimation.blink,
+        //   iconStyle: IconStyle.animated,
+
+        //   // opacity: 0.3,
+        // ),
+        option: DotBarOptions(
+          dotStyle: DotStyle.tile,
+          gradient: const LinearGradient(
+            colors: [
+              Colors.deepPurple,
+              Colors.pink,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
         items: [
           BottomBarItem(
@@ -64,8 +76,8 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               Icons.house_outlined,
             ),
             selectedIcon: const Icon(Icons.house_rounded),
-            // selectedColor: Colors.teal,
-            backgroundColor: Colors.teal,
+            selectedColor: Colors.teal,
+            unSelectedColor: Colors.grey,
             title: const Text('Home'),
             badge: const Text('9+'),
             showBadge: true,
@@ -87,7 +99,6 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               selectedIcon: const Icon(
                 Icons.style,
               ),
-              backgroundColor: Colors.amber,
               selectedColor: Colors.deepOrangeAccent,
               title: const Text('Style')),
           BottomBarItem(
@@ -97,7 +108,6 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               selectedIcon: const Icon(
                 Icons.person,
               ),
-              backgroundColor: Colors.purpleAccent,
               selectedColor: Colors.deepPurple,
               title: const Text('Profile')),
         ],
