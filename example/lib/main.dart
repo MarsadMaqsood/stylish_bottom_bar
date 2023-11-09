@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 void main() {
@@ -112,8 +111,9 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               title: const Text('Profile')),
         ],
         hasNotch: true,
-        fabLocation: StylishBarFabLocation.center,
+        fabLocation: StylishBarFabLocation.end,
         currentIndex: selected ?? 0,
+        notchStyle: NotchStyle.square,
         onTap: (index) {
           controller.jumpToPage(index);
           setState(() {
@@ -133,7 +133,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       body: SafeArea(
         child: PageView(
           controller: controller,

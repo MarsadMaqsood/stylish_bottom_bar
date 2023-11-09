@@ -69,6 +69,7 @@ class StylishBottomBar extends StatefulWidget {
     required this.option,
     this.gradient,
     this.iconSpace = 1.5,
+    this.notchStyle = NotchStyle.themeDefault,
   })  : assert(items.length >= 2,
             '\n\nStylish Bottom Navigation must have 2 or more items'),
         assert(
@@ -158,8 +159,17 @@ class StylishBottomBar extends StatefulWidget {
   /// ```
   final Gradient? gradient;
 
-  //Assign icon sapce;
+  ///Assign icon sapce;
   final double iconSpace;
+
+  /// Specify the notch style
+  ///
+  /// [NotchStyle.circle]
+  ///
+  /// [NotchStyle.square] * Similar to material3
+  ///
+  /// [NotchStyle.themeDefault] * Depends on the `Theme.of(context).useMaterial3`
+  final NotchStyle notchStyle;
 
   @override
   State<StylishBottomBar> createState() => _StylishBottomBarState();
@@ -286,7 +296,17 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       listWidget = _dotBarChilds();
     }
 
-    bool isUsingMaterial3 = Theme.of(context).useMaterial3;
+    bool getStyle() {
+      if (widget.notchStyle == NotchStyle.themeDefault) {
+        return Theme.of(context).useMaterial3;
+      } else if (widget.notchStyle == NotchStyle.square) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    bool isUsingMaterial3 = getStyle();
 
     return Semantics(
       explicitChildNodes: true,
