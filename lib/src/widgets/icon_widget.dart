@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 
-enum BadgeAnimationType {
-  slide,
-  fade,
-  scale,
-}
-
-enum BadgeShape { circle, square }
-
 class IconWidget extends StatelessWidget {
   const IconWidget({
     super.key,
