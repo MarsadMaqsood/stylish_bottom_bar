@@ -135,15 +135,11 @@ class DotBarOptions extends BottomBarOption {
   /// The default color is `Colors.grey`.
   final Color? inkColor;
 
-  /// Specifies the opacity of the navigation bar items' backgrounds.
-  /// The default value is `0.8`.
-  final double? opacity;
-
   /// Specifies the style of dot.
-
+  ///
   /// * **`DotStyle.circle`:** Displays a circular dot.
   /// * **`DotStyle.tile`:** Displays a tiled dot.
-
+  ///
   /// The default value is `DotStyle.circle`.
   final DotStyle dotStyle;
 
@@ -156,7 +152,6 @@ class DotBarOptions extends BottomBarOption {
     this.padding,
     this.inkEffect = false,
     this.inkColor = Colors.grey,
-    this.opacity = 0.8,
     this.dotStyle = DotStyle.circle,
     this.gradient,
   });

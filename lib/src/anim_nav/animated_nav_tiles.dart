@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/helpers/constant.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
-import 'package:stylish_bottom_bar/src/water_drop/water_drop.dart';
+import 'package:stylish_bottom_bar/src/widgets/water_drop.dart';
 
 class AnimatedNavigationTiles extends StatelessWidget {
   const AnimatedNavigationTiles(
@@ -204,7 +204,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
         : iconStyle == IconStyle.animated
             ? [
                 IconWidget(
-                  items: items,
+                  item: items,
                   selected: selected,
                   iconSize: iconSize,
                   barAnimation: barAnimation,
@@ -287,15 +287,14 @@ class AnimatedNavigationTiles extends StatelessWidget {
 
 class LabelWidget extends StatelessWidget {
   const LabelWidget({
-    Key? key,
+    super.key,
     required this.animation,
     required this.item,
     required this.color,
     required this.iconStyle,
-  }) : super(key: key);
+  });
 
   final Animation<double> animation;
-  // final AnimatedBarItems item;
   final BottomBarItem item;
   final Color color;
   final IconStyle iconStyle;
@@ -305,43 +304,41 @@ class LabelWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       heightFactor: 1.0,
-      child: Container(
-        child: iconStyle == IconStyle.Default
-            ? DefaultTextStyle.merge(
+      child: iconStyle == IconStyle.Default
+          ? DefaultTextStyle.merge(
+              style: TextStyle(
+                fontSize: activeFontSize,
+                fontWeight: FontWeight.w600,
+                color: color,
+              ),
+              child: item.title!,
+            )
+          : FadeTransition(
+              alwaysIncludeSemantics: true,
+              opacity: animation,
+              child: DefaultTextStyle.merge(
                 style: TextStyle(
                   fontSize: activeFontSize,
                   fontWeight: FontWeight.w600,
                   color: color,
                 ),
                 child: item.title!,
-              )
-            : FadeTransition(
-                alwaysIncludeSemantics: true,
-                opacity: animation,
-                child: DefaultTextStyle.merge(
-                  style: TextStyle(
-                    fontSize: activeFontSize,
-                    fontWeight: FontWeight.w600,
-                    color: color,
-                  ),
-                  child: item.title!,
-                ),
               ),
-      ),
+            ),
     );
   }
 }
 
 class IconWidget extends StatefulWidget {
-  const IconWidget(
-      {Key? key,
-      required this.items,
-      required this.selected,
-      required this.iconSize,
-      required this.barAnimation})
-      : super(key: key);
-  // final AnimatedBarItems items;
-  final BottomBarItem items;
+  const IconWidget({
+    super.key,
+    required this.item,
+    required this.selected,
+    required this.iconSize,
+    required this.barAnimation,
+  });
+
+  final BottomBarItem item;
   final bool selected;
   final double iconSize;
   final BarAnimation barAnimation;
@@ -390,8 +387,8 @@ class _IconWidgetState extends State<IconWidget>
       }
 
       animationColor = ColorTween(
-        begin: widget.items.backgroundColor ?? widget.items.unSelectedColor,
-        end: widget.items.selectedColor,
+        begin: widget.item.backgroundColor ?? widget.item.unSelectedColor,
+        end: widget.item.selectedColor,
       ).animate(animation)
         ..addListener(() {
           setState(() {});
@@ -417,12 +414,12 @@ class _IconWidgetState extends State<IconWidget>
   _buildWidget() {
     return IconTheme(
       data: IconThemeData(
-        color: widget.items.backgroundColor ??
+        color: widget.item.backgroundColor ??
             (widget.selected
                 ? widget.barAnimation == BarAnimation.transform3D
-                    ? widget.items.selectedColor
+                    ? widget.item.selectedColor
                     : animationColor.value
-                : widget.items.unSelectedColor),
+                : widget.item.unSelectedColor),
         size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
       ),
       child: widget.selected
@@ -432,10 +429,10 @@ class _IconWidgetState extends State<IconWidget>
                     // ..setEntry(2, 3, 0.003)
                     ..setEntry(3, 0, 0.002)
                     ..rotateY(0), //..rotateY(0),
-                  child: widget.items.icon!,
+                  child: widget.item.icon!,
                 )
-              : widget.items.icon!
-          : widget.items.icon!,
+              : widget.item.icon!
+          : widget.item.icon!,
     );
   }
 }

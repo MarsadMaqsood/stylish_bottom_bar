@@ -1,3 +1,11 @@
+## 1.1.0-beta-2
+- Optimized the performance of `DotBarOptions` style
+- Removed redundant code for increased efficiency.
+
+## 1.1.0-beta
+- Added new style `DotBarOptions`
+- Added `NotchStyle`
+
 ## 1.0.3
 - Fix: badge display issue when using `AnimatedBarOptions`
 - Removed unnecessary code

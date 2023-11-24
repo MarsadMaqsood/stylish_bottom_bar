@@ -31,9 +31,9 @@ class AnimatedBarExample extends StatefulWidget {
 }
 
 class _AnimatedBarExampleState extends State<AnimatedBarExample> {
-  dynamic selected;
-  var heart = false;
-  PageController controller = PageController();
+  int selected = 0;
+  bool heart = false;
+  final controller = PageController();
 
   @override
   void dispose() {
@@ -112,9 +112,10 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         ],
         hasNotch: true,
         fabLocation: StylishBarFabLocation.end,
-        currentIndex: selected ?? 0,
+        currentIndex: selected,
         notchStyle: NotchStyle.square,
         onTap: (index) {
+          if (index == selected) return;
           controller.jumpToPage(index);
           setState(() {
             selected = index;

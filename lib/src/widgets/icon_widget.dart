@@ -20,10 +20,10 @@ class IconWidget extends StatelessWidget {
   });
 
   final Animation<double> animation;
+  final BottomBarItem item;
   final double iconSize;
   final bool selected;
   final Color? unselectedIconColor;
-  final BottomBarItem item;
 
   @override
   Widget build(BuildContext context) {
