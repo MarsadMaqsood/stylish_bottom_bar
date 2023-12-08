@@ -1,3 +1,6 @@
+#Test Files
+test.*.dart
+
 # Miscellaneous
 *.class
 *.log

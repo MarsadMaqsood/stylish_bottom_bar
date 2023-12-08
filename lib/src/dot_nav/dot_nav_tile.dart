@@ -43,30 +43,24 @@ class DotNavigationTiles extends StatelessWidget {
                       top: 6.0,
                     )
                   : EdgeInsets.zero),
-          child: Badge(
-            label: item.badge,
-            isLabelVisible: item.showBadge,
-            backgroundColor: item.badgeColor,
-            padding: item.badgePadding,
-            child: IgnorePointer(
-              ignoring: selected,
-              child: InkWell(
-                onTap: onTap,
-                splashColor:
-                    options.inkEffect ? options.inkColor : Colors.transparent,
-                highlightColor: Colors.transparent,
-                borderRadius: const BorderRadius.horizontal(
-                  right: Radius.circular(52),
-                  left: Radius.circular(52),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: selected
-                      ? MainAxisAlignment.spaceEvenly
-                      : MainAxisAlignment.center,
-                  children: _dotItems(),
-                ),
+          child: IgnorePointer(
+            ignoring: selected,
+            child: InkWell(
+              onTap: onTap,
+              splashColor:
+                  options.inkEffect ? options.inkColor : Colors.transparent,
+              highlightColor: Colors.transparent,
+              borderRadius: const BorderRadius.horizontal(
+                right: Radius.circular(52),
+                left: Radius.circular(52),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: selected
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.center,
+                children: _dotItems(),
               ),
             ),
           ),
@@ -89,27 +83,34 @@ class DotNavigationTiles extends StatelessWidget {
       item: item,
     );
     return [
-      AnimatedCrossFade(
-        firstChild: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: label,
-        ),
-        secondChild: Container(
-          alignment: Alignment.center,
-          child: IconTheme(
-            data: IconThemeData(
-              color: itemColor,
-              size: options.iconSize,
-            ),
-            child: iconChild,
+      Badge(
+        label: item.badge,
+        isLabelVisible: item.showBadge,
+        backgroundColor: item.badgeColor,
+        padding: item.badgePadding,
+        alignment: const Alignment(0.175, -1.0),
+        child: AnimatedCrossFade(
+          firstChild: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: label,
           ),
+          secondChild: Container(
+            alignment: Alignment.center,
+            child: IconTheme(
+              data: IconThemeData(
+                color: itemColor,
+                size: options.iconSize,
+              ),
+              child: iconChild,
+            ),
+          ),
+          duration: const Duration(milliseconds: 600),
+          sizeCurve: Curves.fastOutSlowIn,
+          firstCurve: Curves.fastOutSlowIn,
+          secondCurve: Curves.fastOutSlowIn.flipped,
+          crossFadeState:
+              selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         ),
-        duration: const Duration(milliseconds: 600),
-        sizeCurve: Curves.fastOutSlowIn,
-        firstCurve: Curves.fastOutSlowIn,
-        secondCurve: Curves.fastOutSlowIn.flipped,
-        crossFadeState:
-            selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       ),
       AnimatedCrossFade(
         firstChild: const SizedBox(),
