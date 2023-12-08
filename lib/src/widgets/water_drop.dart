@@ -53,8 +53,8 @@ class _WaterDropState extends State<WaterDrop> {
           end: end,
           colors: const [Colors.black, Colors.white],
         ),
-        // backgroundBlendMode: BlendMode.overlay,
-        backgroundBlendMode: BlendMode.colorBurn,
+        backgroundBlendMode: BlendMode.overlay,
+        // backgroundBlendMode: BlendMode.colorBurn,
       ),
       child: widget.child,
     );

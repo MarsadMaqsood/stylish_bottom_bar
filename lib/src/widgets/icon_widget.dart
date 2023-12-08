@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 
-enum BadgeAnimationType {
-  slide,
-  fade,
-  scale,
-}
-
-enum BadgeShape { circle, square }
-
 class IconWidget extends StatelessWidget {
   const IconWidget({
     super.key,
@@ -20,10 +12,10 @@ class IconWidget extends StatelessWidget {
   });
 
   final Animation<double> animation;
+  final BottomBarItem item;
   final double iconSize;
   final bool selected;
   final Color? unselectedIconColor;
-  final BottomBarItem item;
 
   @override
   Widget build(BuildContext context) {
