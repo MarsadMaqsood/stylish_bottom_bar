@@ -53,9 +53,9 @@ class BubbleNavigationTile extends StatelessWidget {
       // color: item.backgroundColor,
     );
 
-    var outlined = selected && fillStyle == BubbleFillStyle.outlined;
-    var fill = selected && fillStyle == BubbleFillStyle.fill;
-    final height = barStyle == BubbleBarStyle.horizontal
+    var isOutlined = selected && fillStyle == BubbleFillStyle.outlined;
+    var isFilled = selected && fillStyle == BubbleFillStyle.fill;
+    final barHeight = barStyle == BubbleBarStyle.horizontal
         ? 48.0
         : iconSize > 30.0 //decreased to 30 from 32
             ? 50.0 + (iconSize - 30.0) //decreased to 30 from 32
@@ -83,7 +83,7 @@ class BubbleNavigationTile extends StatelessWidget {
                 child: Container(
                   // height: 48,
 
-                  height: height,
+                  height: barHeight,
                   decoration: BoxDecoration(
                     borderRadius: itemBorderRadius ??
                         const BorderRadius.horizontal(
@@ -91,10 +91,11 @@ class BubbleNavigationTile extends StatelessWidget {
                           left: Radius.circular(52),
                         ),
                     border: Border.all(
-                        width: outlined ? 1 : 0,
+                        width: isOutlined ? 1 : 0,
                         color: item.borderColor,
-                        style: outlined ? BorderStyle.solid : BorderStyle.none),
-                    color: fill
+                        style:
+                            isOutlined ? BorderStyle.solid : BorderStyle.none),
+                    color: isFilled
                         ? item.backgroundColor?.withOpacity(opacity)
                         : Colors.transparent,
                   ),
