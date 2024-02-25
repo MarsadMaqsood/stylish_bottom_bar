@@ -42,7 +42,6 @@ Widget _container(List<Widget> childs) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ...childs,
-        // Text('as'),
       ],
     ),
   );
