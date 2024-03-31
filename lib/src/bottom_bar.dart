@@ -206,7 +206,9 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         duration: const Duration(milliseconds: 200),
         vsync: this,
       )..addListener(() {
-          // setState(() {}); // removed
+          if (widget.option.runtimeType == BubbleBarOptions) {
+            setState(() {});
+          }
         });
     });
     _animations =

@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      // home: const BubbelBarExample(),
-      home: const AnimatedBarExample(),
+      home: const BubbelBarExample(),
+      // home: const AnimatedBarExample(),
     );
   }
 }
@@ -218,7 +218,6 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             backgroundColor: Colors.purple,
           ),
         ],
-        fabLocation: StylishBarFabLocation.center,
         hasNotch: true,
         currentIndex: selected,
         onTap: (index) {
@@ -228,11 +227,6 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           });
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.emoji_emotions),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
