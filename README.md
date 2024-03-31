@@ -14,7 +14,7 @@ A collection of stylish bottom navigation bars like animated bottom bar and bubb
 ## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^1.1.0-beta-2
+        stylish_bottom_bar: ^1.1.0-beta-3
 
 ## ⚡ Import
 
@@ -189,6 +189,22 @@ onTap: (index){
 
 
 ---
+
+**DotNavigationBar**
+
+`DotStyle.circle`
+
+<img width="356" height="70" src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/30.gif?raw=true">
+<img width="356" height="70" src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/31.gif?raw=true">
+
+---
+
+`DotStyle.tile`
+
+<img width="356" height="70" src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/32.gif?raw=true">
+<img width="356" height="70" src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/33.gif?raw=true">
+
+
 **BubbleNavigationBar**
 
 `BubbleBarStyle.horizotnal`
@@ -229,12 +245,23 @@ StylishBottomBar(
 //    iconStyle: IconStyle.animated,
 //    opacity: 0.3,
 //  ),
-  option: BubbleBarOptions(
-    barStyle: BubbleBarStyle.horizotnal,
-    // barStyle: BubbleBarStyle.vertical,
-    bubbleFillStyle: BubbleFillStyle.fill,
-    // bubbleFillStyle: BubbleFillStyle.outlined,
-    opacity: 0.3,
+//  option: BubbleBarOptions(
+//    barStyle: BubbleBarStyle.horizotnal,
+//    // barStyle: BubbleBarStyle.vertical,
+//    bubbleFillStyle: BubbleFillStyle.fill,
+//    // bubbleFillStyle: BubbleFillStyle.outlined,
+//    opacity: 0.3,
+//  ),
+  option: DotBarOptions(
+    dotStyle: DotStyle.tile,
+    gradient: const LinearGradient(
+      colors: [
+        Colors.deepPurple,
+        Colors.pink,
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
   ),
   items: [
     BottomBarItem(

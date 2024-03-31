@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
@@ -5,12 +7,12 @@ import 'package:stylish_bottom_bar/helpers/enums.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/model/options.dart';
 import 'package:stylish_bottom_bar/src/dot_nav/dot_nav_tile.dart';
-import 'anim_nav/animated_nav_tiles.dart';
-import 'bubble_nav_bar/bubble_navigation_tile.dart';
+
 import '../helpers/cliper.dart';
 import '../helpers/constant.dart';
+import 'anim_nav/animated_nav_tiles.dart';
+import 'bubble_nav_bar/bubble_navigation_tile.dart';
 import 'widgets/widgets.dart';
-import 'dart:math' as math;
 
 ///[StylishBottomBar] class to implement beautiful bottom bar widget
 ///
@@ -204,7 +206,9 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         duration: const Duration(milliseconds: 200),
         vsync: this,
       )..addListener(() {
-          setState(() {}); // removed
+          if (widget.option.runtimeType == BubbleBarOptions) {
+            setState(() {});
+          }
         });
     });
     _animations =
