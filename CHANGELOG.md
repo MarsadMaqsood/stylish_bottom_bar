@@ -1,3 +1,6 @@
+## 1.1.0-beta-3
+- Updated documentation
+
 ## 1.1.0-beta-2
 - Optimized the performance of `DotBarOptions` style
 - Fixed: `Badge` padding issue [#22](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/22#issue-2029833633)
