@@ -15,6 +15,7 @@ class BubbleBarOptions extends BottomBarOption {
   ///BarStyle to align icon and title in horizontal or vertical
   ///[BubbleBarStyle.horizontal]
   ///[BubbleBarStyle.vertical]
+  ///
   ///Default value is [BubbleBarStyle.horizontal]
   final BubbleBarStyle barStyle;
 
@@ -23,11 +24,13 @@ class BubbleBarOptions extends BottomBarOption {
   ///and also fill the background with color using [BubbleFillStyle.fill]
   final BubbleFillStyle bubbleFillStyle;
 
-  ///Change Icon size
+  ///Change icon size
+  ///
   ///Default is 26.0
   final double iconSize;
 
   ///Enable ink effect to bubble navigation bar item
+  ///
   ///Default value is `false`
   final bool inkEffect;
 
@@ -35,6 +38,7 @@ class BubbleBarOptions extends BottomBarOption {
   final BorderRadius? borderRadius;
 
   ///Add padding arround navigation tiles
+  ///
   ///Default padding is [EdgeInsets.zero]
   final EdgeInsets padding;
 
@@ -44,6 +48,7 @@ class BubbleBarOptions extends BottomBarOption {
   final Color inkColor;
 
   /// Specifies the opacity of the navigation bar items' backgrounds.
+  ///
   /// The default value is `0.8`.
   final double? opacity;
 
