@@ -25,7 +25,7 @@ class BottomBarItem {
   ///Use this to add item title
   final Widget? title;
 
-  ///Set widget to display as a badge
+  ///Set the widget to display as a badge
   ///
   ///```dart
   ///badge: Text('90'),

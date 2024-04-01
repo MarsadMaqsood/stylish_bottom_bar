@@ -97,12 +97,9 @@ class StylishBottomBar extends StatefulWidget {
   ///Default value is 8.0
   final double elevation;
 
-  ///Change Icon size
-  ///Default is 26.0
-  // final double? iconSize;
-
   ///Used to change the selected item index
-  /// Default is 0
+  ///
+  /// Default value is 0
   final int currentIndex;
 
   ///Add notch effect to floating action button
@@ -278,25 +275,24 @@ class _StylishBottomBarState extends State<StylishBottomBar>
     double additionalBottomPadding = 0;
     late List<Widget> listWidget;
 
+    final mediaQuery = MediaQuery.of(context);
+
     dynamic options;
 
     if (widget.option.runtimeType == AnimatedBarOptions) {
       options = widget.option as AnimatedBarOptions;
       additionalBottomPadding =
-          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
-              2;
+          math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 2;
       listWidget = _animatedBarChilds();
     } else if (widget.option.runtimeType == BubbleBarOptions) {
       options = widget.option as BubbleBarOptions;
       additionalBottomPadding =
-          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
-              4;
+          math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
       listWidget = _bubbleBarTiles();
     } else if (widget.option.runtimeType == DotBarOptions) {
       options = widget.option as DotBarOptions;
       additionalBottomPadding =
-          math.max(MediaQuery.of(context).padding.bottom - bottomMargin, 0.0) +
-              4;
+          math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
       listWidget = _dotBarChilds();
     }
 
@@ -452,9 +448,13 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       list.insert(
         2,
         list.length > 3
-            ? Flex(
+            ? const Flex(
                 direction: Axis.horizontal,
-                children: [Padding(padding: EdgeInsets.all(12))],
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(12),
+                  ),
+                ],
               )
             : const Spacer(
                 flex: 2,

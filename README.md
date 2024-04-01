@@ -14,7 +14,7 @@ A collection of stylish bottom navigation bars like animated bottom bar and bubb
 ## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^1.1.0-beta-3
+        stylish_bottom_bar: ^1.1.0
 
 ## ⚡ Import
 
@@ -44,6 +44,7 @@ unselectedIconColor:
 bubbleFillStyle:
 iconStyle:
 selectedIcon:
+dotStyle:
 ```
 
 ## Properties
@@ -70,6 +71,7 @@ barStyle → BubbleBarStyle
 unselectedIconColor → Color
 bubbleFillStyle → BubbleFillStyle
 iconStyle → IconStyle
+dotStyle → DotStyle
 ```
 
 ### BarStyle

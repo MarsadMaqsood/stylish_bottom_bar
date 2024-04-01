@@ -1,3 +1,9 @@
+## 1.1.0
+- Added new style `DotBarOptions`
+- Improved `BarAnimation.liquid`
+- Updated documentation
+- Removed unnecessary code
+
 ## 1.1.0-beta-3
 - Updated documentation
 
