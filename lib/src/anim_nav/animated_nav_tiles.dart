@@ -117,16 +117,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
           isLabelVisible: items.showBadge,
           backgroundColor: items.badgeColor,
           padding: items.badgePadding,
-          child: IconTheme(
-            data: IconThemeData(
-              color: itemColor,
-              size: iconSize,
-              // size: selected ? iconSize + 4 : iconSize,
-            ),
-            child: selected && items.selectedIcon != null
-                ? items.selectedIcon!
-                : items.icon!,
-          ),
+          child: selected && items.selectedIcon != null
+              ? items.selectedIcon!
+              : items.icon!,
         ),
       ),
       label,
@@ -215,6 +208,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   padding: items.badgePadding,
                   child: IconWidget(
                     item: items,
+                    color: items.selectedColor,
                     selected: selected,
                     iconSize: iconSize,
                     barAnimation: barAnimation,
@@ -360,11 +354,13 @@ class IconWidget extends StatefulWidget {
     required this.selected,
     required this.iconSize,
     required this.barAnimation,
+    required this.color
   });
 
   final BottomBarItem item;
   final bool selected;
   final double iconSize;
+  final Color color;
   final BarAnimation barAnimation;
 
   @override
@@ -380,7 +376,6 @@ class _IconWidgetState extends State<IconWidget>
   @override
   void initState() {
     super.initState();
-
     _init();
   }
 
@@ -412,7 +407,7 @@ class _IconWidgetState extends State<IconWidget>
 
       animationColor = ColorTween(
         begin: widget.item.backgroundColor ?? widget.item.unSelectedColor,
-        end: widget.item.selectedColor,
+        end: widget.color,
       ).animate(animation)
         ..addListener(() {
           setState(() {});
@@ -442,7 +437,7 @@ class _IconWidgetState extends State<IconWidget>
             (widget.selected
                 ? widget.barAnimation == BarAnimation.transform3D
                     ? widget.item.selectedColor
-                    : animationColor.value
+                    : widget.color
                 : widget.item.unSelectedColor),
         size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
       ),
