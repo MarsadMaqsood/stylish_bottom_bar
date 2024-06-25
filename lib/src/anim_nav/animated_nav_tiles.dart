@@ -117,9 +117,16 @@ class AnimatedNavigationTiles extends StatelessWidget {
           isLabelVisible: items.showBadge,
           backgroundColor: items.badgeColor,
           padding: items.badgePadding,
-          child: selected && items.selectedIcon != null
-              ? items.selectedIcon!
-              : items.icon!,
+          child: IconTheme(
+            data: IconThemeData(
+              color: itemColor,
+              size: iconSize,
+              // size: selected ? iconSize + 4 : iconSize,
+            ),
+            child: selected && items.selectedIcon != null
+                ? items.selectedIcon!
+                : items.icon!,
+          ),
         ),
       ),
       label,
@@ -376,6 +383,7 @@ class _IconWidgetState extends State<IconWidget>
   @override
   void initState() {
     super.initState();
+
     _init();
   }
 
