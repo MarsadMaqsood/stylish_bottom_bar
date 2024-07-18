@@ -19,7 +19,7 @@ A collection of stylish bottom navigation bars like animated bottom bar and bubb
 ## ⚡ Import
 
 ```dart
-import 'package:stylish_bottom_bar/stylish_nav.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 ```
 
 ## 📙 How To Use <a name="how_to_use"></a>
