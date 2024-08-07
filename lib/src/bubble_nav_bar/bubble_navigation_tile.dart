@@ -108,7 +108,7 @@ class BubbleNavigationTile extends StatelessWidget {
                               ? MainAxisAlignment.spaceEvenly
                               : MainAxisAlignment.center,
                           children: items(label).map((child) {
-                            return selected ? Expanded(child: child) : child;
+                            return selected ? child : child;
                           }).toList(),
                         )
                       : Column(

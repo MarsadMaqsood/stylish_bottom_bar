@@ -203,7 +203,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           ),
           BottomBarItem(
             icon: const Icon(Icons.safety_divider),
-            title: const Text('Safety'),
+            title: const Text('Safety Divider'),
             selectedColor: Colors.orange,
             backgroundColor: Colors.orange,
           ),
