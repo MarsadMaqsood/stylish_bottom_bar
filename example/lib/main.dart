@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
-      home: const BubbelBarExample(),
-      // home: const AnimatedBarExample(),
+      // home: const BubbelBarExample(),
+      home: const AnimatedBarExample(),
     );
   }
 }
@@ -51,31 +51,29 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       // resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: StylishBottomBar(
-        // option: AnimatedBarOptions(
-        //   // iconSize: 32,
-        //   barAnimation: BarAnimation.blink,
-        //   iconStyle: IconStyle.animated,
+        option: AnimatedBarOptions(
+          // iconSize: 32,
+          barAnimation: BarAnimation.drop,
+          iconStyle: IconStyle.animated,
 
-        //   // opacity: 0.3,
-        // ),
-        option: DotBarOptions(
-          dotStyle: DotStyle.tile,
-          gradient: const LinearGradient(
-            colors: [
-              Colors.deepPurple,
-              Colors.pink,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          // opacity: 0.3,
         ),
+        // option: DotBarOptions(
+        //   dotStyle: DotStyle.tile,
+        //   gradient: const LinearGradient(
+        //     colors: [
+        //       Colors.deepPurple,
+        //       Colors.pink,
+        //     ],
+        //     begin: Alignment.topLeft,
+        //     end: Alignment.bottomRight,
+        //   ),
+        // ),
         items: [
           BottomBarItem(
-            icon: const Icon(
-              Icons.house_outlined,
-            ),
-            selectedIcon: const Icon(Icons.house_rounded),
-            selectedColor: Colors.teal,
+            icon: const Icon(Icons.house_outlined),
+            selectedIcon: const Icon(Icons.abc),
+            selectedColor: Colors.red,
             unSelectedColor: Colors.grey,
             title: const Text('Home'),
             badge: const Text('9+'),

@@ -74,8 +74,7 @@ class DotNavigationTiles extends StatelessWidget {
       (selected ? item.selectedColor : item.unSelectedColor);
   Color get itemColorOnSelected => item.backgroundColor ?? item.selectedColor;
 
-  Widget get iconChild =>
-      selected && item.selectedIcon != null ? item.selectedIcon! : item.icon!;
+  Widget get iconChild => selected ? item.selectedIcon ?? item.icon : item.icon;
 
   List<Widget> _dotItems() {
     final label = LabelWidget(
