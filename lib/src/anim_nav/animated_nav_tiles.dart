@@ -123,9 +123,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
               size: iconSize,
               // size: selected ? iconSize + 4 : iconSize,
             ),
-            child: selected && items.selectedIcon != null
-                ? items.selectedIcon!
-                : items.icon!,
+            child: selected ? items.selectedIcon ?? items.icon : items.icon,
           ),
         ),
       ),
@@ -159,9 +157,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                 color: itemColor,
                 size: iconSize,
               ),
-              child: selected && items.selectedIcon != null
-                  ? items.selectedIcon!
-                  : items.icon!,
+              child: selected ? items.selectedIcon ?? items.icon : items.icon,
             ),
           ),
           duration: const Duration(milliseconds: 600),
@@ -246,9 +242,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
                         color: itemColor,
                         size: selected ? iconSize + 4 : iconSize,
                       ),
-                      child: selected && items.selectedIcon != null
-                          ? items.selectedIcon!
-                          : items.icon!,
+                      child: selected
+                          ? items.selectedIcon ?? items.icon
+                          : items.icon,
                     ),
                   ),
                 ),
@@ -271,9 +267,10 @@ class AnimatedNavigationTiles extends StatelessWidget {
                 color: itemColor,
                 size: iconSize,
               ),
-              child: selected && items.selectedIcon != null
-                  ? items.selectedIcon!
-                  : items.icon!,
+              // child: selected && items.selectedIcon != null
+              //     ? items.selectedIcon!
+              //     : items.icon,
+              child: selected ? items.selectedIcon ?? items.icon : items.icon,
             ),
           ),
           secondChild: Align(
@@ -292,7 +289,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   ),
                   child: selected && items.selectedIcon != null
                       ? items.selectedIcon!
-                      : items.icon!,
+                      : items.icon,
                 ),
               ),
             ),
@@ -450,13 +447,12 @@ class _IconWidgetState extends State<IconWidget>
           ? widget.barAnimation == BarAnimation.transform3D
               ? Transform(
                   transform: Matrix4.identity()
-                    // ..setEntry(2, 3, 0.003)
                     ..setEntry(3, 0, 0.002)
                     ..rotateY(0), //..rotateY(0),
-                  child: widget.item.icon!,
+                  child: widget.item.selectedIcon ?? widget.item.icon,
                 )
-              : widget.item.icon!
-          : widget.item.icon!,
+              : widget.item.selectedIcon ?? widget.item.icon
+          : widget.item.icon,
     );
   }
 }

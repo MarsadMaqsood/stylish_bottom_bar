@@ -17,7 +17,7 @@ class BottomBarItem {
   });
 
   ///Use this to add item icon
-  final Widget? icon;
+  final Widget icon;
 
   ///Use this to change the selected item icon
   final Widget? selectedIcon;
