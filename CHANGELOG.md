@@ -1,3 +1,11 @@
+## 1.1.1-beta-1
+- Fixed: [#30](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/30)
+- Fixed: [#33](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/33)
+- Fixed: [#37](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/37) 
+- Fixed: [#38](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/38)
+
+- Thanks to PR [#32](https://github.com/MarsadMaqsood/stylish_bottom_bar/pull/32), [#34](https://github.com/MarsadMaqsood/stylish_bottom_bar/pull/34)
+
 ## 1.1.0
 - Added new style `DotBarOptions`
 - Improved `BarAnimation.liquid`
