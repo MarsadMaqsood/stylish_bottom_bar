@@ -14,16 +14,22 @@ class BarClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    final Rect? button = geometry.value.floatingActionButtonArea?.translate(
-      0.0,
-      geometry.value.bottomNavigationBarTop! * -1.0,
-    );
+    final scaffoldGeometry = geometry.value;
+    final fabArea = scaffoldGeometry.floatingActionButtonArea;
+    final barTop = scaffoldGeometry.bottomNavigationBarTop ?? 0.0;
 
-    return shape.getOuterPath(Offset.zero & size, button?.inflate(notchMargin));
+    final Rect? button = fabArea
+        ?.translate(
+          0.0,
+          -barTop,
+        )
+        .inflate(notchMargin);
+
+    return shape.getOuterPath(Offset.zero & size, button);
   }
 
   @override
-  bool shouldReclip(BarClipper oldClipper) {
+  bool shouldReclip(covariant BarClipper oldClipper) {
     return oldClipper.geometry != geometry ||
         oldClipper.shape != shape ||
         oldClipper.notchMargin != notchMargin;
