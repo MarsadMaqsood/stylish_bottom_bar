@@ -449,22 +449,35 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       }),
     );
 
-    if (widget.fabLocation == StylishBarFabLocation.center && list.length > 2) {
-      list.insert(
-        2,
-        list.length > 3
-            ? const Flex(
-                direction: Axis.horizontal,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(12),
-                  ),
-                ],
-              )
-            : const Spacer(
-                flex: 2,
-              ),
-      );
+    // if (widget.fabLocation == StylishBarFabLocation.center && list.length > 2) {
+    //   list.insert(
+    //     2,
+    //     list.length > 3
+    //         ? const Flex(
+    //             direction: Axis.horizontal,
+    //             children: [Padding(padding: EdgeInsets.all(12))],
+    //           )
+    //         : const Spacer(
+    //             flex: 2,
+    //           ),
+    //   );
+    // }
+
+    insertSpace(list);
+
+    return list;
+  }
+
+  List<Widget> insertSpace(List<Widget> list) {
+    if (widget.fabLocation == StylishBarFabLocation.center) {
+      if (list.length == 2) {
+        list.insert(1, const Spacer()); // One at start, one at end
+      } else if (list.length == 3) {
+        list.insert(2, const Spacer(flex: 1)); // Push second item towards FAB
+        list.insert(4, const Spacer()); // Minimal spacing after FAB
+      } else if (list.length == 4) {
+        list.insert(2, const Spacer()); // Two before, two after FAB
+      }
     }
     return list;
   }
@@ -493,19 +506,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       }),
     );
 
-    if (widget.fabLocation == StylishBarFabLocation.center && list.length > 2) {
-      list.insert(
-        2,
-        list.length > 3
-            ? const Flex(
-                direction: Axis.horizontal,
-                children: [Padding(padding: EdgeInsets.all(12))],
-              )
-            : const Spacer(
-                flex: 2,
-              ),
-      );
-    }
+    insertSpace(list);
     return list;
   }
 }
