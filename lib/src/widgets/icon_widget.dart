@@ -8,14 +8,12 @@ class IconWidget extends StatelessWidget {
     required this.iconSize,
     required this.selected,
     required this.item,
-    required this.unselectedIconColor,
   });
 
   final Animation<double> animation;
   final BottomBarItem item;
   final double iconSize;
   final bool selected;
-  final Color? unselectedIconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +29,15 @@ class IconWidget extends StatelessWidget {
           data: IconThemeData(
             color: selected
                 ? item.backgroundColor ?? item.selectedColor
-                : unselectedIconColor,
+                : item.unSelectedColor,
             size: iconSize,
           ),
-          child: Padding(
-            padding:
-                item.showBadge ? const EdgeInsets.all(8.0) : EdgeInsets.zero,
-            child: selected ? item.selectedIcon ?? item.icon : item.icon,
-          ),
+          child: selected ? item.selectedIcon ?? item.icon : item.icon,
+          // child: Padding(
+          //   padding:
+          //       item.showBadge ? const EdgeInsets.all(8.0) : EdgeInsets.zero,
+          //   child: selected ? item.selectedIcon ?? item.icon : item.icon,
+          // ),
         ),
       ),
     );
