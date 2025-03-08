@@ -22,7 +22,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
     required this.iconStyle,
   });
 
-  // final AnimatedBarItems items;
   final BottomBarItem items;
 
   ///Icon size
@@ -169,8 +168,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
         ),
       ),
       AnimatedCrossFade(
-        //to improve the animation replaced the Container with theSizedBox
-        firstChild: const SizedBox(),
+        firstChild: SizedBox(),
         secondChild: Container(
           height: 20,
           width: 22,

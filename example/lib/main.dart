@@ -53,7 +53,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       bottomNavigationBar: StylishBottomBar(
         option: AnimatedBarOptions(
           // iconSize: 32,
-          barAnimation: BarAnimation.drop,
+          barAnimation: BarAnimation.liquid,
           iconStyle: IconStyle.animated,
 
           // opacity: 0.3,
@@ -89,15 +89,15 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             // backgroundColor: Colors.orange,
             title: const Text('Star'),
           ),
-          BottomBarItem(
-              icon: const Icon(
-                Icons.style_outlined,
-              ),
-              selectedIcon: const Icon(
-                Icons.style,
-              ),
-              selectedColor: Colors.deepOrangeAccent,
-              title: const Text('Style')),
+          // BottomBarItem(
+          //     icon: const Icon(
+          //       Icons.style_outlined,
+          //     ),
+          //     selectedIcon: const Icon(
+          //       Icons.style,
+          //     ),
+          //     selectedColor: Colors.deepOrangeAccent,
+          //     title: const Text('Style')),
           BottomBarItem(
               icon: const Icon(
                 Icons.person_outline,
@@ -109,7 +109,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
               title: const Text('Profile')),
         ],
         hasNotch: true,
-        fabLocation: StylishBarFabLocation.end,
+        fabLocation: StylishBarFabLocation.center,
         currentIndex: selected,
         notchStyle: NotchStyle.square,
         onTap: (index) {
@@ -132,7 +132,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
         child: PageView(
           controller: controller,
@@ -210,11 +210,11 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             title: const Text('Cabin'),
             backgroundColor: Colors.purple,
           ),
-          BottomBarItem(
-            icon: const Icon(Icons.cabin),
-            title: const Text('Cabin'),
-            backgroundColor: Colors.purple,
-          ),
+          // BottomBarItem(
+          //   icon: const Icon(Icons.cabin),
+          //   title: const Text('Cabin'),
+          //   backgroundColor: Colors.purple,
+          // ),
         ],
         hasNotch: true,
         currentIndex: selected,
@@ -224,7 +224,11 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
             controller.jumpToPage(index);
           });
         },
+
+        // fabLocation: StylishBarFabLocation.end,
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(onPressed: () {}),
     );
   }
 }

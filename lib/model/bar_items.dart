@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 
+/// Represents an item in the bottom navigation bar.
 class BottomBarItem {
+  /// Creates an instance of [BottomBarItem].
+  ///
+  /// * [icon] is required and represents the item's icon.
+  /// * [title] represents the item's title.
+  /// * [selectedIcon] is an optional widget to display when the item is selected.
+  /// * [backgroundColor] sets the item's background color.
+  /// * [unSelectedColor] sets the color of the icon and text when the item is not selected. Defaults to [Colors.grey].
+  /// * [selectedColor] sets the color of the icon and text when the item is selected. Defaults to [Colors.green].
+  /// * [badge] is an optional widget to display as a badge.
+  /// * [badgeColor] sets the badge's background color. Defaults to [Colors.grey].
+  /// * [showBadge] determines whether to show the badge. Defaults to `false`.
+  /// * [badgePadding] sets the padding around the badge.
+  /// * [borderColor] sets the color of the border around the item. Defaults to [Colors.black].
   BottomBarItem({
     required this.icon,
     required this.title,
@@ -8,7 +22,6 @@ class BottomBarItem {
     this.backgroundColor,
     this.unSelectedColor = Colors.grey,
     this.selectedColor = Colors.green,
-    //badge
     this.badge,
     this.badgeColor = Colors.grey,
     this.showBadge = false,
@@ -16,39 +29,39 @@ class BottomBarItem {
     this.borderColor = Colors.black,
   });
 
-  ///Use this to add item icon
+  /// The icon to display for this item.
   final Widget icon;
 
-  ///Use this to change the selected item icon
+  /// The icon to display when this item is selected.
   final Widget? selectedIcon;
 
-  ///Use this to add item title
+  /// The title of this item.
   final Widget? title;
 
-  ///Set the widget to display as a badge
+  /// The widget to display as a badge.
   ///
-  ///```dart
-  ///badge: Text('90'),
-  ///```
+  /// Example:
+  /// ```dart
+  /// badge: Text('90'),
+  /// ```
   final Widget? badge;
 
-  ///Use this to show or hide the badge
+  /// Whether to show the badge.
   ///
-  ///default is `false`
+  /// Defaults to `false`.
   final bool showBadge;
 
-  ///Change the badge color
+  /// The background color of the badge.
   ///
-  ///default is [Colors.black]
+  /// Defaults to [Colors.grey].
   final Color badgeColor;
 
-  ///The badgePadding property is used to set the padding for the badge label.
-  /// It specifies the amount of space to be left around the badge label content.
-  final EdgeInsets? badgePadding;
+  /// The padding around the badge.
+  final EdgeInsetsGeometry? badgePadding;
 
-  ///Use this to change the border color
+  /// The color of the border around this item.
   ///
-  ///default color is [Colors.black]
+  /// Defaults to [Colors.black].
   final Color borderColor;
 
   ///The `backgroundColor` property is used to assign a [backgroundColor] to [BottomBarItem].
@@ -62,11 +75,13 @@ class BottomBarItem {
   ///  and [unSelectedColor] and [borderColor] of the item
   final Color? backgroundColor;
 
-  ///Use this to change the selected item's icon color
-  ///default color is [Colors.green]
+  /// The color of the icon and text when this item is selected.
+  ///
+  /// Defaults to [Colors.green].
   final Color selectedColor;
 
-  ///Use this to change the unselected item's icon color
-  ///default color is [Colors.grey]
+  /// The color of the icon and text when this item is not selected.
+  ///
+  /// Defaults to [Colors.grey].
   final Color unSelectedColor;
 }

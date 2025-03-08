@@ -6,11 +6,11 @@ import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/model/options.dart';
+import 'package:stylish_bottom_bar/src/anim_nav/animated_nav_tiles.dart';
 import 'package:stylish_bottom_bar/src/dot_nav/dot_nav_tile.dart';
 
 import '../helpers/cliper.dart';
 import '../helpers/constant.dart';
-import 'anim_nav/animated_nav_tiles.dart';
 import 'bubble_nav_bar/bubble_navigation_tile.dart';
 import 'widgets/widgets.dart';
 
@@ -56,7 +56,6 @@ import 'widgets/widgets.dart';
 ///  );
 ///
 ///```
-
 class StylishBottomBar extends StatefulWidget {
   StylishBottomBar({
     super.key,
@@ -124,9 +123,6 @@ class StylishBottomBar extends StatefulWidget {
   ///
   ///```
   final ValueChanged<int>? onTap;
-
-  ///Change navigation bar items background color opacity
-  // final double? opacity;
 
   ///Change navigation bar border radius
   final BorderRadius? borderRadius;
@@ -270,6 +266,12 @@ class _StylishBottomBarState extends State<StylishBottomBar>
     }
   }
 
+  bool getStyle() {
+    return widget.notchStyle == NotchStyle.themeDefault
+        ? Theme.of(context).useMaterial3
+        : widget.notchStyle == NotchStyle.square;
+  }
+
   @override
   Widget build(BuildContext context) {
     double additionalBottomPadding = 0;
@@ -277,33 +279,29 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
     final mediaQuery = MediaQuery.of(context);
 
-    dynamic options;
+    late BottomBarOption options;
 
-    if (widget.option.runtimeType == AnimatedBarOptions) {
-      options = widget.option as AnimatedBarOptions;
-      additionalBottomPadding =
-          math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 2;
-      listWidget = _animatedBarChilds();
-    } else if (widget.option.runtimeType == BubbleBarOptions) {
-      options = widget.option as BubbleBarOptions;
-      additionalBottomPadding =
-          math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
-      listWidget = _bubbleBarTiles();
-    } else if (widget.option.runtimeType == DotBarOptions) {
-      options = widget.option as DotBarOptions;
-      additionalBottomPadding =
-          math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
-      listWidget = _dotBarChilds();
-    }
+    switch (widget.option.runtimeType) {
+      case AnimatedBarOptions:
+        options = widget.option as AnimatedBarOptions;
+        additionalBottomPadding =
+            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 2;
+        listWidget = _animatedBarChilds();
+        break;
 
-    bool getStyle() {
-      if (widget.notchStyle == NotchStyle.themeDefault) {
-        return Theme.of(context).useMaterial3;
-      } else if (widget.notchStyle == NotchStyle.square) {
-        return true;
-      } else {
-        return false;
-      }
+      case BubbleBarOptions:
+        options = widget.option as BubbleBarOptions;
+        additionalBottomPadding =
+            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
+        listWidget = _bubbleBarTiles();
+        break;
+
+      case DotBarOptions:
+        options = widget.option as DotBarOptions;
+        additionalBottomPadding =
+            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
+        listWidget = _dotBarChilds();
+        break;
     }
 
     bool isUsingMaterial3 = getStyle();
@@ -384,43 +382,41 @@ class _StylishBottomBarState extends State<StylishBottomBar>
   List<Widget> _bubbleBarTiles() {
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
-    final List<Widget> children = <Widget>[];
+    final List<Widget> list = <Widget>[];
 
     final BubbleBarOptions options = widget.option as BubbleBarOptions;
 
-    for (int i = 0; i < widget.items.length; i += 1) {
-      children.add(
-        BubbleNavigationTile(
-          widget.items[i],
-          options.opacity!,
-          _animations[i],
-          options.iconSize,
-          options.unselectedIconColor,
-          options.barStyle,
-          onTap: () {
-            if (widget.onTap != null) widget.onTap!(i);
-          },
-          selected: i == widget.currentIndex,
-          flex: _evaluateFlex(_animations[i]),
-          indexLabel: localizations.tabLabel(
-              tabIndex: i + 1, tabCount: widget.items.length),
-          ink: options.inkEffect,
-          inkColor: options.inkColor,
-          padding: options.padding,
-          fillStyle: options.bubbleFillStyle,
-          itemBorderRadius: options.borderRadius,
-        ),
+    list.addAll(List.generate(widget.items.length, (i) {
+      return BubbleNavigationTile(
+        widget.items[i],
+        options.opacity!,
+        _animations[i],
+        options.iconSize,
+        options.unselectedIconColor,
+        options.barStyle,
+        onTap: () {
+          if (widget.onTap != null) widget.onTap!(i);
+        },
+        selected: i == widget.currentIndex,
+        flex: _evaluateFlex(_animations[i]),
+        indexLabel: localizations.tabLabel(
+            tabIndex: i + 1, tabCount: widget.items.length),
+        ink: options.inkEffect,
+        inkColor: options.inkColor,
+        padding: options.padding,
+        fillStyle: options.bubbleFillStyle,
+        itemBorderRadius: options.borderRadius,
       );
-    }
+    }));
 
     if (widget.fabLocation == StylishBarFabLocation.center) {
-      children.insert(
+      list.insert(
           1,
           const Spacer(
             flex: 1500,
           ));
     }
-    return children;
+    return list;
   }
 
   List<Widget> _animatedBarChilds() {
@@ -430,27 +426,30 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
     final AnimatedBarOptions options = widget.option as AnimatedBarOptions;
 
-    for (int i = 0; i < widget.items.length; ++i) {
-      list.add(AnimatedNavigationTiles(
-        widget.items[i],
-        options.iconSize,
-        padding: options.padding,
-        inkEffect: options.inkEffect,
-        inkColor: options.inkColor,
-        selected: widget.currentIndex == i,
-        opacity: options.opacity!,
-        animation: _animations[i],
-        barAnimation: options.barAnimation,
-        iconStyle: options.iconStyle ?? IconStyle.Default,
-        onTap: () {
-          if (widget.onTap != null) widget.onTap!(i);
-        },
-        flex: _evaluateFlex(_animations[i]),
-        indexLabel: localizations.tabLabel(
-            tabIndex: i + 1, tabCount: widget.items.length),
-      ));
-    }
-    if (widget.fabLocation == StylishBarFabLocation.center) {
+    list.addAll(
+      List.generate(widget.items.length, (i) {
+        return AnimatedNavigationTiles(
+          widget.items[i],
+          options.iconSize,
+          padding: options.padding,
+          inkEffect: options.inkEffect,
+          inkColor: options.inkColor,
+          selected: widget.currentIndex == i,
+          opacity: options.opacity!,
+          animation: _animations[i],
+          barAnimation: options.barAnimation,
+          iconStyle: options.iconStyle ?? IconStyle.Default,
+          onTap: () {
+            if (widget.onTap != null) widget.onTap!(i);
+          },
+          flex: _evaluateFlex(_animations[i]),
+          indexLabel: localizations.tabLabel(
+              tabIndex: i + 1, tabCount: widget.items.length),
+        );
+      }),
+    );
+
+    if (widget.fabLocation == StylishBarFabLocation.center && list.length > 2) {
       list.insert(
         2,
         list.length > 3
@@ -477,21 +476,24 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
     final DotBarOptions options = widget.option as DotBarOptions;
 
-    for (int i = 0; i < widget.items.length; ++i) {
-      list.add(DotNavigationTiles(
-        widget.items[i],
-        selected: widget.currentIndex == i,
-        animation: _animations[i],
-        options: options,
-        onTap: () {
-          if (widget.onTap != null) widget.onTap!(i);
-        },
-        flex: _evaluateFlex(_animations[i]),
-        indexLabel: localizations.tabLabel(
-            tabIndex: i + 1, tabCount: widget.items.length),
-      ));
-    }
-    if (widget.fabLocation == StylishBarFabLocation.center) {
+    list.addAll(
+      List.generate(widget.items.length, (i) {
+        return DotNavigationTiles(
+          widget.items[i],
+          selected: widget.currentIndex == i,
+          animation: _animations[i],
+          options: options,
+          onTap: () {
+            if (widget.onTap != null) widget.onTap!(i);
+          },
+          flex: _evaluateFlex(_animations[i]),
+          indexLabel: localizations.tabLabel(
+              tabIndex: i + 1, tabCount: widget.items.length),
+        );
+      }),
+    );
+
+    if (widget.fabLocation == StylishBarFabLocation.center && list.length > 2) {
       list.insert(
         2,
         list.length > 3

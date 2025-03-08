@@ -1,52 +1,73 @@
-enum StylishBarFabLocation { center, end }
+/// Defines the location of the FloatingActionButton in the Stylish Bottom Bar.
+enum StylishBarFabLocation {
+  /// Places the FAB at the center of the bottom bar.
+  center,
 
+  /// Places the FAB at the end (typically the right side) of the bottom bar.
+  end,
+}
+
+/// Specifies the animation style for bar items.
 enum BarAnimation {
+  /// Fades the bar item in and out.
   fade,
+
+  /// Blinks the bar item.
   blink,
+
+  /// Applies a 3D transformation to the bar item.
   transform3D,
 
-  ///Add's liquid type effect on icon hides when clicked
-  /// and a rectangular shape with circle radius is appeared with the title
+  /// Adds a liquid-like effect to the icon. When clicked, the icon hides,
+  /// and a rectangular shape with circular radius appears with the title.
   ///
-  /// This animation is not yet fully customized
+  /// Note: This animation is not yet fully customized.
   liquid,
 
-  ///Adds the water drop effect on the icon
+  /// Adds a water drop effect to the icon.
   drop,
 }
 
+/// Defines the style of icons in the bottom bar.
 enum IconStyle {
-  ///Both the icon and title widgets are visible and change the color of the selected item
+  /// Both the icon and title widgets are visible, and the color of the selected item changes.
+  ///
+  /// Note: This is the default style.
   // ignore: constant_identifier_names
   Default,
 
-  ///Show simple style icons without any animation
+  /// Displays simple style icons without any animation.
   simple,
 
-  ///Show icons with animations
+  /// Displays icons with animations.
   animated,
 }
 
+/// Determines the alignment of bubble bar items.
 enum BubbleBarStyle {
-  ///Align bubble bar items vertically
+  /// Aligns bubble bar items vertically.
   vertical,
 
-  ///Align bubble bar items horizontally
-  horizontal
+  /// Aligns bubble bar items horizontally.
+  horizontal,
 }
 
+/// Specifies the fill style of bubble bar items.
 enum BubbleFillStyle {
-  ///Fill the bubble bar item backgound
+  /// Fills the background of the bubble bar item.
   fill,
 
-  ///Outline this border of the bubble bar item
-  outlined
+  /// Outlines the border of the bubble bar item.
+  outlined,
 }
 
+/// Indicates the movement direction or status.
 enum MovingStatus {
+  /// Moving to the right.
   right,
+
+  /// Moving to the left.
   left,
-  none,
 }
 
 //

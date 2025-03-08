@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
 
+/// Configuration options for the Bubble Bar.
 class BubbleBarOptions extends BottomBarOption {
   ///Change unselected item color
   ///If you don't want to change every single icon color use this property

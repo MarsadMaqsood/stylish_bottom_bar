@@ -136,7 +136,7 @@ class _LightDot extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               blurRadius: 2.25,
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withValues(alpha: 0.9),
             ),
           ],
         ),
@@ -163,7 +163,7 @@ class _OvalShadow extends StatelessWidget {
             BoxShadow(
               blurRadius: 3,
               offset: const Offset(3, 3),
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withValues(alpha: 0.5),
             ),
           ],
         ),

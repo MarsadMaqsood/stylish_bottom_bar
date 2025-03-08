@@ -96,7 +96,7 @@ class BubbleNavigationTile extends StatelessWidget {
                         style:
                             isOutlined ? BorderStyle.solid : BorderStyle.none),
                     color: isFilled
-                        ? item.backgroundColor?.withOpacity(opacity)
+                        ? item.backgroundColor?.withValues(alpha: opacity)
                         : Colors.transparent,
                   ),
                   child: barStyle == BubbleBarStyle.horizontal
