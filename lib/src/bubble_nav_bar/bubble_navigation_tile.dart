@@ -10,7 +10,7 @@ class BubbleNavigationTile extends StatelessWidget {
     this.opacity,
     this.animation,
     this.iconSize,
-    this.unselectedIconColor,
+    // this.unselectedIconColor,
     this.barStyle, {
     super.key,
     this.onTap,
@@ -35,7 +35,7 @@ class BubbleNavigationTile extends StatelessWidget {
   final double opacity;
   final bool ink;
   final Color? inkColor;
-  final Color? unselectedIconColor;
+  // final Color? unselectedIconColor;
   final EdgeInsets padding;
   final BubbleBarStyle? barStyle;
   final BubbleFillStyle? fillStyle;
@@ -44,7 +44,7 @@ class BubbleNavigationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ///flex size
-    var flexSize = (flex * 1000.0).round();
+    final flexSize = (flex * 1000.0).round();
 
     ///Label Widget
     var label = LabelWidget(
@@ -67,90 +67,82 @@ class BubbleNavigationTile extends StatelessWidget {
         container: true,
         header: true,
         selected: selected,
-        child: Stack(
-          children: [
-            Padding(
-              padding: padding,
-              child: InkWell(
-                onTap: onTap,
+        label: indexLabel,
+        child: Padding(
+          padding: padding,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: itemBorderRadius ??
+                const BorderRadius.horizontal(
+                  right: Radius.circular(52),
+                  left: Radius.circular(52),
+                ),
+            highlightColor: Colors.transparent,
+            splashColor: ink ? inkColor : Colors.transparent,
+            child: Container(
+              // height: 48,
+              height: barHeight,
+              decoration: BoxDecoration(
                 borderRadius: itemBorderRadius ??
                     const BorderRadius.horizontal(
                       right: Radius.circular(52),
                       left: Radius.circular(52),
                     ),
-                highlightColor: Colors.transparent,
-                splashColor: ink ? inkColor : Colors.transparent,
-                child: Container(
-                  // height: 48,
-
-                  height: barHeight,
-                  decoration: BoxDecoration(
-                    borderRadius: itemBorderRadius ??
-                        const BorderRadius.horizontal(
-                          right: Radius.circular(52),
-                          left: Radius.circular(52),
-                        ),
-                    border: Border.all(
-                        width: isOutlined ? 1 : 0,
-                        color: item.borderColor,
-                        style:
-                            isOutlined ? BorderStyle.solid : BorderStyle.none),
-                    color: isFilled
-                        ? item.backgroundColor?.withValues(alpha: opacity)
-                        : Colors.transparent,
-                  ),
-                  child: barStyle == BubbleBarStyle.horizontal
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-
-                          ///Add space around selected item
-                          mainAxisAlignment: selected
-                              ? MainAxisAlignment.spaceEvenly
-                              : MainAxisAlignment.center,
-                          children: items(label).map((child) {
-                            return selected ? child : child;
-                          }).toList(),
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-
-                          ///Add space around selected item
-                          mainAxisAlignment: selected
-                              ? MainAxisAlignment.spaceEvenly
-                              : MainAxisAlignment.center,
-                          children: items(label),
-                        ),
-                ),
+                border: Border.all(
+                    width: isOutlined ? 1 : 0,
+                    color: item.borderColor,
+                    style: isOutlined ? BorderStyle.solid : BorderStyle.none),
+                color: isFilled
+                    ? item.backgroundColor?.withValues(alpha: opacity)
+                    : Colors.transparent,
               ),
+              child: barStyle == BubbleBarStyle.horizontal
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+
+                      ///Add space around selected item
+                      mainAxisAlignment: selected
+                          ? MainAxisAlignment.spaceEvenly
+                          : MainAxisAlignment.center,
+                      children: items(label),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+
+                      ///Add space around selected item
+                      mainAxisAlignment: selected
+                          ? MainAxisAlignment.spaceEvenly
+                          : MainAxisAlignment.center,
+                      children: items(label),
+                    ),
             ),
-            Semantics(
-              label: indexLabel,
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  List<Widget> items(label) {
+  List<Widget> items(Widget label) {
     return [
       IconWidget(
         animation: animation,
         iconSize: iconSize,
         selected: selected,
-        unselectedIconColor: unselectedIconColor,
         item: item,
       ),
-      AnimatedCrossFade(
-        alignment: const Alignment(0, 0),
-        firstChild: label,
-        secondChild: Container(),
-        duration: const Duration(milliseconds: 250),
-        sizeCurve: Curves.fastOutSlowIn,
-        firstCurve: Curves.fastOutSlowIn,
-        secondCurve: Curves.fastOutSlowIn.flipped,
-        crossFadeState:
-            selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      SizedBox(
+        width: selected ? null : 0,
+        child: AnimatedCrossFade(
+          alignment: Alignment.center,
+          firstChild: label,
+          secondChild: SizedBox(),
+          duration: const Duration(milliseconds: 250),
+          sizeCurve: Curves.fastOutSlowIn,
+          firstCurve: Curves.fastOutSlowIn,
+          secondCurve: Curves.fastOutSlowIn.flipped,
+          crossFadeState:
+              selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+        ),
       ),
     ];
   }
