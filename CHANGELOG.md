@@ -1,3 +1,15 @@
+## 1.1.1-beta-2
+- Fixed: [#40](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/40)
+- Fixed: Animation issue in horizontal mode for BubbleBarItem
+- Fixed: BubbleBarItem unselected color not updating correctly
+- Improved: Drop style
+  - Eliminated visual glitch where the child icon appeared twice due to BlendMode.overlay.
+  - Refactored child rendering to ensure a single, properly clipped instance.
+  - Implemented multi-layered gradient effect for a realistic water drop look.
+  - Adjusted transparency levels for smoother blending.
+  - Improved shadow and depth effects for better realism.
+
+
 ## 1.1.1-beta-1
 - Fixed: [#30](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/30)
 - Fixed: [#33](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/33)
