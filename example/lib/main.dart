@@ -53,7 +53,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       bottomNavigationBar: StylishBottomBar(
         option: AnimatedBarOptions(
           // iconSize: 32,
-          barAnimation: BarAnimation.liquid,
+          // barAnimation: BarAnimation.liquid,
           iconStyle: IconStyle.animated,
 
           // opacity: 0.3,
@@ -72,7 +72,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         items: [
           BottomBarItem(
             icon: const Icon(Icons.house_outlined),
-            selectedIcon: const Icon(Icons.abc),
+            selectedIcon: const Icon(Icons.house_rounded),
             selectedColor: Colors.red,
             unSelectedColor: Colors.grey,
             title: const Text('Home'),
