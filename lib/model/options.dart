@@ -2,16 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
 import 'package:stylish_bottom_bar/helpers/enums.dart';
 
+/// Configuration options for the Bubble Bar.
 class BubbleBarOptions extends BottomBarOption {
-  ///Change unselected item color
-  ///If you don't want to change every single icon color use this property
-  ///this will bulk change all the unselected icon color which does'nt have color property.
-  ///
-  ///If icon color not provided then
-  ///default unselected icon color is [Colors.black]
-  ///this is also used to set bulk color to unselected icons
-  final Color unselectedIconColor;
-
   ///BarStyle to align icon and title in horizontal or vertical
   ///[BubbleBarStyle.horizontal]
   ///[BubbleBarStyle.vertical]
@@ -57,7 +49,6 @@ class BubbleBarOptions extends BottomBarOption {
     this.bubbleFillStyle = BubbleFillStyle.fill,
     this.iconSize = 26.0,
     this.inkEffect = false,
-    this.unselectedIconColor = Colors.black,
     this.borderRadius,
     this.padding = EdgeInsets.zero,
     this.inkColor = Colors.grey,

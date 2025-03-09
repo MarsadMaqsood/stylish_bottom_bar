@@ -1,142 +1,193 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'dart:math' as math;
 
-class WaterDrop extends StatefulWidget {
+import 'package:flutter/material.dart';
+
+class WaterDrop extends StatelessWidget {
   final double top;
   final double left;
-  final Size size;
+  final double width;
+  final double height;
   final Widget child;
+  final Color? color;
 
   const WaterDrop({
     super.key,
-    required this.size,
+    required this.width,
+    required this.height,
     required this.child,
     required this.top,
     required this.left,
+    this.color,
   });
 
-  @override
-  State<WaterDrop> createState() => _WaterDropState();
-}
+  /// The diameter is the smaller of the two dimensions,
+  /// ensuring the water drop is a perfect circle.
+  double get diameter => math.min(width, height);
 
-class _WaterDropState extends State<WaterDrop> {
-  // Size of the child widget, needed to provide gradient on the drop.
-  Size? totalSize;
+  /// The center of our circle, used by the clippers.
+  Offset get center => Offset(left + diameter / 2, top + diameter / 2);
 
   @override
   Widget build(BuildContext context) {
-    /// Rebuild the widget if [totalSize] is null
-    if (totalSize == null) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        if (context.size != null) {
-          setState(() => totalSize = context.size);
-        }
-      });
-    }
+    // We’ll calculate alignment relative to the screen size
+    // to position the gradient properly.
+    final screenSize = MediaQuery.of(context).size;
+    final alignment = getAlignment(screenSize);
 
-    final size = totalSize ?? MediaQuery.of(context).size;
-    final alignment = getAlignment(size);
-
-    //used for determining alignments for gradient
+    // Because the shape is forced to a circle, we ignore the
+    // difference between width & height for the gradient calculation.
     final alignmentModifier = Alignment(
-      widget.size.width / size.width,
-      widget.size.height / size.height,
+      diameter / screenSize.width,
+      diameter / screenSize.height,
     );
 
     final begin = alignment - alignmentModifier;
     final end = alignment + alignmentModifier;
 
-    Widget childWithGradient = Container(
+    // Gradient overlay to simulate light refraction.
+    final childWithGradient = Container(
+      decoration: color != null
+          ? BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.lerp(color, Colors.black, 0.1)!,
+                  Color.lerp(color, Colors.white, 0.9)!,
+                  color!,
+                ],
+              ),
+            )
+          : null,
       foregroundDecoration: BoxDecoration(
+        shape: BoxShape.circle,
         gradient: LinearGradient(
           begin: begin,
           end: end,
-          colors: const [Colors.black, Colors.white],
+          colors: [
+            Colors.black12,
+            Colors.white.withValues(alpha: 0.1), // Slight white
+          ],
         ),
         backgroundBlendMode: BlendMode.overlay,
-        // backgroundBlendMode: BlendMode.colorBurn,
       ),
-      child: widget.child,
     );
 
-    return Stack(
-      children: [
-        _OvalShadow(
-          width: widget.size.width,
-          height: widget.size.height,
+    final mainChild = ClipOval(
+      child: SizedBox(
+        width: diameter,
+        height: diameter,
+        child: child,
+      ),
+    );
+
+    return SizedBox(
+      width: diameter,
+      height: diameter,
+      child: ClipOval(
+        child: Stack(
+          children: [
+            // Shadow behind the circle.
+            _CircleShadow(
+              top: top,
+              left: left,
+              diameter: diameter,
+            ),
+
+            // Multiple scaled layers to simulate a realistic drop.
+            ...List.generate(8, (i) {
+              final scaleFactor = 1 + 0.02 * i;
+              return Transform.scale(
+                scale: scaleFactor,
+                alignment: alignment,
+                child: ClipPath(
+                  clipper: _CircleClipper(
+                    center: center,
+                    diameter: diameter * (1 - 0.04 * i),
+                  ),
+                  child: childWithGradient,
+                ),
+              );
+            }),
+
+            Positioned(
+              left: left,
+              top: top,
+              child: mainChild,
+            ),
+
+            // A small highlight to mimic a reflective dot.
+            _LightDot(
+              top: top,
+              left: left,
+              diameter: diameter,
+            ),
+          ],
         ),
-        ClipPath(
-          clipper: _OvalClipper(
-              center: center,
-              width: widget.size.width,
-              height: widget.size.height),
-          clipBehavior: Clip.hardEdge,
-          child: childWithGradient,
-        ),
-        _LightDot(
-          width: widget.size.width,
-          height: widget.size.height,
-        ),
-      ],
+      ),
     );
   }
 
-  //A child with gradient on it for light illusion
-  ///Get center of a drop
-  Offset get center => Offset(
-        widget.left + widget.size.width / 2,
-        widget.top + widget.size.height / 2,
-      );
-
-  ///Map Center and Size to Alignment
-  Alignment getAlignment(Size size) => Alignment(
-        (center.dx - size.width / 2.25) / (size.width / 2.25),
-        (center.dy - size.height / 2.25) / (size.height / 2.25),
-      );
+  /// Converts the center to an alignment within the screen size
+  Alignment getAlignment(Size screenSize) {
+    return Alignment(
+      (center.dx - screenSize.width / 2) / (screenSize.width / 2),
+      (center.dy - screenSize.height / 2) / (screenSize.height / 2),
+    );
+  }
 }
 
-class _OvalClipper extends CustomClipper<Path> {
+class _CircleClipper extends CustomClipper<Path> {
   final Offset center;
-  final double height, width;
+  final double diameter;
 
-  _OvalClipper(
-      {required this.center, required this.width, required this.height});
+  _CircleClipper({
+    required this.center,
+    required this.diameter,
+  });
 
   @override
   Path getClip(Size size) {
-    Path path = Path()
-      ..addOval(Rect.fromCenter(
-        width: width,
-        height: height,
-        center: center,
-      ));
-
-    return path;
+    return Path()
+      ..addOval(
+        Rect.fromCenter(
+          center: center,
+          width: diameter,
+          height: diameter,
+        ),
+      );
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => true;
 }
 
+/// A small reflective dot inside the circle
 class _LightDot extends StatelessWidget {
-  final double width, height;
+  final double top;
+  final double left;
+  final double diameter;
 
-  const _LightDot({required this.width, required this.height});
+  const _LightDot({
+    required this.top,
+    required this.left,
+    required this.diameter,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: width / 5,
-      top: height / 5,
-      width: width / 5,
-      height: height / 5,
+      left: left + diameter / 4,
+      top: top + diameter / 4,
+      width: diameter / 4,
+      height: diameter / 4,
       child: DecoratedBox(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              blurRadius: 2.25,
-              color: Colors.white.withOpacity(0.9),
+              blurRadius: 3,
+              color: Colors.white.withValues(alpha: 0.7),
             ),
           ],
         ),
@@ -145,25 +196,33 @@ class _LightDot extends StatelessWidget {
   }
 }
 
-class _OvalShadow extends StatelessWidget {
-  final double width;
-  final double height;
+/// A circular shadow behind the drop
+class _CircleShadow extends StatelessWidget {
+  final double top;
+  final double left;
+  final double diameter;
 
-  const _OvalShadow({required this.width, required this.height});
+  const _CircleShadow({
+    required this.top,
+    required this.left,
+    required this.diameter,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      width: width,
-      height: height,
-      child: Container(
+      left: left,
+      top: top,
+      width: diameter,
+      height: diameter,
+      child: DecoratedBox(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(width / 2),
+          shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              blurRadius: 3,
-              offset: const Offset(3, 3),
-              color: Colors.black.withOpacity(0.5),
+              blurRadius: 4,
+              offset: const Offset(4, 4),
+              color: Colors.black.withValues(alpha: 0.5),
             ),
           ],
         ),
