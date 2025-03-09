@@ -44,7 +44,7 @@ class WaterDrop extends StatelessWidget {
     final begin = alignment - alignmentModifier;
     final end = alignment + alignmentModifier;
 
-    // Child with gradient overlay to simulate light refraction.
+    // Gradient overlay to simulate light refraction.
     final childWithGradient = Container(
       decoration: color != null
           ? BoxDecoration(
@@ -59,7 +59,6 @@ class WaterDrop extends StatelessWidget {
               ),
             )
           : null,
-
       foregroundDecoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
@@ -72,7 +71,6 @@ class WaterDrop extends StatelessWidget {
         ),
         backgroundBlendMode: BlendMode.overlay,
       ),
-      // child: child,
     );
 
     final mainChild = ClipOval(
@@ -112,7 +110,6 @@ class WaterDrop extends StatelessWidget {
               );
             }),
 
-            // mainChild,
             Positioned(
               left: left,
               top: top,
