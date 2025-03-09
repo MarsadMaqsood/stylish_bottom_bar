@@ -275,10 +275,11 @@ class AnimatedNavigationTiles extends StatelessWidget {
             alignment: Alignment.center,
             child: WaterDrop(
               top: 0,
-              size: const Size(48, 48),
+              color: items.backgroundColor,
+              width: 48,
+              height: 48,
               left: 0,
-              child: Container(
-                color: items.backgroundColor,
+              child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: IconTheme(
                   data: IconThemeData(
