@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
-import 'package:stylish_bottom_bar/helpers/enums.dart';
+import 'package:stylish_bottom_bar/src/model/bottom_bar_option.dart';
+import 'package:stylish_bottom_bar/src/utils/enums.dart';
 
 /// Configuration options for the Bubble Bar.
 class BubbleBarOptions extends BottomBarOption {

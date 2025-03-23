@@ -2,17 +2,16 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/helpers/bottom_bar.dart';
-import 'package:stylish_bottom_bar/helpers/enums.dart';
-import 'package:stylish_bottom_bar/model/bar_items.dart';
-import 'package:stylish_bottom_bar/model/options.dart';
 import 'package:stylish_bottom_bar/src/anim_nav/animated_nav_tiles.dart';
 import 'package:stylish_bottom_bar/src/dot_nav/dot_nav_tile.dart';
+import 'package:stylish_bottom_bar/src/model/bar_items.dart';
+import 'package:stylish_bottom_bar/src/model/bottom_bar_option.dart';
+import 'package:stylish_bottom_bar/src/model/options.dart';
+import 'package:stylish_bottom_bar/src/utils/enums.dart';
 
-import '../helpers/cliper.dart';
-import '../helpers/constant.dart';
 import 'bubble_nav_bar/bubble_navigation_tile.dart';
-import 'widgets/widgets.dart';
+import 'shapes/bar_cliper.dart';
+import 'utils/constant.dart';
 
 ///[StylishBottomBar] class to implement beautiful bottom bar widget
 ///
@@ -347,7 +346,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                     gradient: widget.gradient,
                     color: widget.backgroundColor ?? Colors.white,
                   ),
-                  child: innerWidget(
+                  child: _innerWidget(
                     context,
                     additionalBottomPadding,
                     widget.fabLocation,
@@ -366,7 +365,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                   gradient: widget.gradient,
                   color: widget.backgroundColor ?? Colors.white,
                 ),
-                child: innerWidget(
+                child: _innerWidget(
                     context,
                     additionalBottomPadding + 2,
                     widget.fabLocation,
@@ -507,5 +506,45 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
     insertSpace(list);
     return list;
+  }
+
+  Widget _innerWidget(
+    context,
+    double additionalBottomPadding,
+    fabLocation,
+    List<Widget> childs, [
+    BarAnimation? barAnimation,
+  ]) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+      ),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+            minHeight: kBottomNavigationBarHeight + additionalBottomPadding),
+        child: Material(
+          type: MaterialType.transparency,
+          child: Padding(
+            padding: EdgeInsets.only(
+                bottom:
+                    barAnimation != null && barAnimation == BarAnimation.liquid
+                        ? 0
+                        : additionalBottomPadding,
+                right: fabLocation == StylishBarFabLocation.end ? 72 : 0),
+            child: MediaQuery.removePadding(
+              context: context,
+              removeBottom: true,
+              child: DefaultTextStyle.merge(
+                overflow: TextOverflow.ellipsis,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: childs,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
