@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/model/bar_items.dart';
+import 'package:stylish_bottom_bar/src/model/bar_items.dart';
 
 class IconWidget extends StatelessWidget {
   const IconWidget({

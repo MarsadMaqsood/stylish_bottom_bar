@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/helpers/enums.dart';
-import 'package:stylish_bottom_bar/model/bar_items.dart';
+import 'package:stylish_bottom_bar/src/model/bar_items.dart';
+import 'package:stylish_bottom_bar/src/utils/enums.dart';
 import 'package:stylish_bottom_bar/src/widgets/icon_widget.dart';
 import 'package:stylish_bottom_bar/src/widgets/label_widget.dart';
 
