@@ -24,18 +24,15 @@ class _DotBarExampleState extends State<DotBarExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true, //to make floating action button notch transparent
-
       //to avoid the floating action button overlapping behavior,
       // when a soft keyboard is displayed
       // resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: StylishBottomBar(
-        option: DotBarOptions(),
+        option: const DotBarOptions(),
         items: [
           BottomBarItem(
-            icon: const Icon(
-              Icons.house_outlined,
-            ),
+            icon: const Icon(Icons.house_outlined),
             selectedIcon: const Icon(Icons.house_rounded),
             // selectedColor: Colors.teal,
             backgroundColor: Colors.teal,
@@ -54,25 +51,19 @@ class _DotBarExampleState extends State<DotBarExample> {
             title: const Text('Star'),
           ),
           BottomBarItem(
-              icon: const Icon(
-                Icons.style_outlined,
-              ),
-              selectedIcon: const Icon(
-                Icons.style,
-              ),
-              backgroundColor: Colors.amber,
-              selectedColor: Colors.deepOrangeAccent,
-              title: const Text('Style')),
+            icon: const Icon(Icons.style_outlined),
+            selectedIcon: const Icon(Icons.style),
+            backgroundColor: Colors.amber,
+            selectedColor: Colors.deepOrangeAccent,
+            title: const Text('Style'),
+          ),
           BottomBarItem(
-              icon: const Icon(
-                Icons.person_outline,
-              ),
-              selectedIcon: const Icon(
-                Icons.person,
-              ),
-              backgroundColor: Colors.purpleAccent,
-              selectedColor: Colors.deepPurple,
-              title: const Text('Profile')),
+            icon: const Icon(Icons.person_outline),
+            selectedIcon: const Icon(Icons.person),
+            backgroundColor: Colors.purpleAccent,
+            selectedColor: Colors.deepPurple,
+            title: const Text('Profile'),
+          ),
         ],
         hasNotch: true,
         fabLocation: StylishBarFabLocation.center,
@@ -134,13 +125,12 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true, //to make floating action button notch transparent
-
       //to avoid the floating action button overlapping behavior,
       // when a soft keyboard is displayed
       // resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: StylishBottomBar(
-        option: AnimatedBarOptions(
+        option: const AnimatedBarOptions(
           // iconSize: 32,
           barAnimation: BarAnimation.fade,
           iconStyle: IconStyle.animated,
@@ -148,9 +138,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         ),
         items: [
           BottomBarItem(
-            icon: const Icon(
-              Icons.house_outlined,
-            ),
+            icon: const Icon(Icons.house_outlined),
             selectedIcon: const Icon(Icons.house_rounded),
             // selectedColor: Colors.teal,
             backgroundColor: Colors.teal,
@@ -169,25 +157,19 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             title: const Text('Star'),
           ),
           BottomBarItem(
-              icon: const Icon(
-                Icons.style_outlined,
-              ),
-              selectedIcon: const Icon(
-                Icons.style,
-              ),
-              backgroundColor: Colors.amber,
-              selectedColor: Colors.deepOrangeAccent,
-              title: const Text('Style')),
+            icon: const Icon(Icons.style_outlined),
+            selectedIcon: const Icon(Icons.style),
+            backgroundColor: Colors.amber,
+            selectedColor: Colors.deepOrangeAccent,
+            title: const Text('Style'),
+          ),
           BottomBarItem(
-              icon: const Icon(
-                Icons.person_outline,
-              ),
-              selectedIcon: const Icon(
-                Icons.person,
-              ),
-              backgroundColor: Colors.purpleAccent,
-              selectedColor: Colors.deepPurple,
-              title: const Text('Profile')),
+            icon: const Icon(Icons.person_outline),
+            selectedIcon: const Icon(Icons.person),
+            backgroundColor: Colors.purpleAccent,
+            selectedColor: Colors.deepPurple,
+            title: const Text('Profile'),
+          ),
         ],
         hasNotch: true,
         fabLocation: StylishBarFabLocation.center,
@@ -258,7 +240,7 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
         ],
       ),
       bottomNavigationBar: StylishBottomBar(
-        option: BubbleBarOptions(
+        option: const BubbleBarOptions(
           // barStyle: BubbleBarStyle.vertical,
           barStyle: BubbleBarStyle.horizontal,
           bubbleFillStyle: BubbleFillStyle.fill,

@@ -13,7 +13,16 @@ linter:
   rules:
     avoid_print: true
     use_key_in_widget_constructors: true
-    # 
     avoid_dynamic_calls: true
     avoid_empty_else: true
     avoid_relative_lib_imports: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    prefer_const_constructors: true
+
+    annotate_overrides: true
+    unnecessary_null_aware_assignments: true
+    use_super_parameters: true
+    strict_top_level_inference: true
+    secure_pubspec_urls: true
+    void_checks: true
