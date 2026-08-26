@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/src/model/bar_items.dart';
-import 'package:stylish_bottom_bar/src/utils/constant.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_constants.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_item.dart';
+import 'package:stylish_bottom_bar/src/styles/animated/widgets/water_drop_painter.dart';
 import 'package:stylish_bottom_bar/src/utils/enums.dart';
-import 'package:stylish_bottom_bar/src/widgets/water_drop.dart';
 
 class AnimatedNavigationTiles extends StatelessWidget {
   const AnimatedNavigationTiles(
@@ -11,7 +11,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
     super.key,
     this.padding,
     this.onTap,
-    this.inkEffect,
+    this.inkEffect = false,
     this.inkColor,
     required this.selected,
     required this.opacity,
@@ -24,10 +24,10 @@ class AnimatedNavigationTiles extends StatelessWidget {
 
   final BottomBarItem items;
 
-  ///Icon size
+  /// Icon size
   final double iconSize;
 
-  ///onTap gesture event
+  /// onTap gesture event
   final VoidCallback? onTap;
 
   final bool? inkEffect;
@@ -35,17 +35,14 @@ class AnimatedNavigationTiles extends StatelessWidget {
   final bool selected;
   final EdgeInsets? padding;
 
-  ///Background color opacity
+  /// Background color opacity
   final double opacity;
   final double? flex;
   final String? indexLabel;
   final Animation<double>? animation;
   final BarAnimation barAnimation;
 
-  ///icon style of the bottom bar items
-  ///[IconStyle.Default]
-  ///[IconStyle.animated]
-  ///[IconStyle.simple]
+  /// Icon style of the bottom bar items
   final IconStyle iconStyle;
 
   @override
@@ -55,6 +52,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
         container: true,
         header: true,
         selected: selected,
+        label: indexLabel,
         child: Padding(
           padding: padding ??
               (items.showBadge && iconStyle != IconStyle.simple
@@ -64,7 +62,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   : EdgeInsets.zero),
           child: InkWell(
             onTap: onTap,
-            splashColor: inkEffect! ? inkColor : Colors.transparent,
+            splashColor: (inkEffect ?? false) ? (inkColor ?? Colors.grey) : Colors.transparent,
             highlightColor: Colors.transparent,
             borderRadius: const BorderRadius.horizontal(
               right: Radius.circular(52),
@@ -102,9 +100,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
   Color get itemColorOnSelected => items.backgroundColor ?? items.selectedColor;
 
   List<Widget> _defaultItems() {
-    var label = LabelWidget(
+    final label = _AnimatedLabelWidget(
       iconStyle: iconStyle,
-      animation: animation!,
+      animation: animation,
       item: items,
       color: itemColor,
     );
@@ -120,7 +118,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
             data: IconThemeData(
               color: itemColor,
               size: iconSize,
-              // size: selected ? iconSize + 4 : iconSize,
             ),
             child: selected ? items.selectedIcon ?? items.icon : items.icon,
           ),
@@ -131,9 +128,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   List<Widget> _liquidItems() {
-    var label = LabelWidget(
+    final label = _AnimatedLabelWidget(
       iconStyle: iconStyle,
-      animation: animation!,
+      animation: animation,
       item: items,
       color: itemColorOnSelected,
     );
@@ -168,7 +165,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
         ),
       ),
       AnimatedCrossFade(
-        firstChild: SizedBox(),
+        firstChild: const SizedBox.shrink(),
         secondChild: Container(
           height: 20,
           width: 22,
@@ -191,9 +188,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 
   List<Widget> _childItems() {
-    var label = LabelWidget(
+    final label = _AnimatedLabelWidget(
       iconStyle: iconStyle,
-      animation: animation!,
+      animation: animation,
       item: items,
       color: itemColorOnSelected,
     );
@@ -207,7 +204,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                   isLabelVisible: items.showBadge,
                   backgroundColor: items.badgeColor,
                   padding: items.badgePadding,
-                  child: IconWidget(
+                  child: _AnimatedIconWidget(
                     item: items,
                     selected: selected,
                     iconSize: iconSize,
@@ -217,7 +214,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
                 AnimatedCrossFade(
                   alignment: const Alignment(0, 0),
                   firstChild: label,
-                  secondChild: Container(),
+                  secondChild: const SizedBox.shrink(),
                   duration: const Duration(milliseconds: 250),
                   sizeCurve: Curves.fastOutSlowIn,
                   firstCurve: Curves.fastOutSlowIn,
@@ -265,9 +262,6 @@ class AnimatedNavigationTiles extends StatelessWidget {
                 color: itemColor,
                 size: iconSize,
               ),
-              // child: selected && items.selectedIcon != null
-              //     ? items.selectedIcon!
-              //     : items.icon,
               child: selected ? items.selectedIcon ?? items.icon : items.icon,
             ),
           ),
@@ -305,53 +299,48 @@ class AnimatedNavigationTiles extends StatelessWidget {
   }
 }
 
-class LabelWidget extends StatelessWidget {
-  const LabelWidget({
-    super.key,
+class _AnimatedLabelWidget extends StatelessWidget {
+  const _AnimatedLabelWidget({
     required this.animation,
     required this.item,
     required this.color,
     required this.iconStyle,
   });
 
-  final Animation<double> animation;
+  final Animation<double>? animation;
   final BottomBarItem item;
   final Color color;
   final IconStyle iconStyle;
 
   @override
   Widget build(BuildContext context) {
+    if (item.title == null) return const SizedBox.shrink();
+
+    final text = DefaultTextStyle.merge(
+      style: TextStyle(
+        fontSize: activeFontSize,
+        fontWeight: FontWeight.w600,
+        color: color,
+      ),
+      child: item.title!,
+    );
+
     return Align(
       alignment: Alignment.center,
       heightFactor: 1.0,
-      child: iconStyle == IconStyle.Default
-          ? DefaultTextStyle.merge(
-              style: TextStyle(
-                fontSize: activeFontSize,
-                fontWeight: FontWeight.w600,
-                color: color,
-              ),
-              child: item.title!,
-            )
+      child: iconStyle == IconStyle.Default || animation == null
+          ? text
           : FadeTransition(
               alwaysIncludeSemantics: true,
-              opacity: animation,
-              child: DefaultTextStyle.merge(
-                style: TextStyle(
-                  fontSize: activeFontSize,
-                  fontWeight: FontWeight.w600,
-                  color: color,
-                ),
-                child: item.title!,
-              ),
+              opacity: animation!,
+              child: text,
             ),
     );
   }
 }
 
-class IconWidget extends StatefulWidget {
-  const IconWidget({
-    super.key,
+class _AnimatedIconWidget extends StatefulWidget {
+  const _AnimatedIconWidget({
     required this.item,
     required this.selected,
     required this.iconSize,
@@ -364,93 +353,107 @@ class IconWidget extends StatefulWidget {
   final BarAnimation barAnimation;
 
   @override
-  State<IconWidget> createState() => _IconWidgetState();
+  State<_AnimatedIconWidget> createState() => _AnimatedIconWidgetState();
 }
 
-class _IconWidgetState extends State<IconWidget>
+class _AnimatedIconWidgetState extends State<_AnimatedIconWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController? controller;
-  late Animation<Color?> animationColor;
-  late Animation<double> animation;
+  AnimationController? _controller;
+  Animation<Color?>? _animationColor;
+  Animation<double>? _animation;
 
   @override
   void initState() {
     super.initState();
-
     _init();
+    if (widget.selected) {
+      _controller?.value = 1.0;
+    }
   }
 
   void _init() {
     if (widget.barAnimation != BarAnimation.transform3D) {
-      controller = AnimationController(
+      final ctrl = AnimationController(
         duration: const Duration(milliseconds: 300),
         reverseDuration: const Duration(milliseconds: 300),
         vsync: this,
       );
+      _controller = ctrl;
+
+      if (widget.barAnimation == BarAnimation.blink) {
+        _animation = CurvedAnimation(parent: ctrl, curve: Curves.bounceIn);
+      } else {
+        _animation = CurvedAnimation(parent: ctrl, curve: Curves.ease);
+      }
+
+      _animationColor = ColorTween(
+        begin: widget.item.backgroundColor ?? widget.item.unSelectedColor,
+        end: widget.item.selectedColor,
+      ).animate(_animation!);
     }
-    _assignAnimation();
+  }
+
+  @override
+  void didUpdateWidget(_AnimatedIconWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.selected != oldWidget.selected) {
+      if (widget.selected) {
+        _controller?.forward();
+      } else {
+        _controller?.reverse();
+      }
+    }
   }
 
   @override
   void dispose() {
-    if (widget.barAnimation != BarAnimation.transform3D) controller?.dispose();
+    _controller?.dispose();
     super.dispose();
-  }
-
-  _assignAnimation() {
-    if (widget.barAnimation != BarAnimation.transform3D) {
-      if (widget.barAnimation == BarAnimation.blink) {
-        animation =
-            CurvedAnimation(parent: controller!, curve: Curves.bounceIn);
-      } else {
-        animation = CurvedAnimation(parent: controller!, curve: Curves.ease);
-      }
-
-      animationColor = ColorTween(
-        begin: widget.item.backgroundColor ?? widget.item.unSelectedColor,
-        end: widget.item.selectedColor,
-      ).animate(animation)
-        ..addListener(() {
-          setState(() {});
-        });
-    }
-  }
-
-  _playAnimation() {
-    if (widget.barAnimation != BarAnimation.transform3D) {
-      widget.selected ? controller?.forward() : controller?.reset();
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (controller == null) _init();
-    // _assignAnimation();
-    _playAnimation();
+    if (widget.barAnimation == BarAnimation.transform3D) {
+      return _buildTransform3D();
+    }
 
-    return _buildWidget();
+    if (_controller == null) return const SizedBox.shrink();
+
+    return AnimatedBuilder(
+      animation: _controller!,
+      builder: (context, child) {
+        return IconTheme(
+          data: IconThemeData(
+            color: widget.item.backgroundColor ??
+                (widget.selected
+                    ? _animationColor?.value ?? widget.item.selectedColor
+                    : widget.item.unSelectedColor),
+            size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
+          ),
+          child: widget.selected
+              ? (widget.item.selectedIcon ?? widget.item.icon)
+              : widget.item.icon,
+        );
+      },
+    );
   }
 
-  _buildWidget() {
+  Widget _buildTransform3D() {
     return IconTheme(
       data: IconThemeData(
         color: widget.item.backgroundColor ??
             (widget.selected
-                ? widget.barAnimation == BarAnimation.transform3D
-                    ? widget.item.selectedColor
-                    : animationColor.value
+                ? widget.item.selectedColor
                 : widget.item.unSelectedColor),
         size: widget.selected ? widget.iconSize + 4 : widget.iconSize,
       ),
       child: widget.selected
-          ? widget.barAnimation == BarAnimation.transform3D
-              ? Transform(
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 0, 0.002)
-                    ..rotateY(0), //..rotateY(0),
-                  child: widget.item.selectedIcon ?? widget.item.icon,
-                )
-              : widget.item.selectedIcon ?? widget.item.icon
+          ? Transform(
+              transform: Matrix4.identity()
+                ..setEntry(3, 0, 0.002)
+                ..rotateY(0),
+              child: widget.item.selectedIcon ?? widget.item.icon,
+            )
           : widget.item.icon,
     );
   }

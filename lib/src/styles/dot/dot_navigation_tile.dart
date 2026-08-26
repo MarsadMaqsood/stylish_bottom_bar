@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/src/widgets/label_widget.dart';
-import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_item.dart';
+import 'package:stylish_bottom_bar/src/shared/widgets/bar_label_widget.dart';
+import 'package:stylish_bottom_bar/src/styles/dot/dot_bar_options.dart';
+import 'package:stylish_bottom_bar/src/utils/enums.dart';
 
 class DotNavigationTiles extends StatelessWidget {
   const DotNavigationTiles(
@@ -15,14 +17,9 @@ class DotNavigationTiles extends StatelessWidget {
   });
 
   final DotBarOptions options;
-
   final BottomBarItem item;
-
-  ///onTap gesture event
   final VoidCallback? onTap;
-
   final bool selected;
-
   final double? flex;
   final String? indexLabel;
   final Animation<double>? animation;
@@ -31,7 +28,7 @@ class DotNavigationTiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Semantics(
-        enabled: selected,
+        enabled: true,
         container: true,
         header: true,
         label: indexLabel,
@@ -39,16 +36,14 @@ class DotNavigationTiles extends StatelessWidget {
         child: Padding(
           padding: options.padding ??
               (item.showBadge
-                  ? const EdgeInsets.only(
-                      top: 6.0,
-                    )
+                  ? const EdgeInsets.only(top: 6.0)
                   : EdgeInsets.zero),
           child: IgnorePointer(
             ignoring: selected,
             child: InkWell(
               onTap: onTap,
               splashColor:
-                  options.inkEffect ? options.inkColor : Colors.transparent,
+                  options.inkEffect ? (options.inkColor ?? Colors.grey) : Colors.transparent,
               highlightColor: Colors.transparent,
               borderRadius: const BorderRadius.horizontal(
                 right: Radius.circular(52),
@@ -77,10 +72,13 @@ class DotNavigationTiles extends StatelessWidget {
   Widget get iconChild => selected ? item.selectedIcon ?? item.icon : item.icon;
 
   List<Widget> _dotItems() {
-    final label = LabelWidget(
-      animation: animation!,
-      item: item,
-    );
+    final label = animation != null
+        ? LabelWidget(
+            animation: animation!,
+            item: item,
+          )
+        : (item.title ?? const SizedBox.shrink());
+
     return [
       Badge(
         label: item.badge,
@@ -112,7 +110,7 @@ class DotNavigationTiles extends StatelessWidget {
         ),
       ),
       AnimatedCrossFade(
-        firstChild: const SizedBox(),
+        firstChild: const SizedBox.shrink(),
         secondChild: Container(
           height: 8,
           width: options.dotStyle == DotStyle.circle ? 8 : 16,
@@ -127,7 +125,7 @@ class DotNavigationTiles extends StatelessWidget {
         firstCurve: Curves.fastOutSlowIn,
         secondCurve: Curves.fastOutSlowIn.flipped,
         crossFadeState:
-            selected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+              selected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       ),
     ];
   }

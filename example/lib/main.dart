@@ -45,7 +45,6 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true, //to make floating action button notch transparent
-
       //to avoid the floating action button overlapping behavior,
       // when a soft keyboard is displayed
       // resizeToAvoidBottomInset: false,
@@ -53,22 +52,24 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       bottomNavigationBar: StylishBottomBar(
         option: AnimatedBarOptions(
           // iconSize: 32,
-          // barAnimation: BarAnimation.liquid,
+          barAnimation: BarAnimation.blink,
           iconStyle: IconStyle.animated,
 
-          // opacity: 0.3,
+          opacity: 0.3,
         ),
         // option: DotBarOptions(
-        //   dotStyle: DotStyle.tile,
+        //   dotStyle: DotStyle.circle,
         //   gradient: const LinearGradient(
-        //     colors: [
-        //       Colors.deepPurple,
-        //       Colors.pink,
-        //     ],
+        //     colors: [Colors.deepPurple, Colors.pink],
         //     begin: Alignment.topLeft,
         //     end: Alignment.bottomRight,
         //   ),
         // ),
+        // option: BubbleBarOptions(
+        //   barStyle: BubbleBarStyle.vertical,
+        //   bubbleFillStyle: BubbleFillStyle.outlined,
+        // ),
+
         items: [
           BottomBarItem(
             icon: const Icon(Icons.house_outlined),
@@ -99,19 +100,16 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
           //     selectedColor: Colors.deepOrangeAccent,
           //     title: const Text('Style')),
           BottomBarItem(
-              icon: const Icon(
-                Icons.person_outline,
-              ),
-              selectedIcon: const Icon(
-                Icons.person,
-              ),
-              selectedColor: Colors.deepPurple,
-              title: const Text('Profile')),
+            icon: const Icon(Icons.person_outline),
+            selectedIcon: const Icon(Icons.person),
+            selectedColor: Colors.deepPurple,
+            title: const Text('Profile'),
+          ),
         ],
         hasNotch: true,
-        fabLocation: StylishBarFabLocation.center,
+        fabLocation: StylishBarFabLocation.end,
         currentIndex: selected,
-        notchStyle: NotchStyle.square,
+        // notchStyle: NotchStyle.square,
         onTap: (index) {
           if (index == selected) return;
           controller.jumpToPage(index);
@@ -132,7 +130,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
           color: Colors.red,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       body: SafeArea(
         child: PageView(
           controller: controller,

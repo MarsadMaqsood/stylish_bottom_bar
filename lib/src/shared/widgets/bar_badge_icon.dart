@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/src/model/bar_items.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_item.dart';
 
 class IconWidget extends StatelessWidget {
   const IconWidget({
     super.key,
-    required this.animation,
+    this.animation,
     required this.iconSize,
     required this.selected,
     required this.item,
   });
 
-  final Animation<double> animation;
+  final Animation<double>? animation;
   final BottomBarItem item;
   final double iconSize;
   final bool selected;
@@ -33,11 +33,6 @@ class IconWidget extends StatelessWidget {
             size: iconSize,
           ),
           child: selected ? item.selectedIcon ?? item.icon : item.icon,
-          // child: Padding(
-          //   padding:
-          //       item.showBadge ? const EdgeInsets.all(8.0) : EdgeInsets.zero,
-          //   child: selected ? item.selectedIcon ?? item.icon : item.icon,
-          // ),
         ),
       ),
     );

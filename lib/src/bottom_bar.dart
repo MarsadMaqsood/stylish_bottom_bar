@@ -2,16 +2,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/src/anim_nav/animated_nav_tiles.dart';
-import 'package:stylish_bottom_bar/src/dot_nav/dot_nav_tile.dart';
-import 'package:stylish_bottom_bar/src/model/bar_items.dart';
-import 'package:stylish_bottom_bar/src/model/bottom_bar_option.dart';
-import 'package:stylish_bottom_bar/src/model/options.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_constants.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_item.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_option.dart';
+import 'package:stylish_bottom_bar/src/shared/clippers/bar_clipper.dart';
 import 'package:stylish_bottom_bar/src/utils/enums.dart';
-
-import 'bubble_nav_bar/bubble_navigation_tile.dart';
-import 'shapes/bar_cliper.dart';
-import 'utils/constant.dart';
 
 ///[StylishBottomBar] class to implement beautiful bottom bar widget
 ///
@@ -73,31 +68,24 @@ class StylishBottomBar extends StatefulWidget {
   })  : assert(items.length >= 2,
             '\n\nStylish Bottom Navigation must have 2 or more items'),
         assert(
-          items.every((BottomBarItem item) => item.title != null) == true,
+          items.every((BottomBarItem item) => item.title != null),
           '\n\nEvery item must have a non-null title',
         ),
-        assert((currentIndex >= items.length) == false,
-            '\n\nCurrent index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}'),
-        assert((currentIndex < 0) == false,
-            '\n\nCurrent index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}');
+        assert(currentIndex >= 0 && currentIndex < items.length,
+            '\n\nCurrent index is out of bounds. Provided: $currentIndex Bounds: 0 to ${items.length - 1}'),
+        assert(elevation >= 0, 'elevation must be non-negative'),
+        assert(iconSpace >= 0, 'iconSpace must be non-negative');
 
-  ///Add navigation bar items
-  ///[BottomBarItem]
-  ///
-  ///You can use `BottomBarItem` class to add navigation bar items
+  /// Add navigation bar items
   final List<BottomBarItem> items;
 
-  ///Change animated navigation bar background color
+  /// Change animated navigation bar background color
   final Color? backgroundColor;
 
-  ///Add elevation to bottom navigation bar
-  ///
-  ///Default value is 8.0
+  /// Add elevation to bottom navigation bar (default value is 8.0)
   final double elevation;
 
-  ///Used to change the selected item index
-  ///
-  /// Default value is 0
+  /// Used to change the selected item index (default value is 0)
   final int currentIndex;
 
   ///Add notch effect to floating action button
@@ -123,7 +111,7 @@ class StylishBottomBar extends StatefulWidget {
   ///```
   final ValueChanged<int>? onTap;
 
-  ///Change navigation bar border radius
+  /// Change navigation bar border radius
   final BorderRadius? borderRadius;
 
   ///Adjust bubble navigation items according to the fab location
@@ -153,7 +141,7 @@ class StylishBottomBar extends StatefulWidget {
   /// ```
   final Gradient? gradient;
 
-  ///Assign icon sapce;
+  /// Assign icon space
   final double iconSpace;
 
   /// Specify the notch style
@@ -171,12 +159,11 @@ class StylishBottomBar extends StatefulWidget {
 
 class _StylishBottomBarState extends State<StylishBottomBar>
     with TickerProviderStateMixin {
-  late List<AnimationController> _controllers = <AnimationController>[];
-  late List<CurvedAnimation> _animations;
-  Color? _backgroundColor;
+  List<AnimationController> _controllers = <AnimationController>[];
+  List<CurvedAnimation> _animations = <CurvedAnimation>[];
 
   ValueListenable<ScaffoldGeometry>? _geometryListenable;
-  Animatable<double>? _flexTween;
+  late Animatable<double> _flexTween;
 
   @override
   void didChangeDependencies() {
@@ -187,10 +174,8 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         : Tween<double>(begin: 1.15, end: 1.75);
   }
 
-  void _state() {
-    for (AnimationController controller in _controllers) {
-      controller.dispose();
-    }
+  void _initAnimations() {
+    _disposeAnimations();
 
     _controllers =
         List<AnimationController>.generate(widget.items.length, (int index) {
@@ -198,11 +183,12 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         duration: const Duration(milliseconds: 200),
         vsync: this,
       )..addListener(() {
-          if (widget.option.runtimeType == BubbleBarOptions) {
+          if (widget.option.requiresControllerListener) {
             setState(() {});
           }
         });
     });
+
     _animations =
         List<CurvedAnimation>.generate(widget.items.length, (int index) {
       return CurvedAnimation(
@@ -211,61 +197,52 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         reverseCurve: Curves.fastOutSlowIn.flipped,
       );
     });
-    _controllers[widget.currentIndex].value = 1.0;
-    _backgroundColor = widget.items[widget.currentIndex].backgroundColor;
+
+    final safeIndex = widget.currentIndex.clamp(0, widget.items.length - 1);
+    _controllers[safeIndex].value = 1.0;
+  }
+
+  void _disposeAnimations() {
+    for (final animation in _animations) {
+      animation.dispose();
+    }
+    _animations = [];
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    _controllers = [];
   }
 
   @override
   void initState() {
     super.initState();
-    _state();
+    _initAnimations();
   }
 
   @override
   void dispose() {
-    ///Dispose controllers
-    for (AnimationController controller in _controllers) {
-      controller.dispose();
-    }
+    _disposeAnimations();
     super.dispose();
   }
-
-  double _evaluateFlex(Animation<double> animation) =>
-      _flexTween!.evaluate(animation);
 
   @override
   void didUpdateWidget(StylishBottomBar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.items.length != oldWidget.items.length) {
-      _state();
+      _initAnimations();
       return;
     }
 
     if (widget.currentIndex != oldWidget.currentIndex) {
-      _controllers[oldWidget.currentIndex].reverse();
-      _controllers[widget.currentIndex].forward();
-
-      if (widget.fabLocation == StylishBarFabLocation.center) {
-        // dynamic _currentItem = widget.items[oldWidget.currentIndex!];
-        // dynamic _nextItem = widget.items[widget.currentIndex!]!;
-
-        // widget.items[0] = _nextItem;
-        // widget.items[widget.currentIndex!] = _currentItem;
-        _controllers[oldWidget.currentIndex].reverse();
-        _controllers[widget.currentIndex].forward();
-        // widget.currentIndex = 0;
-        _state();
-      }
-    } else {
-      if (_backgroundColor !=
-          widget.items[widget.currentIndex].backgroundColor) {
-        _backgroundColor = widget.items[widget.currentIndex].backgroundColor;
-      }
+      final oldIndex = oldWidget.currentIndex.clamp(0, _controllers.length - 1);
+      final newIndex = widget.currentIndex.clamp(0, _controllers.length - 1);
+      _controllers[oldIndex].reverse();
+      _controllers[newIndex].forward();
     }
   }
 
-  bool getStyle() {
+  bool _isUsingMaterial3(BuildContext context) {
     return widget.notchStyle == NotchStyle.themeDefault
         ? Theme.of(context).useMaterial3
         : widget.notchStyle == NotchStyle.square;
@@ -273,37 +250,52 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
   @override
   Widget build(BuildContext context) {
-    double additionalBottomPadding = 0;
-    late List<Widget> listWidget;
-
     final mediaQuery = MediaQuery.of(context);
+    final localizations = MaterialLocalizations.of(context);
+    final isM3 = _isUsingMaterial3(context);
 
-    late BottomBarOption options;
+    final additionalBottomPadding = math.max(
+          mediaQuery.padding.bottom - bottomMargin,
+          0.0,
+        ) +
+        widget.option.additionalBottomPadding;
 
-    switch (widget.option.runtimeType) {
-      case AnimatedBarOptions:
-        options = widget.option as AnimatedBarOptions;
-        additionalBottomPadding =
-            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 2;
-        listWidget = _animatedBarChilds();
-        break;
+    final List<Widget> listWidget =
+        List<Widget>.generate(widget.items.length, (i) {
+      return widget.option.buildTile(
+        context: context,
+        item: widget.items[i],
+        isSelected: i == widget.currentIndex,
+        animation: _animations[i],
+        flexTween: _flexTween,
+        onTap: () => widget.onTap?.call(i),
+        indexLabel: localizations.tabLabel(
+          tabIndex: i + 1,
+          tabCount: widget.items.length,
+        ),
+        index: i,
+        totalLength: widget.items.length,
+      );
+    });
 
-      case BubbleBarOptions:
-        options = widget.option as BubbleBarOptions;
-        additionalBottomPadding =
-            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
-        listWidget = _bubbleBarTiles();
-        break;
-
-      case DotBarOptions:
-        options = widget.option as DotBarOptions;
-        additionalBottomPadding =
-            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
-        listWidget = _dotBarChilds();
-        break;
+    if (widget.fabLocation == StylishBarFabLocation.center) {
+      widget.option.insertCenterFabSpacer(listWidget);
     }
 
-    bool isUsingMaterial3 = getStyle();
+    final content = Container(
+      decoration: BoxDecoration(
+        borderRadius: widget.borderRadius,
+        gradient: widget.gradient,
+        color: widget.backgroundColor ?? Colors.white,
+      ),
+      child: _innerWidget(
+        context,
+        additionalBottomPadding,
+        widget.fabLocation,
+        listWidget,
+        widget.option.barAnimation,
+      ),
+    );
 
     return Semantics(
       explicitChildNodes: true,
@@ -312,7 +304,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
               elevation: widget.elevation,
               color: widget.backgroundColor ?? Colors.white,
               clipper: BarClipper(
-                shape: isUsingMaterial3
+                shape: isM3
                     ? const AutomaticNotchedShape(
                         RoundedRectangleBorder(),
                         RoundedRectangleBorder(
@@ -323,11 +315,11 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                       )
                     : const CircularNotchedRectangle(),
                 geometry: _geometryListenable!,
-                notchMargin: isUsingMaterial3 ? 6 : 8,
+                notchMargin: isM3 ? 6.0 : 8.0,
               ),
               child: ClipPath(
                 clipper: BarClipper(
-                  shape: isUsingMaterial3
+                  shape: isM3
                       ? const AutomaticNotchedShape(
                           RoundedRectangleBorder(),
                           RoundedRectangleBorder(
@@ -338,199 +330,43 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                         )
                       : const CircularNotchedRectangle(),
                   geometry: _geometryListenable!,
-                  notchMargin: isUsingMaterial3 ? 6 : 8,
+                  notchMargin: isM3 ? 6.0 : 8.0,
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: widget.borderRadius,
-                    gradient: widget.gradient,
-                    color: widget.backgroundColor ?? Colors.white,
-                  ),
-                  child: _innerWidget(
-                    context,
-                    additionalBottomPadding,
-                    widget.fabLocation,
-                    listWidget,
-                    options is AnimatedBarOptions ? options.barAnimation : null,
-                  ),
-                ),
+                child: content,
               ),
             )
           : Material(
               elevation: widget.elevation,
               borderRadius: widget.borderRadius,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: widget.borderRadius,
-                  gradient: widget.gradient,
-                  color: widget.backgroundColor ?? Colors.white,
-                ),
-                child: _innerWidget(
-                    context,
-                    additionalBottomPadding + 2,
-                    widget.fabLocation,
-                    listWidget,
-                    options is AnimatedBarOptions
-                        ? options.barAnimation
-                        : null),
-              ),
+              color: Colors.transparent,
+              child: content,
             ),
     );
   }
 
-  List<Widget> _bubbleBarTiles() {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-    final List<Widget> list = <Widget>[];
-
-    final BubbleBarOptions options = widget.option as BubbleBarOptions;
-
-    list.addAll(List.generate(widget.items.length, (i) {
-      return BubbleNavigationTile(
-        widget.items[i],
-        options.opacity!,
-        _animations[i],
-        options.iconSize,
-        options.barStyle,
-        onTap: () {
-          if (widget.onTap != null) widget.onTap!(i);
-        },
-        selected: i == widget.currentIndex,
-        flex: _evaluateFlex(_animations[i]),
-        indexLabel: localizations.tabLabel(
-            tabIndex: i + 1, tabCount: widget.items.length),
-        ink: options.inkEffect,
-        inkColor: options.inkColor,
-        padding: options.padding,
-        fillStyle: options.bubbleFillStyle,
-        itemBorderRadius: options.borderRadius,
-      );
-    }));
-
-    if (widget.fabLocation == StylishBarFabLocation.center) {
-      list.insert(
-          1,
-          const Spacer(
-            flex: 1500,
-          ));
-    }
-    return list;
-  }
-
-  List<Widget> _animatedBarChilds() {
-    final List<Widget> list = [];
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-
-    final AnimatedBarOptions options = widget.option as AnimatedBarOptions;
-
-    list.addAll(
-      List.generate(widget.items.length, (i) {
-        return AnimatedNavigationTiles(
-          widget.items[i],
-          options.iconSize,
-          padding: options.padding,
-          inkEffect: options.inkEffect,
-          inkColor: options.inkColor,
-          selected: widget.currentIndex == i,
-          opacity: options.opacity!,
-          animation: _animations[i],
-          barAnimation: options.barAnimation,
-          iconStyle: options.iconStyle ?? IconStyle.Default,
-          onTap: () {
-            if (widget.onTap != null) widget.onTap!(i);
-          },
-          flex: _evaluateFlex(_animations[i]),
-          indexLabel: localizations.tabLabel(
-              tabIndex: i + 1, tabCount: widget.items.length),
-        );
-      }),
-    );
-
-    // if (widget.fabLocation == StylishBarFabLocation.center && list.length > 2) {
-    //   list.insert(
-    //     2,
-    //     list.length > 3
-    //         ? const Flex(
-    //             direction: Axis.horizontal,
-    //             children: [Padding(padding: EdgeInsets.all(12))],
-    //           )
-    //         : const Spacer(
-    //             flex: 2,
-    //           ),
-    //   );
-    // }
-
-    insertSpace(list);
-
-    return list;
-  }
-
-  List<Widget> insertSpace(List<Widget> list) {
-    if (widget.fabLocation == StylishBarFabLocation.center) {
-      if (list.length == 2) {
-        list.insert(1, const Spacer()); // One at start, one at end
-      } else if (list.length == 3) {
-        list.insert(2, const Spacer(flex: 1)); // Push second item towards FAB
-        list.insert(4, const Spacer()); // Minimal spacing after FAB
-      } else if (list.length == 4) {
-        list.insert(2, const Spacer()); // Two before, two after FAB
-      }
-    }
-    return list;
-  }
-
-  List<Widget> _dotBarChilds() {
-    final List<Widget> list = [];
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-
-    final DotBarOptions options = widget.option as DotBarOptions;
-
-    list.addAll(
-      List.generate(widget.items.length, (i) {
-        return DotNavigationTiles(
-          widget.items[i],
-          selected: widget.currentIndex == i,
-          animation: _animations[i],
-          options: options,
-          onTap: () {
-            if (widget.onTap != null) widget.onTap!(i);
-          },
-          flex: _evaluateFlex(_animations[i]),
-          indexLabel: localizations.tabLabel(
-              tabIndex: i + 1, tabCount: widget.items.length),
-        );
-      }),
-    );
-
-    insertSpace(list);
-    return list;
-  }
-
   Widget _innerWidget(
-    context,
+    BuildContext context,
     double additionalBottomPadding,
-    fabLocation,
-    List<Widget> childs, [
+    StylishBarFabLocation? fabLocation,
+    List<Widget> children, [
     BarAnimation? barAnimation,
   ]) {
+    final isLiquid = barAnimation == BarAnimation.liquid;
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
       ),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-            minHeight: kBottomNavigationBarHeight + additionalBottomPadding),
+          minHeight: kBottomNavigationBarHeight + additionalBottomPadding,
+        ),
         child: Material(
           type: MaterialType.transparency,
           child: Padding(
             padding: EdgeInsets.only(
-                bottom:
-                    barAnimation != null && barAnimation == BarAnimation.liquid
-                        ? 0
-                        : additionalBottomPadding,
-                right: fabLocation == StylishBarFabLocation.end ? 72 : 0),
+              bottom: isLiquid ? 0 : additionalBottomPadding,
+              right: fabLocation == StylishBarFabLocation.end ? 72 : 0,
+            ),
             child: MediaQuery.removePadding(
               context: context,
               removeBottom: true,
@@ -538,7 +374,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                 overflow: TextOverflow.ellipsis,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: childs,
+                  children: children,
                 ),
               ),
             ),
