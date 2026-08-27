@@ -48,10 +48,12 @@ class AnimatedBarOptions extends BottomBarOption {
     this.inkColor = Colors.grey,
     this.opacity = 0.8,
     this.barAnimation = BarAnimation.fade,
-    this.iconStyle = IconStyle.Default,
-  })  : assert(iconSize > 0, 'iconSize must be greater than 0'),
-        assert(opacity >= 0.0 && opacity <= 1.0,
-            'opacity must be between 0.0 and 1.0');
+    this.iconStyle = IconStyle.defaultStyle,
+  }) : assert(iconSize > 0, 'iconSize must be greater than 0'),
+       assert(
+         opacity >= 0.0 && opacity <= 1.0,
+         'opacity must be between 0.0 and 1.0',
+       );
 
   @override
   double get additionalBottomPadding => 2.0;
