@@ -54,15 +54,16 @@ class AnimatedNavigationTiles extends StatelessWidget {
         selected: selected,
         label: indexLabel,
         child: Padding(
-          padding: padding ??
+          padding:
+              padding ??
               (items.showBadge && iconStyle != IconStyle.simple
-                  ? const EdgeInsets.only(
-                      top: 6.0,
-                    )
+                  ? const EdgeInsets.only(top: 6.0)
                   : EdgeInsets.zero),
           child: InkWell(
             onTap: onTap,
-            splashColor: (inkEffect ?? false) ? (inkColor ?? Colors.grey) : Colors.transparent,
+            splashColor: (inkEffect ?? false)
+                ? (inkColor ?? Colors.grey)
+                : Colors.transparent,
             highlightColor: Colors.transparent,
             borderRadius: const BorderRadius.horizontal(
               right: Radius.circular(52),
@@ -73,8 +74,8 @@ class AnimatedNavigationTiles extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: selected
                   ? barAnimation == BarAnimation.liquid
-                      ? MainAxisAlignment.spaceBetween
-                      : MainAxisAlignment.spaceEvenly
+                        ? MainAxisAlignment.spaceBetween
+                        : MainAxisAlignment.spaceEvenly
                   : MainAxisAlignment.center,
               children: _getBarItems(),
             ),
@@ -115,10 +116,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
           backgroundColor: items.badgeColor,
           padding: items.badgePadding,
           child: IconTheme(
-            data: IconThemeData(
-              color: itemColor,
-              size: iconSize,
-            ),
+            data: IconThemeData(color: itemColor, size: iconSize),
             child: selected ? items.selectedIcon ?? items.icon : items.icon,
           ),
         ),
@@ -142,17 +140,11 @@ class AnimatedNavigationTiles extends StatelessWidget {
         padding: items.badgePadding,
         alignment: const Alignment(0.175, -1.0),
         child: AnimatedCrossFade(
-          firstChild: Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: label,
-          ),
+          firstChild: Padding(padding: const EdgeInsets.all(6.0), child: label),
           secondChild: Container(
             alignment: Alignment.center,
             child: IconTheme(
-              data: IconThemeData(
-                color: itemColor,
-                size: iconSize,
-              ),
+              data: IconThemeData(color: itemColor, size: iconSize),
               child: selected ? items.selectedIcon ?? items.icon : items.icon,
             ),
           ),
@@ -160,8 +152,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
           sizeCurve: Curves.fastOutSlowIn,
           firstCurve: Curves.fastOutSlowIn,
           secondCurve: Curves.fastOutSlowIn.flipped,
-          crossFadeState:
-              selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+          crossFadeState: selected
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
         ),
       ),
       AnimatedCrossFade(
@@ -181,8 +174,9 @@ class AnimatedNavigationTiles extends StatelessWidget {
         sizeCurve: Curves.linear,
         firstCurve: Curves.fastOutSlowIn,
         secondCurve: Curves.fastOutSlowIn.flipped,
-        crossFadeState:
-            selected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+        crossFadeState: selected
+            ? CrossFadeState.showSecond
+            : CrossFadeState.showFirst,
       ),
     ];
   }
@@ -195,55 +189,55 @@ class AnimatedNavigationTiles extends StatelessWidget {
       color: itemColorOnSelected,
     );
 
-    return iconStyle == IconStyle.Default
+    return iconStyle == IconStyle.Default || iconStyle == IconStyle.defaultStyle
         ? _defaultItems()
         : iconStyle == IconStyle.animated
-            ? [
-                Badge(
-                  label: items.badge,
-                  isLabelVisible: items.showBadge,
-                  backgroundColor: items.badgeColor,
-                  padding: items.badgePadding,
-                  child: _AnimatedIconWidget(
-                    item: items,
-                    selected: selected,
-                    iconSize: iconSize,
-                    barAnimation: barAnimation,
+        ? [
+            Badge(
+              label: items.badge,
+              isLabelVisible: items.showBadge,
+              backgroundColor: items.badgeColor,
+              padding: items.badgePadding,
+              child: _AnimatedIconWidget(
+                item: items,
+                selected: selected,
+                iconSize: iconSize,
+                barAnimation: barAnimation,
+              ),
+            ),
+            AnimatedCrossFade(
+              alignment: const Alignment(0, 0),
+              firstChild: label,
+              secondChild: const SizedBox.shrink(),
+              duration: const Duration(milliseconds: 250),
+              sizeCurve: Curves.fastOutSlowIn,
+              firstCurve: Curves.fastOutSlowIn,
+              secondCurve: Curves.fastOutSlowIn.flipped,
+              crossFadeState: selected
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+            ),
+          ]
+        : [
+            Container(
+              alignment: Alignment.center,
+              child: Badge(
+                label: items.badge,
+                isLabelVisible: items.showBadge,
+                backgroundColor: items.badgeColor,
+                padding: items.badgePadding,
+                child: IconTheme(
+                  data: IconThemeData(
+                    color: itemColor,
+                    size: selected ? iconSize + 4 : iconSize,
                   ),
+                  child: selected
+                      ? items.selectedIcon ?? items.icon
+                      : items.icon,
                 ),
-                AnimatedCrossFade(
-                  alignment: const Alignment(0, 0),
-                  firstChild: label,
-                  secondChild: const SizedBox.shrink(),
-                  duration: const Duration(milliseconds: 250),
-                  sizeCurve: Curves.fastOutSlowIn,
-                  firstCurve: Curves.fastOutSlowIn,
-                  secondCurve: Curves.fastOutSlowIn.flipped,
-                  crossFadeState: selected
-                      ? CrossFadeState.showFirst
-                      : CrossFadeState.showSecond,
-                ),
-              ]
-            : [
-                Container(
-                  alignment: Alignment.center,
-                  child: Badge(
-                    label: items.badge,
-                    isLabelVisible: items.showBadge,
-                    backgroundColor: items.badgeColor,
-                    padding: items.badgePadding,
-                    child: IconTheme(
-                      data: IconThemeData(
-                        color: itemColor,
-                        size: selected ? iconSize + 4 : iconSize,
-                      ),
-                      child: selected
-                          ? items.selectedIcon ?? items.icon
-                          : items.icon,
-                    ),
-                  ),
-                ),
-              ];
+              ),
+            ),
+          ];
   }
 
   List<Widget> _dropItems() {
@@ -258,10 +252,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
           firstChild: Container(
             alignment: Alignment.center,
             child: IconTheme(
-              data: IconThemeData(
-                color: itemColor,
-                size: iconSize,
-              ),
+              data: IconThemeData(color: itemColor, size: iconSize),
               child: selected ? items.selectedIcon ?? items.icon : items.icon,
             ),
           ),
@@ -276,10 +267,7 @@ class AnimatedNavigationTiles extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: IconTheme(
-                  data: IconThemeData(
-                    color: itemColor,
-                    size: iconSize,
-                  ),
+                  data: IconThemeData(color: itemColor, size: iconSize),
                   child: selected && items.selectedIcon != null
                       ? items.selectedIcon!
                       : items.icon,
@@ -291,10 +279,11 @@ class AnimatedNavigationTiles extends StatelessWidget {
           sizeCurve: Curves.linear,
           firstCurve: Curves.ease,
           secondCurve: Curves.fastOutSlowIn.flipped,
-          crossFadeState:
-              selected ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          crossFadeState: selected
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
         ),
-      )
+      ),
     ];
   }
 }
@@ -328,7 +317,10 @@ class _AnimatedLabelWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       heightFactor: 1.0,
-      child: iconStyle == IconStyle.Default || animation == null
+      child:
+          (iconStyle == IconStyle.Default ||
+                  iconStyle == IconStyle.defaultStyle) ||
+              animation == null
           ? text
           : FadeTransition(
               alwaysIncludeSemantics: true,
@@ -424,7 +416,8 @@ class _AnimatedIconWidgetState extends State<_AnimatedIconWidget>
       builder: (context, child) {
         return IconTheme(
           data: IconThemeData(
-            color: widget.item.backgroundColor ??
+            color:
+                widget.item.backgroundColor ??
                 (widget.selected
                     ? _animationColor?.value ?? widget.item.selectedColor
                     : widget.item.unSelectedColor),
@@ -441,7 +434,8 @@ class _AnimatedIconWidgetState extends State<_AnimatedIconWidget>
   Widget _buildTransform3D() {
     return IconTheme(
       data: IconThemeData(
-        color: widget.item.backgroundColor ??
+        color:
+            widget.item.backgroundColor ??
             (widget.selected
                 ? widget.item.selectedColor
                 : widget.item.unSelectedColor),
