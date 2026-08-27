@@ -9,6 +9,9 @@ analyzer:
     - linux/**
 include: package:flutter_lints/flutter.yaml
 
+formatter:
+  trailing_commas: preserve
+
 linter: 
   rules:
     avoid_print: true
