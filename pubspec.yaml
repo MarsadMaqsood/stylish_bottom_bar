@@ -25,3 +25,6 @@ topics:
   - bottom-navigation
   - navigation-bar
 
+flutter:
+  shaders:
+       - shaders/liquid_glass.frag
