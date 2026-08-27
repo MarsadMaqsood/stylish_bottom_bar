@@ -30,11 +30,19 @@ enum BarAnimation {
 
 /// Defines the style of icons in the bottom bar.
 enum IconStyle {
+  @Deprecated(
+    'IconStyle.Default is deprecated, use IconStyle.defaultStyle instead',
+  )
   /// Both the icon and title widgets are visible, and the color of the selected item changes.
   ///
   /// Note: This is the default style.
   // ignore: constant_identifier_names
   Default,
+
+  /// Both the icon and title widgets are visible, and the color of the selected item changes.
+  ///
+  /// Note: This is the default style.
+  defaultStyle,
 
   /// Displays simple style icons without any animation.
   simple,
@@ -71,13 +79,6 @@ enum MovingStatus {
 }
 
 //
-enum DotStyle {
-  circle,
-  tile,
-}
+enum DotStyle { circle, tile }
 
-enum NotchStyle {
-  circle,
-  square,
-  themeDefault,
-}
+enum NotchStyle { circle, square, themeDefault }
