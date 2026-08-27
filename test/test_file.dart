@@ -281,11 +281,49 @@ class _BubbelBarExampleState extends State<BubbelBarExample> {
           });
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: const Icon(Icons.emoji_emotions),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }
+
+class BlurBarExample extends StatefulWidget {
+  const BlurBarExample({super.key});
+
+  @override
+  State<BlurBarExample> createState() => _BlurBarExampleState();
+}
+
+class _BlurBarExampleState extends State<BlurBarExample> {
+  int selected = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBody: true,
+      body: Center(child: Text('Selected: $selected')),
+      bottomNavigationBar: StylishBottomBar(
+        option: const BarBlurOptions.frosted(
+          sigma: 10.0,
+        ),
+        margin: const EdgeInsets.all(16),
+        borderRadius: BorderRadius.circular(20),
+        currentIndex: selected,
+        onTap: (index) {
+          setState(() {
+            selected = index;
+          });
+        },
+        items: [
+          BottomBarItem(
+            icon: const Icon(Icons.home),
+            title: const Text('Home'),
+          ),
+          BottomBarItem(
+            icon: const Icon(Icons.search),
+            title: const Text('Search'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
