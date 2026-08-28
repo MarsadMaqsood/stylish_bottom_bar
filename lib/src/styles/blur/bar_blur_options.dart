@@ -22,10 +22,10 @@ class BarBlurOptions extends BottomBarOption {
   /// Optional custom FragmentShader for advanced refraction & chromatic dispersion
   final ui.FragmentShader? customShader;
 
-  /// Refraction index multiplier when using custom shaders (default: 0.04)
+  /// Refraction index multiplier when using custom shaders (default: 0.0255)
   final double refraction;
 
-  /// Chromatic dispersion intensity for rainbow rim highlights (default: 0.015)
+  /// Chromatic dispersion intensity for rainbow rim highlights (default: 0.0039)
   final double dispersion;
 
   /// Icon size (default: 26.0)
@@ -48,7 +48,76 @@ class BarBlurOptions extends BottomBarOption {
 
   final double bevelDepth;
 
+  /// Default constructor for standard frosted blur effect.
   const BarBlurOptions({
+    this.sigmaX = 12.0,
+    this.sigmaY = 12.0,
+    this.enabled = true,
+    this.iconSize = 26.0,
+    this.inkEffect = false,
+    this.inkColor = Colors.grey,
+    this.opacity = 0.8,
+    this.padding = EdgeInsets.zero,
+    this.borderRadius,
+  }) : useShader = false,
+       customShader = null,
+       refraction = 0.0255,
+       dispersion = 0.0039,
+       bevelDepth = 9.0,
+       assert(iconSize > 0, 'iconSize must be greater than 0'),
+       assert(
+         opacity >= 0.0 && opacity <= 1.0,
+         'opacity must be between 0.0 and 1.0',
+       );
+
+  /// Preset for standard frosted glass with a single [sigma] parameter.
+  const BarBlurOptions.frosted({
+    double sigma = 14.0,
+    bool enabled = true,
+    double iconSize = 26.0,
+    bool inkEffect = false,
+    Color inkColor = Colors.grey,
+    double opacity = 0.8,
+    EdgeInsets padding = EdgeInsets.zero,
+    BorderRadius? borderRadius,
+  }) : this(
+         sigmaX: sigma,
+         sigmaY: sigma,
+         enabled: enabled,
+         iconSize: iconSize,
+         inkEffect: inkEffect,
+         inkColor: inkColor,
+         opacity: opacity,
+         padding: padding,
+         borderRadius: borderRadius,
+       );
+
+  /// Preset for Apple-style liquid glass with refraction shader.
+  const BarBlurOptions.liquidGlass({
+    double sigma = 24.0,
+    this.refraction = 0.0255,
+    this.dispersion = 0.0039,
+    this.bevelDepth = 9.0,
+    ui.FragmentShader? shader,
+    this.iconSize = 26.0,
+    this.inkEffect = false,
+    this.inkColor = Colors.grey,
+    this.opacity = 0.8,
+    this.padding = EdgeInsets.zero,
+    this.borderRadius,
+    this.useShader = true,
+    this.enabled = true,
+  }) : sigmaX = sigma,
+       sigmaY = sigma,
+       customShader = shader,
+       assert(iconSize > 0, 'iconSize must be greater than 0'),
+       assert(
+         opacity >= 0.0 && opacity <= 1.0,
+         'opacity must be between 0.0 and 1.0',
+       );
+
+  /// Advanced constructor for raw control over all parameters.
+  const BarBlurOptions.custom({
     this.sigmaX = 12.0,
     this.sigmaY = 12.0,
     this.enabled = true,
@@ -67,58 +136,6 @@ class BarBlurOptions extends BottomBarOption {
        assert(
          opacity >= 0.0 && opacity <= 1.0,
          'opacity must be between 0.0 and 1.0',
-       );
-
-  /// Preset for standard frosted glass
-  const BarBlurOptions.frosted({
-    double sigma = 14.0,
-    double iconSize = 26.0,
-    bool inkEffect = false,
-    Color inkColor = Colors.grey,
-    double opacity = 0.8,
-    EdgeInsets padding = EdgeInsets.zero,
-    BorderRadius? borderRadius,
-  }) : this(
-         sigmaX: sigma,
-         sigmaY: sigma,
-         enabled: true,
-         useShader: false,
-         iconSize: iconSize,
-         inkEffect: inkEffect,
-         inkColor: inkColor,
-         opacity: opacity,
-         padding: padding,
-         borderRadius: borderRadius,
-       );
-
-  /// Preset for Apple-style liquid glass
-  const BarBlurOptions.liquidGlass({
-    double sigma = 24.0,
-    double refraction = 0.0255,
-    double dispersion = 0.0039,
-    double bevelDepth = 9.0,
-    ui.FragmentShader? shader,
-    double iconSize = 26.0,
-    bool inkEffect = false,
-    Color inkColor = Colors.grey,
-    double opacity = 0.8,
-    EdgeInsets padding = EdgeInsets.zero,
-    BorderRadius? borderRadius,
-    bool useShader = true,
-  }) : this(
-         sigmaX: sigma,
-         sigmaY: sigma,
-         enabled: true,
-         useShader: useShader,
-         refraction: refraction,
-         dispersion: dispersion,
-         customShader: shader,
-         iconSize: iconSize,
-         inkEffect: inkEffect,
-         inkColor: inkColor,
-         opacity: opacity,
-         padding: padding,
-         borderRadius: borderRadius,
        );
 
   @override
