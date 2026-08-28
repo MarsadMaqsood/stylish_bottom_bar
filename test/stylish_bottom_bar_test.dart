@@ -60,4 +60,18 @@ void main() {
     // Check if the "Star" icon and title are displayed.
     expect(find.text('Star'), findsOneWidget);
   });
+
+  testWidgets('Test BlurBarExample', (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: BlurBarExample()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Selected: 0'), findsOneWidget);
+    expect(find.byIcon(Icons.home), findsOneWidget);
+    expect(find.byIcon(Icons.search), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.search));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Selected: 1'), findsOneWidget);
+  });
 }

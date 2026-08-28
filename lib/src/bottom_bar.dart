@@ -1,17 +1,16 @@
+import 'dart:developer' as developer;
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/src/anim_nav/animated_nav_tiles.dart';
-import 'package:stylish_bottom_bar/src/dot_nav/dot_nav_tile.dart';
-import 'package:stylish_bottom_bar/src/model/bar_items.dart';
-import 'package:stylish_bottom_bar/src/model/bottom_bar_option.dart';
-import 'package:stylish_bottom_bar/src/model/options.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_constants.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_item.dart';
+import 'package:stylish_bottom_bar/src/core/bottom_bar_option.dart';
+import 'package:stylish_bottom_bar/src/core/liquid_glass_shader.dart';
+import 'package:stylish_bottom_bar/src/shared/clippers/bar_clipper.dart';
+import 'package:stylish_bottom_bar/src/styles/blur/bar_blur_options.dart';
 import 'package:stylish_bottom_bar/src/utils/enums.dart';
-
-import 'bubble_nav_bar/bubble_navigation_tile.dart';
-import 'shapes/bar_cliper.dart';
-import 'utils/constant.dart';
 
 ///[StylishBottomBar] class to implement beautiful bottom bar widget
 ///
@@ -70,34 +69,34 @@ class StylishBottomBar extends StatefulWidget {
     this.gradient,
     this.iconSpace = 1.5,
     this.notchStyle = NotchStyle.themeDefault,
-  })  : assert(items.length >= 2,
-            '\n\nStylish Bottom Navigation must have 2 or more items'),
-        assert(
-          items.every((BottomBarItem item) => item.title != null) == true,
-          '\n\nEvery item must have a non-null title',
-        ),
-        assert((currentIndex >= items.length) == false,
-            '\n\nCurrent index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}'),
-        assert((currentIndex < 0) == false,
-            '\n\nCurrent index is out of bond. Provided: $currentIndex  Bond: 0 to ${items.length - 1}');
+    this.margin,
+    this.border,
+    this.boxShadow,
+  }) : assert(
+         items.length >= 2,
+         '\n\nStylish Bottom Navigation must have 2 or more items',
+       ),
+       assert(
+         items.every((BottomBarItem item) => item.title != null),
+         '\n\nEvery item must have a non-null title',
+       ),
+       assert(
+         currentIndex >= 0 && currentIndex < items.length,
+         '\n\nCurrent index is out of bounds. Provided: $currentIndex Bounds: 0 to ${items.length - 1}',
+       ),
+       assert(elevation >= 0, 'elevation must be non-negative'),
+       assert(iconSpace >= 0, 'iconSpace must be non-negative');
 
-  ///Add navigation bar items
-  ///[BottomBarItem]
-  ///
-  ///You can use `BottomBarItem` class to add navigation bar items
+  /// Add navigation bar items
   final List<BottomBarItem> items;
 
-  ///Change animated navigation bar background color
+  /// Change animated navigation bar background color
   final Color? backgroundColor;
 
-  ///Add elevation to bottom navigation bar
-  ///
-  ///Default value is 8.0
+  /// Add elevation to bottom navigation bar (default value is 8.0)
   final double elevation;
 
-  ///Used to change the selected item index
-  ///
-  /// Default value is 0
+  /// Used to change the selected item index (default value is 0)
   final int currentIndex;
 
   ///Add notch effect to floating action button
@@ -123,7 +122,7 @@ class StylishBottomBar extends StatefulWidget {
   ///```
   final ValueChanged<int>? onTap;
 
-  ///Change navigation bar border radius
+  /// Change navigation bar border radius
   final BorderRadius? borderRadius;
 
   ///Adjust bubble navigation items according to the fab location
@@ -153,7 +152,7 @@ class StylishBottomBar extends StatefulWidget {
   /// ```
   final Gradient? gradient;
 
-  ///Assign icon sapce;
+  /// Assign icon space
   final double iconSpace;
 
   /// Specify the notch style
@@ -165,18 +164,29 @@ class StylishBottomBar extends StatefulWidget {
   /// [NotchStyle.themeDefault] * Depends on the `Theme.of(context).useMaterial3`
   final NotchStyle notchStyle;
 
+  /// Margins around the bottom bar for floating capsule layouts
+  final EdgeInsetsGeometry? margin;
+
+  /// Border decoration around the bottom bar (e.g. for specular glass edges)
+  final BoxBorder? border;
+
+  /// Custom shadows for the bottom bar container
+  final List<BoxShadow>? boxShadow;
+
   @override
   State<StylishBottomBar> createState() => _StylishBottomBarState();
 }
 
 class _StylishBottomBarState extends State<StylishBottomBar>
     with TickerProviderStateMixin {
-  late List<AnimationController> _controllers = <AnimationController>[];
-  late List<CurvedAnimation> _animations;
-  Color? _backgroundColor;
+  List<AnimationController> _controllers = <AnimationController>[];
+  List<CurvedAnimation> _animations = <CurvedAnimation>[];
 
   ValueListenable<ScaffoldGeometry>? _geometryListenable;
-  Animatable<double>? _flexTween;
+  late Animatable<double> _flexTween;
+  ui.FragmentShader? _glassShader;
+
+  int _previousIndex = 0;
 
   @override
   void didChangeDependencies() {
@@ -187,85 +197,132 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         : Tween<double>(begin: 1.15, end: 1.75);
   }
 
-  void _state() {
-    for (AnimationController controller in _controllers) {
-      controller.dispose();
-    }
+  void _initAnimations() {
+    _disposeAnimations();
 
-    _controllers =
-        List<AnimationController>.generate(widget.items.length, (int index) {
+    _controllers = List<AnimationController>.generate(widget.items.length, (
+      int index,
+    ) {
       return AnimationController(
         duration: const Duration(milliseconds: 200),
         vsync: this,
       )..addListener(() {
-          if (widget.option.runtimeType == BubbleBarOptions) {
-            setState(() {});
-          }
-        });
+        if (widget.option.requiresControllerListener) {
+          setState(() {});
+        }
+      });
     });
-    _animations =
-        List<CurvedAnimation>.generate(widget.items.length, (int index) {
+
+    _animations = List<CurvedAnimation>.generate(widget.items.length, (
+      int index,
+    ) {
       return CurvedAnimation(
         parent: _controllers[index],
         curve: Curves.fastOutSlowIn,
         reverseCurve: Curves.fastOutSlowIn.flipped,
       );
     });
-    _controllers[widget.currentIndex].value = 1.0;
-    _backgroundColor = widget.items[widget.currentIndex].backgroundColor;
+
+    final safeIndex = widget.currentIndex.clamp(0, widget.items.length - 1);
+    _controllers[safeIndex].value = 1.0;
+  }
+
+  void _disposeAnimations() {
+    for (final animation in _animations) {
+      animation.dispose();
+    }
+    _animations = [];
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    _controllers = [];
   }
 
   @override
   void initState() {
     super.initState();
-    _state();
+    _initAnimations();
+    _initShader();
+  }
+
+  void _initShader() {
+    if (widget.option is BarBlurOptions) {
+      final opt = widget.option as BarBlurOptions;
+      if (opt.customShader != null) {
+        _glassShader = opt.customShader;
+      } else if (opt.useShader) {
+        LiquidGlassShader.load()
+            .then((program) {
+              if (mounted && program != null) {
+                setState(() {
+                  _glassShader = program.fragmentShader();
+                });
+
+                if (kDebugMode) {
+                  developer.log(
+                    'LiquidGlassShader loaded successfully',
+                    name: 'stylish_bottom_bar',
+                  );
+                }
+              }
+            })
+            .catchError((error, stackTrace) {
+              if (kDebugMode) {
+                developer.log(
+                  'Failed to load LiquidGlassShader',
+                  name: 'stylish_bottom_bar',
+                  error: error,
+                  stackTrace: stackTrace,
+                );
+              }
+            });
+      }
+    }
   }
 
   @override
   void dispose() {
-    ///Dispose controllers
-    for (AnimationController controller in _controllers) {
-      controller.dispose();
-    }
+    _disposeAnimations();
     super.dispose();
   }
-
-  double _evaluateFlex(Animation<double> animation) =>
-      _flexTween!.evaluate(animation);
 
   @override
   void didUpdateWidget(StylishBottomBar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    if (widget.option != oldWidget.option) {
+      _initShader();
+    }
+
     if (widget.items.length != oldWidget.items.length) {
-      _state();
+      _initAnimations();
       return;
     }
 
     if (widget.currentIndex != oldWidget.currentIndex) {
-      _controllers[oldWidget.currentIndex].reverse();
-      _controllers[widget.currentIndex].forward();
-
-      if (widget.fabLocation == StylishBarFabLocation.center) {
-        // dynamic _currentItem = widget.items[oldWidget.currentIndex!];
-        // dynamic _nextItem = widget.items[widget.currentIndex!]!;
-
-        // widget.items[0] = _nextItem;
-        // widget.items[widget.currentIndex!] = _currentItem;
-        _controllers[oldWidget.currentIndex].reverse();
-        _controllers[widget.currentIndex].forward();
-        // widget.currentIndex = 0;
-        _state();
-      }
-    } else {
-      if (_backgroundColor !=
-          widget.items[widget.currentIndex].backgroundColor) {
-        _backgroundColor = widget.items[widget.currentIndex].backgroundColor;
-      }
+      _previousIndex = oldWidget.currentIndex;
+      final oldIndex = oldWidget.currentIndex.clamp(0, _controllers.length - 1);
+      final newIndex = widget.currentIndex.clamp(0, _controllers.length - 1);
+      _controllers[oldIndex].reverse();
+      _controllers[newIndex].forward();
     }
   }
 
-  bool getStyle() {
+  double _getTabCenterX(int index) {
+    final mediaQuery = MediaQuery.of(context);
+    final resolvedMargin =
+        widget.margin?.resolve(Directionality.of(context)) ?? EdgeInsets.zero;
+    final barWidth = mediaQuery.size.width - resolvedMargin.horizontal;
+    final isBlur =
+        widget.option is BarBlurOptions &&
+        (widget.option as BarBlurOptions).enabled;
+    final hPadding = isBlur ? 4.0 : 10.0;
+    final usableWidth = barWidth - (hPadding * 2);
+    final tabWidth = usableWidth / widget.items.length;
+    return hPadding + (tabWidth * index) + (tabWidth * 0.5);
+  }
+
+  bool _isUsingMaterial3(BuildContext context) {
     return widget.notchStyle == NotchStyle.themeDefault
         ? Theme.of(context).useMaterial3
         : widget.notchStyle == NotchStyle.square;
@@ -273,264 +330,169 @@ class _StylishBottomBarState extends State<StylishBottomBar>
 
   @override
   Widget build(BuildContext context) {
-    double additionalBottomPadding = 0;
-    late List<Widget> listWidget;
-
     final mediaQuery = MediaQuery.of(context);
+    final localizations = MaterialLocalizations.of(context);
+    final isM3 = _isUsingMaterial3(context);
 
-    late BottomBarOption options;
+    final additionalBottomPadding =
+        math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) +
+        widget.option.additionalBottomPadding;
 
-    switch (widget.option.runtimeType) {
-      case AnimatedBarOptions:
-        options = widget.option as AnimatedBarOptions;
-        additionalBottomPadding =
-            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 2;
-        listWidget = _animatedBarChilds();
-        break;
+    final List<Widget> listWidget = List<Widget>.generate(widget.items.length, (
+      i,
+    ) {
+      return widget.option.buildTile(
+        context: context,
+        item: widget.items[i],
+        isSelected: i == widget.currentIndex,
+        animation: _animations[i],
+        flexTween: _flexTween,
+        onTap: () => widget.onTap?.call(i),
+        indexLabel: localizations.tabLabel(
+          tabIndex: i + 1,
+          tabCount: widget.items.length,
+        ),
+        index: i,
+        totalLength: widget.items.length,
+      );
+    });
 
-      case BubbleBarOptions:
-        options = widget.option as BubbleBarOptions;
-        additionalBottomPadding =
-            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
-        listWidget = _bubbleBarTiles();
-        break;
-
-      case DotBarOptions:
-        options = widget.option as DotBarOptions;
-        additionalBottomPadding =
-            math.max(mediaQuery.padding.bottom - bottomMargin, 0.0) + 4;
-        listWidget = _dotBarChilds();
-        break;
+    if (widget.fabLocation == StylishBarFabLocation.center) {
+      widget.option.insertCenterFabSpacer(listWidget);
     }
 
-    bool isUsingMaterial3 = getStyle();
+    final isBlur =
+        widget.option is BarBlurOptions &&
+        (widget.option as BarBlurOptions).enabled;
+    final blurOptions = isBlur ? widget.option as BarBlurOptions : null;
 
-    return Semantics(
+    final effectiveGradient = isBlur ? null : widget.gradient;
+
+    final effectiveBorder = isBlur ? null : widget.border;
+
+    final defaultBgColor = isBlur
+        ? Colors.transparent
+        : (widget.backgroundColor ?? Colors.white);
+
+    final effectiveShadow = isBlur ? null : widget.boxShadow;
+
+    final effectiveElevation = (isBlur || widget.boxShadow != null)
+        ? 0.0
+        : widget.elevation;
+
+    Widget content = Container(
+      decoration: BoxDecoration(
+        borderRadius: widget.borderRadius,
+        gradient: effectiveGradient,
+        color: effectiveGradient == null
+            ? (widget.backgroundColor ?? defaultBgColor)
+            : null,
+        border: effectiveBorder,
+        boxShadow: effectiveShadow,
+      ),
+      child: _innerWidget(
+        context,
+        additionalBottomPadding,
+        widget.fabLocation,
+        listWidget,
+        widget.option.barAnimation,
+        isBlur,
+      ),
+    );
+
+    if (isBlur && blurOptions != null) {
+      ui.ImageFilter filter;
+      if (_glassShader != null && blurOptions.useShader) {
+        ui.FragmentShader glassShader = buildShadderValues(
+          _glassShader!,
+          additionalBottomPadding,
+        );
+
+        filter = ui.ImageFilter.shader(glassShader);
+      } else {
+        filter = ui.ImageFilter.blur(
+          sigmaX: blurOptions.sigmaX,
+          sigmaY: blurOptions.sigmaY,
+        );
+      }
+
+      content = ClipRRect(
+        borderRadius: widget.borderRadius ?? BorderRadius.zero,
+        child: BackdropFilter(filter: filter, child: content),
+      );
+    }
+
+    Widget barWidget = Semantics(
       explicitChildNodes: true,
       child: widget.hasNotch
           ? PhysicalShape(
-              elevation: widget.elevation,
-              color: widget.backgroundColor ?? Colors.white,
+              elevation: effectiveElevation,
+              color: widget.backgroundColor ?? defaultBgColor,
               clipper: BarClipper(
-                shape: isUsingMaterial3
+                shape: isM3
                     ? const AutomaticNotchedShape(
                         RoundedRectangleBorder(),
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(18),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(18)),
                         ),
                       )
                     : const CircularNotchedRectangle(),
                 geometry: _geometryListenable!,
-                notchMargin: isUsingMaterial3 ? 6 : 8,
+                notchMargin: isM3 ? 6.0 : 8.0,
               ),
               child: ClipPath(
                 clipper: BarClipper(
-                  shape: isUsingMaterial3
+                  shape: isM3
                       ? const AutomaticNotchedShape(
                           RoundedRectangleBorder(),
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(18),
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(18)),
                           ),
                         )
                       : const CircularNotchedRectangle(),
                   geometry: _geometryListenable!,
-                  notchMargin: isUsingMaterial3 ? 6 : 8,
+                  notchMargin: isM3 ? 6.0 : 8.0,
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: widget.borderRadius,
-                    gradient: widget.gradient,
-                    color: widget.backgroundColor ?? Colors.white,
-                  ),
-                  child: _innerWidget(
-                    context,
-                    additionalBottomPadding,
-                    widget.fabLocation,
-                    listWidget,
-                    options is AnimatedBarOptions ? options.barAnimation : null,
-                  ),
-                ),
+                child: content,
               ),
             )
           : Material(
-              elevation: widget.elevation,
+              elevation: effectiveElevation,
               borderRadius: widget.borderRadius,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: widget.borderRadius,
-                  gradient: widget.gradient,
-                  color: widget.backgroundColor ?? Colors.white,
-                ),
-                child: _innerWidget(
-                    context,
-                    additionalBottomPadding + 2,
-                    widget.fabLocation,
-                    listWidget,
-                    options is AnimatedBarOptions
-                        ? options.barAnimation
-                        : null),
-              ),
+              color: Colors.transparent,
+              child: content,
             ),
     );
-  }
 
-  List<Widget> _bubbleBarTiles() {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-    final List<Widget> list = <Widget>[];
-
-    final BubbleBarOptions options = widget.option as BubbleBarOptions;
-
-    list.addAll(List.generate(widget.items.length, (i) {
-      return BubbleNavigationTile(
-        widget.items[i],
-        options.opacity!,
-        _animations[i],
-        options.iconSize,
-        options.barStyle,
-        onTap: () {
-          if (widget.onTap != null) widget.onTap!(i);
-        },
-        selected: i == widget.currentIndex,
-        flex: _evaluateFlex(_animations[i]),
-        indexLabel: localizations.tabLabel(
-            tabIndex: i + 1, tabCount: widget.items.length),
-        ink: options.inkEffect,
-        inkColor: options.inkColor,
-        padding: options.padding,
-        fillStyle: options.bubbleFillStyle,
-        itemBorderRadius: options.borderRadius,
-      );
-    }));
-
-    if (widget.fabLocation == StylishBarFabLocation.center) {
-      list.insert(
-          1,
-          const Spacer(
-            flex: 1500,
-          ));
+    if (widget.margin != null) {
+      barWidget = Padding(padding: widget.margin!, child: barWidget);
     }
-    return list;
-  }
 
-  List<Widget> _animatedBarChilds() {
-    final List<Widget> list = [];
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-
-    final AnimatedBarOptions options = widget.option as AnimatedBarOptions;
-
-    list.addAll(
-      List.generate(widget.items.length, (i) {
-        return AnimatedNavigationTiles(
-          widget.items[i],
-          options.iconSize,
-          padding: options.padding,
-          inkEffect: options.inkEffect,
-          inkColor: options.inkColor,
-          selected: widget.currentIndex == i,
-          opacity: options.opacity!,
-          animation: _animations[i],
-          barAnimation: options.barAnimation,
-          iconStyle: options.iconStyle ?? IconStyle.Default,
-          onTap: () {
-            if (widget.onTap != null) widget.onTap!(i);
-          },
-          flex: _evaluateFlex(_animations[i]),
-          indexLabel: localizations.tabLabel(
-              tabIndex: i + 1, tabCount: widget.items.length),
-        );
-      }),
-    );
-
-    // if (widget.fabLocation == StylishBarFabLocation.center && list.length > 2) {
-    //   list.insert(
-    //     2,
-    //     list.length > 3
-    //         ? const Flex(
-    //             direction: Axis.horizontal,
-    //             children: [Padding(padding: EdgeInsets.all(12))],
-    //           )
-    //         : const Spacer(
-    //             flex: 2,
-    //           ),
-    //   );
-    // }
-
-    insertSpace(list);
-
-    return list;
-  }
-
-  List<Widget> insertSpace(List<Widget> list) {
-    if (widget.fabLocation == StylishBarFabLocation.center) {
-      if (list.length == 2) {
-        list.insert(1, const Spacer()); // One at start, one at end
-      } else if (list.length == 3) {
-        list.insert(2, const Spacer(flex: 1)); // Push second item towards FAB
-        list.insert(4, const Spacer()); // Minimal spacing after FAB
-      } else if (list.length == 4) {
-        list.insert(2, const Spacer()); // Two before, two after FAB
-      }
-    }
-    return list;
-  }
-
-  List<Widget> _dotBarChilds() {
-    final List<Widget> list = [];
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-
-    final DotBarOptions options = widget.option as DotBarOptions;
-
-    list.addAll(
-      List.generate(widget.items.length, (i) {
-        return DotNavigationTiles(
-          widget.items[i],
-          selected: widget.currentIndex == i,
-          animation: _animations[i],
-          options: options,
-          onTap: () {
-            if (widget.onTap != null) widget.onTap!(i);
-          },
-          flex: _evaluateFlex(_animations[i]),
-          indexLabel: localizations.tabLabel(
-              tabIndex: i + 1, tabCount: widget.items.length),
-        );
-      }),
-    );
-
-    insertSpace(list);
-    return list;
+    return barWidget;
   }
 
   Widget _innerWidget(
-    context,
+    BuildContext context,
     double additionalBottomPadding,
-    fabLocation,
-    List<Widget> childs, [
+    StylishBarFabLocation? fabLocation,
+    List<Widget> children, [
     BarAnimation? barAnimation,
+    bool isBlur = false,
   ]) {
+    final isLiquid = barAnimation == BarAnimation.liquid;
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: isBlur ? 4.0 : 10),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-            minHeight: kBottomNavigationBarHeight + additionalBottomPadding),
+          minHeight: kBottomNavigationBarHeight + additionalBottomPadding,
+        ),
         child: Material(
           type: MaterialType.transparency,
           child: Padding(
             padding: EdgeInsets.only(
-                bottom:
-                    barAnimation != null && barAnimation == BarAnimation.liquid
-                        ? 0
-                        : additionalBottomPadding,
-                right: fabLocation == StylishBarFabLocation.end ? 72 : 0),
+              bottom: isLiquid ? 0 : additionalBottomPadding,
+              right: fabLocation == StylishBarFabLocation.end ? 72 : 0,
+            ),
             child: MediaQuery.removePadding(
               context: context,
               removeBottom: true,
@@ -538,7 +500,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
                 overflow: TextOverflow.ellipsis,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: childs,
+                  children: children,
                 ),
               ),
             ),
@@ -546,5 +508,100 @@ class _StylishBottomBarState extends State<StylishBottomBar>
         ),
       ),
     );
+  }
+
+  ui.FragmentShader buildShadderValues(
+    ui.FragmentShader glassShader,
+    double additionalBottomPadding,
+  ) {
+    final mediaQuery = MediaQuery.of(context);
+    final pixelRatio = mediaQuery.devicePixelRatio;
+    final screenSize = mediaQuery.size * pixelRatio;
+
+    final renderBox = context.findRenderObject() as RenderBox?;
+    final resolvedMargin =
+        widget.margin?.resolve(Directionality.of(context)) ?? EdgeInsets.zero;
+
+    final hasLayout = renderBox != null && renderBox.hasSize;
+    final rawOffset = hasLayout
+        ? renderBox.localToGlobal(Offset.zero)
+        : Offset(
+            0.0,
+            mediaQuery.size.height -
+                (kBottomNavigationBarHeight + additionalBottomPadding) -
+                resolvedMargin.bottom -
+                resolvedMargin.top,
+          );
+
+    final originX = (rawOffset.dx + resolvedMargin.left) * pixelRatio;
+    final originY = (rawOffset.dy + resolvedMargin.top) * pixelRatio;
+
+    final barRenderWidth = hasLayout
+        ? renderBox.size.width - resolvedMargin.horizontal
+        : mediaQuery.size.width - resolvedMargin.horizontal;
+    final barRenderHeight = hasLayout
+        ? renderBox.size.height - resolvedMargin.vertical
+        : kBottomNavigationBarHeight + additionalBottomPadding;
+
+    final barWidth = barRenderWidth * pixelRatio;
+    final barHeight = barRenderHeight * pixelRatio;
+
+    final cornerRadius = widget.borderRadius?.topLeft.x ?? 33.5;
+
+    final blurOpt = widget.option is BarBlurOptions
+        ? widget.option as BarBlurOptions
+        : null;
+    final refraction = blurOpt?.refraction ?? 0.0255;
+    final dispersion = blurOpt?.dispersion ?? 0.0039;
+    final bevelDepth = blurOpt?.bevelDepth ?? 9.0;
+
+    // Selected Tab Capsule Calculations
+    final hPadding = 4.0 * pixelRatio;
+    final usableWidth = barWidth - (hPadding * 2);
+    final tabWidth = usableWidth / widget.items.length;
+
+    //
+    final startX = _getTabCenterX(_previousIndex);
+    final endX = _getTabCenterX(widget.currentIndex);
+    final animValue =
+        _animations.isNotEmpty && widget.currentIndex < _animations.length
+        ? _animations[widget.currentIndex].value
+        : 1.0;
+    final currentTabX = ui.lerpDouble(startX, endX, animValue) ?? endX;
+    //
+
+    final activeCenterX = currentTabX * pixelRatio;
+    final activeCenterY = barHeight * 0.5;
+
+    final pillHalfWidth = tabWidth * 0.50; // 0.5000 ratio
+    final pillHalfHeight = barHeight * 0.4373; // 0.4373 ratio
+    final pillRadius = pillHalfHeight;
+
+    // Passing calibrated values directly into the shader
+    _glassShader!.setFloat(0, screenSize.width);
+    _glassShader!.setFloat(1, screenSize.height);
+    _glassShader!.setFloat(2, originX);
+    _glassShader!.setFloat(3, originY);
+    _glassShader!.setFloat(4, barWidth);
+    _glassShader!.setFloat(5, barHeight);
+    _glassShader!.setFloat(6, cornerRadius * pixelRatio);
+    _glassShader!.setFloat(7, refraction);
+    _glassShader!.setFloat(8, dispersion);
+    _glassShader!.setFloat(9, bevelDepth * pixelRatio);
+    _glassShader!.setFloat(10, 1.0); // Tint R
+    _glassShader!.setFloat(11, 1.0); // Tint G
+    _glassShader!.setFloat(12, 1.0); // Tint B
+    _glassShader!.setFloat(13, 0.0); // Tint Alpha
+    _glassShader!.setFloat(14, activeCenterX);
+    _glassShader!.setFloat(15, activeCenterY);
+    _glassShader!.setFloat(16, pillHalfWidth);
+    _glassShader!.setFloat(17, pillHalfHeight);
+    _glassShader!.setFloat(18, pillRadius);
+    _glassShader!.setFloat(19, 1.0); // Pill R
+    _glassShader!.setFloat(20, 1.0); // Pill G
+    _glassShader!.setFloat(21, 1.0); // Pill B
+    _glassShader!.setFloat(22, 0.0); // Pill Alpha (Pure Optical Lens)
+
+    return _glassShader!;
   }
 }

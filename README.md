@@ -14,7 +14,7 @@ A collection of stylish bottom navigation bars like animated bottom bar and bubb
 ## ⭐  Installing <a name="installing"></a>
 
     dependencies:
-        stylish_bottom_bar: ^1.1.1
+        stylish_bottom_bar: ^1.2.0-beta
 
 ## ⚡ Import
 
@@ -54,6 +54,7 @@ items → List<BottomBarItem>
 option → AnimatedBarOptions
 option → BubbleBarOptions
 option → DotBarOptions
+option → BarBlurOptions
 backgroundColor → Color
 elevation → double
 currentIndex → int
@@ -132,7 +133,20 @@ onTap: (index){
 
 ## Showcase <a name="showcase"></a>
 
-**AnimatedNavigationBar**
+**BarBlurOptions**
+
+`BarBlurOptions.frosted()`
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/34.gif">
+
+---
+
+`BarBlurOptions.liquidGlass()`
+
+<img width="356" height="100" src="https://raw.githubusercontent.com/MarsadMaqsood/stylish_bottom_bar/master/showcase/35.gif">
+
+
+**AnimatedBarOptions**
 
 `IconStyle.Default`
 
@@ -192,7 +206,7 @@ onTap: (index){
 
 ---
 
-**DotNavigationBar**
+**DotBarOptions**
 
 `DotStyle.circle`
 
@@ -207,7 +221,7 @@ onTap: (index){
 <img width="356" height="70" src="https://github.com/MarsadMaqsood/stylish_bottom_bar/raw/master/showcase/33.gif?raw=true">
 
 
-**BubbleNavigationBar**
+**BubbleBarOptions**
 
 `BubbleBarStyle.horizotnal`
 
@@ -241,12 +255,17 @@ From version **1.0.0** `option:` `AnimatedBarOptions` and `BubbleBarOptions` wil
 
 ```dart
 StylishBottomBar(
+//  option: const BarBlurOptions.liquidGlass(),
+//
+//  option: const BarBlurOptions.frosted(),
+//
 //  option: AnimatedBarOptions(
 //    iconSize: 32,
 //    barAnimation: BarAnimation.liquid,
 //    iconStyle: IconStyle.animated,
 //    opacity: 0.3,
 //  ),
+//
 //  option: BubbleBarOptions(
 //    barStyle: BubbleBarStyle.horizotnal,
 //    // barStyle: BubbleBarStyle.vertical,
@@ -254,6 +273,7 @@ StylishBottomBar(
 //    // bubbleFillStyle: BubbleFillStyle.outlined,
 //    opacity: 0.3,
 //  ),
+//
   option: DotBarOptions(
     dotStyle: DotStyle.tile,
     gradient: const LinearGradient(
