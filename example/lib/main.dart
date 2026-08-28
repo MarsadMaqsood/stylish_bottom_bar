@@ -160,6 +160,7 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       // resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: StylishBottomBar(
+        // option: DotBarOptions(),
         option: AnimatedBarOptions(
           iconStyle: .animated,
         ),
@@ -184,13 +185,6 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             showBadge: true,
             badgeColor: Colors.red,
             badge: Text('9'),
-          ),
-          BottomBarItem(
-            icon: const Icon(Icons.home_rounded),
-            // selectedColor: Colors.white,
-            // unSelectedColor: Colors.white60,
-            title: const Text('Home'),
-            backgroundColor: Colors.orange,
           ),
           BottomBarItem(
             icon: const Icon(Icons.feed_outlined),
@@ -376,7 +370,7 @@ class _BlurBarExampleState extends State<BlurBarExample> {
           useShader: true,
           customShader: _customShader,
         ),
-        margin: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+        // margin: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
         currentIndex: selected,
         onTap: (index) {
           if (index == selected) return;
@@ -388,43 +382,28 @@ class _BlurBarExampleState extends State<BlurBarExample> {
         items: [
           BottomBarItem(
             icon: const Icon(Icons.home_rounded),
-            selectedIcon: const Icon(Icons.home_filled),
-
-            selectedColor: Colors.orange,
-            // unSelectedColor: Colors.pink,
-            borderColor: Colors.red,
-            backgroundColor: Colors.red,
+            selectedColor: Colors.white,
+            unSelectedColor: Colors.white60,
             title: const Text('Home'),
-            showBadge: true,
-            badgeColor: Colors.red,
-            badge: Text('9'),
-          ),
-          BottomBarItem(
-            icon: const Icon(Icons.home_rounded),
-            // selectedColor: Colors.white,
-            // unSelectedColor: Colors.white60,
-            title: const Text('Home'),
-            backgroundColor: Colors.orange,
           ),
           BottomBarItem(
             icon: const Icon(Icons.feed_outlined),
             selectedIcon: const Icon(Icons.feed_rounded),
-            // selectedColor: Colors.white,
-            // unSelectedColor: Colors.white60,
+            selectedColor: Colors.white,
+            unSelectedColor: Colors.white60,
             title: const Text('Feed'),
-            backgroundColor: Colors.orange,
           ),
           BottomBarItem(
             icon: const Icon(Icons.search_rounded),
-            // selectedColor: Colors.white,
-            // unSelectedColor: Colors.white60,
+            selectedColor: Colors.white,
+            unSelectedColor: Colors.white60,
             title: const Text('Search'),
           ),
           BottomBarItem(
             icon: const Icon(Icons.settings_outlined),
             selectedIcon: const Icon(Icons.settings_rounded),
-            // selectedColor: Colors.white,
-            // unSelectedColor: Colors.white60,
+            selectedColor: Colors.white,
+            unSelectedColor: Colors.white60,
             title: const Text('Settings'),
           ),
         ],
