@@ -1,3 +1,19 @@
+## 1.2.0-beta
+- Added: New `BarBlurOptions` style for floating translucent, frosted, and glassmorphic navigation:
+  - `BarBlurOptions()`: Default standard frosted backdrop blur.
+  - `BarBlurOptions.frosted()`: Convenience preset with single `sigma` configuration.
+  - `BarBlurOptions.liquidGlass()`: Optical liquid glass with refraction, chromatic dispersion, and specular highlights.
+  - `BarBlurOptions.custom()`: Allows loading custom `FragmentShader` programs and fine-tuning optical parameters.
+- Added: Hardware-accelerated fragment shader (`shaders/liquid_glass.frag`) for realistic glass refraction and chromatic dispersion.
+- Refactored: `AnimatedNavigationTiles` into modular sub-widgets (`AnimatedIconWidget`, `AnimatedLabelWidget`, `LiquidTileLayout`, `DropTileLayout`) for cleaner maintainability.
+- Optimized: `AnimatedIconWidget` to reuse the parent `Animation<double>` object for synchronized animations and improved performance.
+- Improved: `BubbleBarOptions` default opacity and border alpha blending in `BubbleNavigationTile`.
+- Corrected `Semantics(enabled: true)` across `DotNavigationTiles`, ensuring unselected navigation items are fully announced and interactive in TalkBack / VoiceOver.
+- Deduplicated `IconWidget` and `LabelWidget` declarations into single canonical widgets under `lib/src/widgets/`.
+- Added constructor assertions across `BubbleBarOptions`, `AnimatedBarOptions`, and `DotBarOptions` for `iconSize > 0` and valid `opacity` ranges.
+- Updated: Example application showcasing frosted blur, liquid glass shaders, and custom shader integration.
+- Fixed: [#45](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/45)
+
 ## 1.1.1
 - Fixed: [#40](https://github.com/MarsadMaqsood/stylish_bottom_bar/issues/40)
 - Fixed: Animation issue in horizontal mode for BubbleBarItem
