@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -16,8 +18,9 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
         primarySwatch: Colors.green,
       ),
+      home: const BlurBarExample(),
       // home: const BubbelBarExample(),
-      home: const AnimatedBarExample(),
+      // home: const AnimatedBarExample(),
     );
   }
 }
@@ -157,13 +160,9 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
       // resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: StylishBottomBar(
-        option: const AnimatedBarOptions(
+        option: AnimatedBarOptions(
           iconStyle: .animated,
         ),
-        // backgroundColor: Colors.transparent,
-        // option: const BarBlurOptions.frosted(),
-        // margin: const EdgeInsets.only(left: 20, right: 20, bottom: 28),
-        // borderRadius: BorderRadius.circular(36),
         currentIndex: selected,
         onTap: (index) {
           if (index == selected) return;
@@ -175,15 +174,23 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
         items: [
           BottomBarItem(
             icon: const Icon(Icons.home_rounded),
-            // selectedColor: Colors.white,
-            // unSelectedColor: Colors.white60,
+            selectedIcon: const Icon(Icons.home_filled),
+
+            selectedColor: Colors.orange,
+            // unSelectedColor: Colors.pink,
+            borderColor: Colors.red,
+            backgroundColor: Colors.red,
             title: const Text('Home'),
+            showBadge: true,
+            badgeColor: Colors.red,
+            badge: Text('9'),
           ),
           BottomBarItem(
             icon: const Icon(Icons.home_rounded),
             // selectedColor: Colors.white,
             // unSelectedColor: Colors.white60,
             title: const Text('Home'),
+            backgroundColor: Colors.orange,
           ),
           BottomBarItem(
             icon: const Icon(Icons.feed_outlined),
@@ -191,6 +198,221 @@ class _AnimatedBarExampleState extends State<AnimatedBarExample> {
             // selectedColor: Colors.white,
             // unSelectedColor: Colors.white60,
             title: const Text('Feed'),
+            backgroundColor: Colors.orange,
+          ),
+          BottomBarItem(
+            icon: const Icon(Icons.search_rounded),
+            // selectedColor: Colors.white,
+            // unSelectedColor: Colors.white60,
+            title: const Text('Search'),
+          ),
+          BottomBarItem(
+            icon: const Icon(Icons.settings_outlined),
+            selectedIcon: const Icon(Icons.settings_rounded),
+            // selectedColor: Colors.white,
+            // unSelectedColor: Colors.white60,
+            title: const Text('Settings'),
+          ),
+        ],
+      ),
+      body: body,
+    );
+  }
+}
+
+class BlurBarExample extends StatefulWidget {
+  const BlurBarExample({super.key});
+
+  @override
+  State<BlurBarExample> createState() => _BlurBarExampleState();
+}
+
+class _BlurBarExampleState extends State<BlurBarExample> {
+  int selected = 0;
+  bool heart = false;
+  final controller = PageController();
+  ui.FragmentShader? _customShader;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCustomShader();
+  }
+
+  Future<void> _loadCustomShader() async {
+    final program = await ui.FragmentProgram.fromAsset(
+      'shaders/custom_neon_glass.frag',
+    );
+    if (mounted) {
+      setState(() {
+        _customShader = program.fragmentShader();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget body = Stack(
+      children: [
+        // Vibrant colorful liquid glass backdrop
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFE91E63), Color(0xFF9C27B0), Color(0xFF3F51B5)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        Positioned(
+          left: -40,
+          top: 100,
+          child: Container(
+            width: 220,
+            height: 220,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFFF4081).withValues(alpha: 0.8),
+            ),
+          ),
+        ),
+        Positioned(
+          right: -20,
+          top: 200,
+          child: Container(
+            width: 260,
+            height: 260,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFF00E5FF).withValues(alpha: 0.7),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 40,
+          bottom: 40,
+          child: Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFFF9100).withValues(alpha: 0.8),
+            ),
+          ),
+        ),
+        Positioned(
+          left: 20,
+          bottom: 60,
+          child: Container(
+            width: 180,
+            height: 180,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFF7C4DFF).withValues(alpha: 0.8),
+            ),
+          ),
+        ),
+        PageView(
+          controller: controller,
+          children: const [
+            Center(
+              child: Text(
+                'Home Page',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Center(
+              child: Text(
+                'Feed Page',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Center(
+              child: Text(
+                'Search Page',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Center(
+              child: Text(
+                'Settings Page',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+
+    return Scaffold(
+      extendBody: true,
+
+      bottomNavigationBar: StylishBottomBar(
+        // option: const BarBlurOptions.liquidGlass(),
+        // option: const BarBlurOptions.frosted(),
+        option: BarBlurOptions.custom(
+          useShader: true,
+          customShader: _customShader,
+        ),
+        margin: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+        currentIndex: selected,
+        onTap: (index) {
+          if (index == selected) return;
+          controller.jumpToPage(index);
+          setState(() {
+            selected = index;
+          });
+        },
+        items: [
+          BottomBarItem(
+            icon: const Icon(Icons.home_rounded),
+            selectedIcon: const Icon(Icons.home_filled),
+
+            selectedColor: Colors.orange,
+            // unSelectedColor: Colors.pink,
+            borderColor: Colors.red,
+            backgroundColor: Colors.red,
+            title: const Text('Home'),
+            showBadge: true,
+            badgeColor: Colors.red,
+            badge: Text('9'),
+          ),
+          BottomBarItem(
+            icon: const Icon(Icons.home_rounded),
+            // selectedColor: Colors.white,
+            // unSelectedColor: Colors.white60,
+            title: const Text('Home'),
+            backgroundColor: Colors.orange,
+          ),
+          BottomBarItem(
+            icon: const Icon(Icons.feed_outlined),
+            selectedIcon: const Icon(Icons.feed_rounded),
+            // selectedColor: Colors.white,
+            // unSelectedColor: Colors.white60,
+            title: const Text('Feed'),
+            backgroundColor: Colors.orange,
           ),
           BottomBarItem(
             icon: const Icon(Icons.search_rounded),
