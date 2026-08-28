@@ -34,7 +34,7 @@ class BubbleBarOptions extends BottomBarOption {
   final Color inkColor;
 
   /// Specifies the opacity of the navigation bar items' backgrounds.
-  /// The default value is `0.8`.
+  /// The default value is `0.2`.
   final double opacity;
 
   const BubbleBarOptions({
@@ -45,10 +45,12 @@ class BubbleBarOptions extends BottomBarOption {
     this.borderRadius,
     this.padding = EdgeInsets.zero,
     this.inkColor = Colors.grey,
-    this.opacity = 0.8,
-  })  : assert(iconSize > 0, 'iconSize must be greater than 0'),
-        assert(opacity >= 0.0 && opacity <= 1.0,
-            'opacity must be between 0.0 and 1.0');
+    this.opacity = 0.2,
+  }) : assert(iconSize > 0, 'iconSize must be greater than 0'),
+       assert(
+         opacity >= 0.0 && opacity <= 1.0,
+         'opacity must be between 0.0 and 1.0',
+       );
 
   @override
   double get additionalBottomPadding => 4.0;
