@@ -54,8 +54,8 @@ class BubbleNavigationTile extends StatelessWidget {
     final barHeight = barStyle == BubbleBarStyle.horizontal
         ? 48.0
         : iconSize > 30.0
-            ? 50.0 + (iconSize - 30.0)
-            : 50.0;
+        ? 50.0 + (iconSize - 30.0)
+        : 50.0;
 
     return Expanded(
       flex: flexSize,
@@ -68,7 +68,8 @@ class BubbleNavigationTile extends StatelessWidget {
           padding: padding,
           child: InkWell(
             onTap: onTap,
-            borderRadius: itemBorderRadius ??
+            borderRadius:
+                itemBorderRadius ??
                 const BorderRadius.horizontal(
                   right: Radius.circular(52),
                   left: Radius.circular(52),
@@ -78,15 +79,17 @@ class BubbleNavigationTile extends StatelessWidget {
             child: Container(
               height: barHeight,
               decoration: BoxDecoration(
-                borderRadius: itemBorderRadius ??
+                borderRadius:
+                    itemBorderRadius ??
                     const BorderRadius.horizontal(
                       right: Radius.circular(52),
                       left: Radius.circular(52),
                     ),
                 border: Border.all(
-                    width: isOutlined ? 1 : 0,
-                    color: item.borderColor,
-                    style: isOutlined ? BorderStyle.solid : BorderStyle.none),
+                  width: isOutlined ? 1 : 0,
+                  color: item.borderColor.withValues(alpha: opacity),
+                  style: isOutlined ? BorderStyle.solid : BorderStyle.none,
+                ),
                 color: isFilled
                     ? item.backgroundColor?.withValues(alpha: opacity)
                     : Colors.transparent,
@@ -131,8 +134,9 @@ class BubbleNavigationTile extends StatelessWidget {
           sizeCurve: Curves.fastOutSlowIn,
           firstCurve: Curves.fastOutSlowIn,
           secondCurve: Curves.fastOutSlowIn.flipped,
-          crossFadeState:
-              selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+          crossFadeState: selected
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
         ),
       ),
     ];
