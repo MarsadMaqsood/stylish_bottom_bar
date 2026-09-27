@@ -327,3 +327,102 @@ class _BlurBarExampleState extends State<BlurBarExample> {
   }
 }
 
+class DropTileLayoutTest extends StatefulWidget {
+  const DropTileLayoutTest({super.key});
+
+  @override
+  State<DropTileLayoutTest> createState() => _DropTileLayoutTestState();
+}
+
+class _DropTileLayoutTestState extends State<DropTileLayoutTest> {
+  int selected = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBody: true,
+      body: SafeArea(
+        child: IndexedStack(
+          index: selected,
+          children: const [
+            Center(child: Text('Home')),
+            Center(child: Text('Search')),
+          ],
+        ),
+      ),
+      bottomNavigationBar: StylishBottomBar(
+        option: const AnimatedBarOptions(
+          barAnimation: .drop,
+        ),
+        margin: const EdgeInsets.all(16),
+        borderRadius: BorderRadius.circular(20),
+        currentIndex: selected,
+        onTap: (index) {
+          setState(() {
+            selected = index;
+          });
+        },
+        items: [
+          BottomBarItem(
+            icon: const Icon(Icons.home),
+            title: const Text('Home'),
+          ),
+          BottomBarItem(
+            icon: const Icon(Icons.search),
+            title: const Text('Search'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LiquidTileLayoutTest extends StatefulWidget {
+  const LiquidTileLayoutTest({super.key});
+
+  @override
+  State<LiquidTileLayoutTest> createState() => _LiquidTileLayoutTestState();
+}
+
+class _LiquidTileLayoutTestState extends State<LiquidTileLayoutTest> {
+  int selected = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBody: true,
+      body: SafeArea(
+        child: IndexedStack(
+          index: selected,
+          children: const [
+            Center(child: Text('Home Screen')),
+            Center(child: Text('Search Screen')),
+          ],
+        ),
+      ),
+      bottomNavigationBar: StylishBottomBar(
+        option: const AnimatedBarOptions(
+          barAnimation: .liquid,
+        ),
+        margin: const EdgeInsets.all(16),
+        borderRadius: BorderRadius.circular(20),
+        currentIndex: selected,
+        onTap: (index) {
+          setState(() {
+            selected = index;
+          });
+        },
+        items: [
+          BottomBarItem(
+            icon: const Icon(Icons.home),
+            title: const Text('Home'),
+          ),
+          BottomBarItem(
+            icon: const Icon(Icons.search),
+            title: const Text('Search'),
+          ),
+        ],
+      ),
+    );
+  }
+}
