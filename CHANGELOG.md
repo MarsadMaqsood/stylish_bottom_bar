@@ -1,3 +1,6 @@
+## 1.2.0-beta-2
+- Added: `showLabel` in `BarBlurOptions`.
+
 ## 1.2.0-beta
 - Added: New `BarBlurOptions` style for floating translucent, frosted, and glassmorphic navigation:
   - `BarBlurOptions()`: Default standard frosted backdrop blur.
