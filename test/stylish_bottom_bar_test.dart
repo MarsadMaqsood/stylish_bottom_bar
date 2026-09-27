@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:stylish_bottom_bar/src/core/liquid_glass_shader.dart';
 
 import 'test_file.dart';
 
@@ -73,5 +74,52 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Selected: 1'), findsOneWidget);
+  });
+
+  test(
+    'LiquidGlassShader load returns null or shader program in test environment',
+    () async {
+      final program = await LiquidGlassShader.load();
+
+      final shadder = LiquidGlassShader.createShader();
+
+      expect(
+        program,
+        isNull,
+      ); // assets/shaders usually return null/fail in headless unit test bindings without mock asset bundles
+      expect(shadder, isNull);
+    },
+  );
+
+  testWidgets('Test DropTileLayout', (WidgetTester tester) async {
+    // Create and pump AnimatedBarExample widget to test.
+    await tester.pumpWidget(const MaterialApp(home: DropTileLayoutTest()));
+
+    // Wait for the widget to be rendered.
+    await tester.idle();
+
+    expect(find.byWidget(const Text('Home')), findsNothing);
+
+    // Wait for the widget to be updated.
+    await tester.pumpAndSettle();
+
+    // Check if the "Home" icon and title are displayed.
+    expect(find.text('Home'), findsOneWidget);
+  });
+
+  testWidgets('Test LiquidTileLayout', (WidgetTester tester) async {
+    // Create and pump AnimatedBarExample widget to test.
+    await tester.pumpWidget(const MaterialApp(home: LiquidTileLayoutTest()));
+
+    // Wait for the widget to be rendered.
+    await tester.idle();
+
+    expect(find.byWidget(const Text('Home')), findsNothing);
+
+    // Wait for the widget to be updated.
+    await tester.pumpAndSettle();
+
+    // Check if the "Home" icon and title are displayed.
+    expect(find.text('Home'), findsOneWidget);
   });
 }

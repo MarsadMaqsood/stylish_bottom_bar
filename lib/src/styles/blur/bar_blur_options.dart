@@ -48,6 +48,9 @@ class BarBlurOptions extends BottomBarOption {
 
   final double bevelDepth;
 
+  /// Display items label
+  final bool showLabel;
+
   /// Default constructor for standard frosted blur effect.
   const BarBlurOptions({
     this.sigmaX = 12.0,
@@ -58,6 +61,7 @@ class BarBlurOptions extends BottomBarOption {
     this.inkColor = Colors.grey,
     this.opacity = 0.8,
     this.padding = EdgeInsets.zero,
+    this.showLabel = true,
     this.borderRadius,
   }) : useShader = false,
        customShader = null,
@@ -79,6 +83,7 @@ class BarBlurOptions extends BottomBarOption {
     Color inkColor = Colors.grey,
     double opacity = 0.8,
     EdgeInsets padding = EdgeInsets.zero,
+    bool showLabel = true,
     BorderRadius? borderRadius,
   }) : this(
          sigmaX: sigma,
@@ -90,6 +95,7 @@ class BarBlurOptions extends BottomBarOption {
          opacity: opacity,
          padding: padding,
          borderRadius: borderRadius,
+         showLabel: showLabel,
        );
 
   /// Preset for Apple-style liquid glass with refraction shader.
@@ -107,6 +113,7 @@ class BarBlurOptions extends BottomBarOption {
     this.borderRadius,
     this.useShader = true,
     this.enabled = true,
+    this.showLabel = true,
   }) : sigmaX = sigma,
        sigmaY = sigma,
        customShader = shader,
@@ -132,6 +139,7 @@ class BarBlurOptions extends BottomBarOption {
     this.opacity = 0.8,
     this.padding = EdgeInsets.zero,
     this.borderRadius,
+    this.showLabel = true,
   }) : assert(iconSize > 0, 'iconSize must be greater than 0'),
        assert(
          opacity >= 0.0 && opacity <= 1.0,
@@ -169,6 +177,7 @@ class BarBlurOptions extends BottomBarOption {
       inkColor: inkColor,
       padding: padding,
       itemBorderRadius: borderRadius,
+      showLabel: showLabel,
     );
   }
 }
