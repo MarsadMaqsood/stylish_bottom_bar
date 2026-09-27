@@ -21,6 +21,7 @@ class BlurNavigationTile extends StatelessWidget {
     this.inkColor = Colors.grey,
     this.padding,
     this.itemBorderRadius,
+    required this.showLabel,
   });
 
   final BottomBarItem item;
@@ -35,6 +36,7 @@ class BlurNavigationTile extends StatelessWidget {
   final Color? inkColor;
   final EdgeInsets? padding;
   final BorderRadius? itemBorderRadius;
+  final bool showLabel;
 
   Color get itemColor =>
       item.backgroundColor ??
@@ -84,7 +86,7 @@ class BlurNavigationTile extends StatelessWidget {
                         : item.icon,
                   ),
                 ),
-                if (item.title != null)
+                if (showLabel && item.title != null)
                   _BlurLabelWidget(
                     animation: animation,
                     item: item,
