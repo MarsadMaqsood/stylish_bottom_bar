@@ -1,3 +1,6 @@
+## Unreleased
+- Added: Optional `materialType` for non-notched bars. Set `MaterialType.transparency` to omit the outer Material surface/elevation shadow while preserving container decoration. Defaults to `MaterialType.canvas` for compatibility.
+
 ## 1.2.0-beta-2
 - Added: `showLabel` in `BarBlurOptions`.
 

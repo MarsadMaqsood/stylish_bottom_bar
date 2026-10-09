@@ -28,6 +28,7 @@ items:
 option:
 backgroundColor:
 elevation:
+materialType:
 currentIndex:
 iconSize:
 padding:
@@ -57,6 +58,7 @@ option → DotBarOptions
 option → BarBlurOptions
 backgroundColor → Color
 elevation → double
+materialType → MaterialType (non-notched bars)
 currentIndex → int
 iconSize → double
 padding → EdgeInsets
@@ -73,6 +75,27 @@ unselectedIconColor → Color
 bubbleFillStyle → BubbleFillStyle
 iconStyle → IconStyle
 dotStyle → DotStyle
+```
+
+### Transparent Material surface
+
+For a non-notched bar whose background and shadows are supplied by the decorated
+container, set `materialType: MaterialType.transparency`. This suppresses the
+outer Material surface and its elevation shadow. `backgroundColor`, `gradient`,
+`borderRadius`, `border` and custom `boxShadow` decoration still work. The default
+is `MaterialType.canvas`, so existing bars retain their elevation behavior.
+Notched bars use `PhysicalShape` and ignore this option.
+
+```dart
+StylishBottomBar(
+  materialType: MaterialType.transparency,
+  backgroundColor: Colors.transparent,
+  option: AnimatedBarOptions(),
+  items: [
+    BottomBarItem(icon: Icon(Icons.home), title: Text('Home')),
+    BottomBarItem(icon: Icon(Icons.search), title: Text('Search')),
+  ],
+)
 ```
 
 ### BarStyle

@@ -60,6 +60,7 @@ class StylishBottomBar extends StatefulWidget {
     required this.items,
     this.backgroundColor,
     this.elevation = 8.0,
+    this.materialType = MaterialType.canvas,
     this.currentIndex = 0,
     this.onTap,
     this.borderRadius,
@@ -95,6 +96,15 @@ class StylishBottomBar extends StatefulWidget {
 
   /// Add elevation to bottom navigation bar (default value is 8.0)
   final double elevation;
+
+  /// The outer Material surface type when [hasNotch] is false.
+  ///
+  /// Defaults to [MaterialType.canvas], preserving the existing surface and
+  /// elevation. Use [MaterialType.transparency] to suppress the Material's
+  /// surface and elevation shadow while retaining the decorated container's
+  /// background, gradient, border and custom box shadows. Ignored for notched
+  /// bars, which use a [PhysicalShape].
+  final MaterialType materialType;
 
   /// Used to change the selected item index (default value is 0)
   final int currentIndex;
@@ -457,6 +467,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
               ),
             )
           : Material(
+              type: widget.materialType,
               elevation: effectiveElevation,
               borderRadius: widget.borderRadius,
               color: Colors.transparent,
